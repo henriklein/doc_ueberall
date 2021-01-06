@@ -1,5 +1,6 @@
 import 'package:doc_ueberall/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchBar extends StatelessWidget {
@@ -26,7 +27,9 @@ class SearchBar extends StatelessWidget {
         Align(
           alignment: Alignment.centerRight,
           child: MaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              HapticFeedback.heavyImpact();
+            },
             color: kOrangeColor,
             padding: EdgeInsets.symmetric(
               horizontal: 10,

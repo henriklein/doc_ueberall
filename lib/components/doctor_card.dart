@@ -1,21 +1,24 @@
 import 'package:doc_ueberall/constant.dart';
-import 'package:doc_ueberall/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:doc_ueberall/screens/alleInhalte.dart';
+import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
-class TopicCard extends StatefulWidget {
+class InhalteCard extends StatefulWidget {
+  var _search;
   var _name;
   var _description;
   var _imageUrl;
   var _bgColor;
 
-  TopicCard(this._name, this._description, this._imageUrl, this._bgColor);
+  InhalteCard(this._search, this._name, this._description, this._imageUrl,
+      this._bgColor);
 
   @override
-  _TopicCardState createState() => _TopicCardState();
+  _InhalteCardState createState() => _InhalteCardState();
 }
 
-class _TopicCardState extends State<TopicCard> {
+class _InhalteCardState extends State<InhalteCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -23,9 +26,9 @@ class _TopicCardState extends State<TopicCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailScreen(widget._name, widget._description, widget._imageUrl),
-          ),
+              builder: (context) => AlleThemen()), //Link to Information page
         );
+        HapticFeedback.mediumImpact();
       },
       child: DecoratedBox(
         decoration: BoxDecoration(
