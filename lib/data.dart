@@ -55,7 +55,7 @@ List alleInhalte = [
   },
   {
     "kapitel": 8,
-    "kapitelThema": "Verletzungen",
+    "kapitelThema": "Schmerzen",
     "subtitle": "Sibtitle",
     "img":
         "https://images.unsplash.com/photo-1523264939339-c89f9dadde2e?ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",

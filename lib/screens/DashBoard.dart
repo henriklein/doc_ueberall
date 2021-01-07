@@ -1,7 +1,10 @@
-import 'package:doc_ueberall/components/doctor_card.dart';
+import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/components/search_bar.dart';
 import 'package:doc_ueberall/constant.dart';
-import 'package:doc_ueberall/screens/DetailScreen.dart';
+import 'package:doc_ueberall/screens/GespeicherteArtikel.dart';
+import 'package:doc_ueberall/screens/ZuletztGesehen.dart';
+import 'package:doc_ueberall/screens/Kapitel.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tags/flutter_tags.dart';
@@ -15,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
@@ -49,7 +51,7 @@ class Header extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 38,
-            color: kTitleTextColor,
+            color: primaryTextColor,
           ),
         ),
         Padding(
@@ -71,7 +73,7 @@ class Header extends StatelessWidget {
                 ),
                 Text(
                   "Mehr",
-                  style: TextStyle(color: kTitleTextColor),
+                  style: TextStyle(color: secondaryTextColor),
                 )
               ])),
         )
@@ -101,19 +103,20 @@ class Header extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(25.0,25,25,15),
+                            padding:
+                                const EdgeInsets.fromLTRB(25.0, 25, 25, 15),
                             child: Text(
                               "Kontrollzentrum",
                               style: TextStyle(
                                   fontSize: 38,
                                   fontWeight: FontWeight.bold,
-                                  color: kTitleTextColor),
+                                  color: primaryTextColor),
                             ),
                           ),
                           Card(
                             elevation: 4.0,
-                            margin: const EdgeInsets.fromLTRB(
-                                20.0, 0, 20.0, 16.0),
+                            margin:
+                                const EdgeInsets.fromLTRB(20.0, 0, 20.0, 16.0),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
                             child: Column(
@@ -121,22 +124,35 @@ class Header extends StatelessWidget {
                                 ListTile(
                                   leading: Icon(
                                     Icons.history,
-                                    color: kOrangeColor,
+                                    color: kRedColor,
                                   ),
                                   title: Text("Zuletzt gesehen"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ZuletztGesehen()), //Link to Information page
+                                    );
+                                  },
                                 ),
                                 ListTile(
                                   leading: Icon(
                                     Icons.touch_app,
-                                    color: kOrangeColor,
+                                    color: kRedColor,
                                   ),
-                                  title: Text("Deine Favouriten"),
+                                  title: Text("Gespeicherte Artikel"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () {},
+                                  onTap: () {
+                                     Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              GespeicherteArtikel()), //Link to Information page
+                                    );
+                                  },
                                 ),
-                                
                               ],
                             ),
                           ),
@@ -151,7 +167,7 @@ class Header extends StatelessWidget {
                                 ListTile(
                                   leading: Icon(
                                     Icons.people_outline,
-                                    color: kOrangeColor,
+                                    color: kRedColor,
                                   ),
                                   title: Text("Über das Team"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
@@ -163,7 +179,7 @@ class Header extends StatelessWidget {
                                 ListTile(
                                   leading: Icon(
                                     Icons.history,
-                                    color: kOrangeColor,
+                                    color: kRedColor,
                                   ),
                                   title: Text("All. Geschäftsbedingugen"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
@@ -175,7 +191,7 @@ class Header extends StatelessWidget {
                                 ListTile(
                                   leading: Icon(
                                     Icons.zoom_out_map,
-                                    color: kOrangeColor,
+                                    color: kRedColor,
                                   ),
                                   title: Text("Unsere Website"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
@@ -195,7 +211,7 @@ class Header extends StatelessWidget {
                                 ListTile(
                                   leading: Icon(
                                     Icons.settings,
-                                    color: kOrangeColor,
+                                    color: kRedColor,
                                   ),
                                   title: Text("Weitere Enstellungen"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
@@ -262,7 +278,7 @@ class Search extends StatelessWidget {
                       child: Container(
                         height: 40,
                         decoration: BoxDecoration(
-                            color: kSearchBackgroundColor,
+                            color: kBoxBackground,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(22))),
                         child: Padding(
@@ -270,11 +286,10 @@ class Search extends StatelessWidget {
                             MediaQuery.of(context).size.height * 0.01,
                           ),
                           child: Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CircleAvatar(
-                                backgroundColor: kOrangeColor,
+                                backgroundColor: kRedColor,
                                 maxRadius: 0,
                               ),
                               SizedBox(
@@ -313,7 +328,7 @@ class Cards extends StatelessWidget {
             "unsere Inhalte",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: kTitleTextColor,
+              color: primaryTextColor,
               fontSize: 18,
             ),
           ),
@@ -330,42 +345,50 @@ class Cards extends StatelessWidget {
     double _height = MediaQuery.of(context).size.height;
     return Column(
       children: <Widget>[
-        InhalteCard(
-          'AlleInhalte',
-          'Alle inhalte',
-          'Sehen sie alle unsere Inhalte auf einen Blick',
-          'assets/images/doctor3.png',
-          kOrangeColor,
+        TopicCard(
+          header: 'Alle Kapitel',
+          description: 'Sehen sie alle unsere Inhalte auf einen Blick',
+          imgURL: 'assets/images/doctor3.png',
+          bgColor: kRedColor,
+          press: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      KapitelScreen()), //Link to Information page
+            );
+          },
         ),
         SizedBox(
           height: _height * 0.02,
         ),
-        InhalteCard(
-          'AlleInhalte',
-          'vor der Reise',
-          'Erkundigen sie sich noch vor beginn der Reiße über aktuelle Umstände.',
-          'assets/images/doctor2.png',
-          kYellowColor,
+        TopicCard(
+          header: 'Reisevorbereitungen',
+          description:
+              'Erkundigen sie sich noch vor beginn der Reiße über aktuelle Umstände.',
+          imgURL: 'assets/images/doctor2.png',
+          bgColor: kPurpleColor,
+          press: () {},
         ),
         SizedBox(
           height: _height * 0.02,
         ),
-        InhalteCard(
-          'AlleInhalte',
-          'Wärend der Reise',
-          'Eye Specialist - Flower Hospitals',
-          'assets/images/doctor3.png',
-          kSearchTextColor,
+        TopicCard(
+          header: 'Kleine Medikamentenkundes',
+          description: 'Eye Specialist - Flower Hospitals',
+          imgURL: 'assets/images/doctor3.png',
+          bgColor: kYellowColor,
+          press: () {},
         ),
         SizedBox(
           height: _height * 0.02,
         ),
-        InhalteCard(
-          'AlleInhalte',
-          'Notfallinstruktionen',
-          'Heart Surgeon - Flower Hospitals',
-          'assets/images/doctor1.png',
-          kBlueColor,
+        TopicCard(
+          header: 'Notfallinstruktionen',
+          description: 'Heart Surgeon - Flower Hospitals',
+          imgURL: 'assets/images/doctor1.png',
+          bgColor: kBlueColor,
+          press: () {},
         ),
         SizedBox(
           height: _height * 0.02,

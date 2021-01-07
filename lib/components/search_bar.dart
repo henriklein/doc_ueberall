@@ -13,7 +13,7 @@ class SearchBar extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.7,
           padding: EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
-            color: kSearchBackgroundColor,
+            color: kBoxBackground,
             borderRadius: BorderRadius.circular(30),
           ),
           child: Center(
@@ -30,7 +30,7 @@ class SearchBar extends StatelessWidget {
             onPressed: () {
               HapticFeedback.heavyImpact();
             },
-            color: kOrangeColor,
+            color: kRedColor,
             padding: EdgeInsets.symmetric(
               horizontal: 10,
               vertical: 15,
