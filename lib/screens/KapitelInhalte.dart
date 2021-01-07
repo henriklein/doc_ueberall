@@ -62,7 +62,8 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
                       header: "Reisevorbereitung",
                       subtitle:
                           "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-                          keywoerter: "Word1, word 2, word3, etc..",
+                          keywoerter: "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
+                  
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),
@@ -70,8 +71,9 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
                       kapitel: "Zweites ",
                       intKapitel: "2",
                       header: "Reisen bei Vorerkrankungen",
-                      subtitle: "Erkundige dich über lokale Viren und möglichn Schutz.",
-                      keywoerter: "Word1, word 2, word3, etc..",
+                      subtitle: "Können sie mit Vorerkrankungen Reisen antreten?",
+                      keywoerter: "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
+                     
                       bookmarkchecked: Icon(Icons.bookmark),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),

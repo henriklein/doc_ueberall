@@ -169,7 +169,7 @@ class Header extends StatelessWidget {
                                     Icons.people_outline,
                                     color: kRedColor,
                                   ),
-                                  title: Text("Über das Team"),
+                                  title: Text("Über DocÜberall"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {},
                                 ),
@@ -181,7 +181,7 @@ class Header extends StatelessWidget {
                                     Icons.history,
                                     color: kRedColor,
                                   ),
-                                  title: Text("All. Geschäftsbedingugen"),
+                                  title: Text("All. Geschäftsbedingungen"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {},
                                 ),
@@ -223,9 +223,20 @@ class Header extends StatelessWidget {
                           const SizedBox(height: 5.0),
                           Center(
                             child: Text(
-                              "Wir wünschen viel Spass auf der Reise",
+                              "Wir wünschen viel Spaß auf der Reise",
                               style: TextStyle(
                                 fontSize: 15.0,
+                                color: primaryTextColor
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              "DocÜberall v0.7 ",
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: secondaryTextColor
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -245,7 +256,7 @@ class Header extends StatelessWidget {
 
 class Search extends StatelessWidget {
   final List<String> tags = [
-    '📌 Grundausstattung',
+   '😷 Vorerkrankugnen ',
     '💊 Reiseapotheke ',
     '💉 Impfungen',
     "👔 Versicherungen",
@@ -348,7 +359,7 @@ class Cards extends StatelessWidget {
         TopicCard(
           header: 'Alle Kapitel',
           description: 'Sehen sie alle unsere Inhalte auf einen Blick',
-          imgURL: 'assets/images/doctor3.png',
+          imgURL: 'assets/SVGs/allChapters.svg',
           bgColor: kRedColor,
           press: () {
             Navigator.push(
@@ -366,7 +377,7 @@ class Cards extends StatelessWidget {
           header: 'Reisevorbereitungen',
           description:
               'Erkundigen sie sich noch vor beginn der Reiße über aktuelle Umstände.',
-          imgURL: 'assets/images/doctor2.png',
+          imgURL: 'assets/SVGs/prepare.svg',
           bgColor: kPurpleColor,
           press: () {},
         ),
@@ -374,9 +385,9 @@ class Cards extends StatelessWidget {
           height: _height * 0.02,
         ),
         TopicCard(
-          header: 'Kleine Medikamentenkundes',
-          description: 'Eye Specialist - Flower Hospitals',
-          imgURL: 'assets/images/doctor3.png',
+          header: 'Kleine Medikamentenrunde',
+          description: 'Alles was sie über Ihre Reseapotheke wissen müssen.',
+          imgURL: 'assets/SVGs/medecine.svg',
           bgColor: kYellowColor,
           press: () {},
         ),
@@ -385,8 +396,8 @@ class Cards extends StatelessWidget {
         ),
         TopicCard(
           header: 'Notfallinstruktionen',
-          description: 'Heart Surgeon - Flower Hospitals',
-          imgURL: 'assets/images/doctor1.png',
+          description: 'Notfallinstruktionen in Kriesensituationen.',
+          imgURL: 'assets/SVGs/firstAID.svg',
           bgColor: kBlueColor,
           press: () {},
         ),

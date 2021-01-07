@@ -1,9 +1,6 @@
 import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/constant.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
-
 class KapitelScreen extends StatefulWidget {
   @override
   _KapitelScreenState createState() => _KapitelScreenState();
@@ -63,7 +60,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       header: "Reise",
                       subtitle:
                           "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-                          keywoerter: "Word1, word 2, word3, etc..",
+                          keywoerter: "Resevorbereitung, Reisen bei Vorerkrankungen",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),
@@ -71,8 +68,8 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Zweites ",
                       intKapitel: "2",
                       header: "Kleine Medikamentenkunde",
-                      subtitle: "Erkundige dich über lokale Viren und möglichn Schutz.",
-                      keywoerter: "Word1, word 2, word3, etc..",
+                      subtitle: "Erkundige dich über lokale Viren und möglichen Schutz.",
+                      keywoerter: "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
                       bookmarkchecked: Icon(Icons.bookmark),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),
@@ -80,8 +77,8 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Drittes ",
                       intKapitel: "3",
                       header: "Tiere und Pflanzen",
-                      subtitle: "Welech Tiere sind vor Ort zu finden?",
-                      keywoerter: "Word1, word 2, word3, etc..",
+                      subtitle: "Was tun bei Kontakt mit örtlichen Tieren",
+                      keywoerter: "Tiere und Pflanzen', Insektenstiche und -bisse, Verletzungen durch Meerestiere, Pflanzen",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
                     ),

@@ -88,7 +88,10 @@ class DetailPage extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
-                        Text("www.tropeninstitut.de", style: TextStyle(color: secondaryTextColor),),
+                        Text(
+                          "www.tropeninstitut.de",
+                          style: TextStyle(color: secondaryTextColor),
+                        ),
                         SizedBox(
                           height: 10,
                         ),
@@ -110,12 +113,18 @@ class DetailPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Als Gekesen Makieren", style: TextStyle(color: secondaryTextColor),),
+                            Text(
+                              "Als Gekesen Makieren",
+                              style: TextStyle(color: secondaryTextColor),
+                            ),
                             IconButton(
                               icon: Icon(Icons.check_box_outline_blank),
                               onPressed: () {},
                             ),
-                            Text("Speichern", style: TextStyle(color: secondaryTextColor),),
+                            Text(
+                              "Speichern",
+                              style: TextStyle(color: secondaryTextColor),
+                            ),
                             IconButton(
                                 icon: Icon(Icons.bookmark_outline),
                                 onPressed: () {})
@@ -141,7 +150,7 @@ class DetailPage extends StatelessWidget {
                         TopicCard(
                           header: 'Reisen bei Vorerkrankungen',
                           description: 'Erkundige dich wie du...',
-                          imgURL: 'assets/images/doctor3.png',
+                          imgURL: 'assets/SVGs/prepare.svg',
                           bgColor: kRedColor,
                           press: () {},
                         ),
@@ -169,7 +178,8 @@ class DetailPage extends StatelessWidget {
                     header: "Kleine Medikamentenkunde",
                     subtitle:
                         "Erkundige dich über lokale Viren und möglichn Schutz.",
-                    keywoerter: "Word1, word 2, word3, etc..",
+                    keywoerter:
+                        "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
                     bookmarkchecked: Icon(Icons.bookmark),
                     checkbox: Icon(Icons.check_box_outlined),
                   ),

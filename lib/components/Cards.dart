@@ -3,6 +3,7 @@ import 'package:doc_ueberall/screens/DetailScreen.dart';
 import 'package:doc_ueberall/screens/KapitelInhalte.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
 class TopicCard extends StatelessWidget {
@@ -35,8 +36,11 @@ class TopicCard extends StatelessWidget {
         ),
         child: Padding(
           padding: EdgeInsets.all(10),
-          child: ListTile(
-            leading: Image.asset(imgURL),
+          child: 
+          ListTile(
+            leading: Container(
+              width: 70,
+              child: SvgPicture.asset(imgURL, width: 70, height: 70,)),
             title: Text(
               header,
               style: TextStyle(
@@ -178,9 +182,7 @@ class BuildKapitelCard extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
+                    
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -191,27 +193,29 @@ class BuildKapitelCard extends StatelessWidget {
                             SizedBox(
                               width: 5,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Keywörter",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: primaryTextColor
+                            Flexible(
+                                                          child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Themengebiete",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: primaryTextColor
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  keywoerter,
-                                  style: TextStyle(
-                                    color: secondaryTextColor,
-                                    fontSize: 12,
+                                  SizedBox(
+                                    height: 5,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    keywoerter,
+                                    style: TextStyle(
+                                      color: secondaryTextColor,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             )
                           ],
                         )
