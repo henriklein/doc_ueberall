@@ -27,7 +27,7 @@ class _ZuletztGesehenState extends State<ZuletztGesehen> {
                     }),
                 Flexible(
                     child: Text(
-                  "Zuletzt Gesehen",
+                  "Zuletzt Gesehen", //last seen / History
                   style: TextStyle(fontSize: 30, color: primaryTextColor),
                 )),
               ],
@@ -57,21 +57,21 @@ class _ZuletztGesehenState extends State<ZuletztGesehen> {
                       height: height * 0.05,
                     ),
                     BuildInhaltCard(
-                      kapitel: "Erstes ",
-                      intKapitel: "1",
-                      header: "Reisevorbereitung",
-                      subtitle:
+                      artikel: "Erstes ", //curreent Article Noumber as wiritten out (needs to  be initialized as "", ill add real data later)
+                      intartikel: "1",  //int of current Article
+                      header: "Reisevorbereitung", //Header of Article
+                      discription: //Needs to be initialized as "lorum Ipsum sentence, Ill add real data later"
                           "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-                          keywoerter: "Word1, word 2, word3, etc..",
+                          
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),
                     BuildInhaltCard(
-                      kapitel: "Zweites ",
-                      intKapitel: "2",
+                      artikel: "Zweites ",
+                      intartikel: "2",
                       header: "Reisen bei Vorerkrankungen",
-                      subtitle: "Erkundige dich über lokale Viren und möglichn Schutz.",
-                      keywoerter: "Word1, word 2, word3, etc..",
+                      discription: "Erkundige dich über lokale Viren und möglichn Schutz.",
+                     
                       bookmarkchecked: Icon(Icons.bookmark),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),

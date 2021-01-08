@@ -27,7 +27,7 @@ class _GespeicherteArtikelState extends State<GespeicherteArtikel> {
                     }),
                 Flexible(
                     child: Text(
-                  "Gespeicherte Artikel",
+                  "Gespeicherte Artikel", //saved Articles
                   style: TextStyle(fontSize: 30, color: primaryTextColor),
                 )),
               ],
@@ -56,22 +56,28 @@ class _GespeicherteArtikelState extends State<GespeicherteArtikel> {
                     SizedBox(
                       height: height * 0.05,
                     ),
+
+                    /*
+                    ---
+                      Two Examples of Saved Articles (Bookmarked)
+                    ---
+                    */
                     BuildInhaltCard(
-                      kapitel: "Erstes ",
-                      intKapitel: "1",
+                      artikel: "Erstes ",
+                      intartikel: "1",
                       header: "Reisevorbereitung",
-                      subtitle:
+                      discription:
                           "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-                          keywoerter: "Word1, word 2, word3, etc..",
-                      bookmarkchecked: Icon(Icons.bookmark_outline),
+                     
+                      bookmarkchecked: Icon(Icons.bookmark),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),
                     BuildInhaltCard(
-                      kapitel: "Zweites ",
-                      intKapitel: "2",
+                      artikel: "Zweites ",
+                      intartikel: "2",
                       header: "Reisen bei Vorerkrankungen",
-                      subtitle: "Erkundige dich über lokale Viren und möglichn Schutz.",
-                      keywoerter: "Word1, word 2, word3, etc..",
+                      discription: "Erkundige dich über lokale Viren und möglichn Schutz.",
+                     
                       bookmarkchecked: Icon(Icons.bookmark),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),

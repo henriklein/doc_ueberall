@@ -1,6 +1,7 @@
 import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/components/search_bar.dart';
 import 'package:doc_ueberall/constant.dart';
+
 import 'package:doc_ueberall/screens/GespeicherteArtikel.dart';
 import 'package:doc_ueberall/screens/ZuletztGesehen.dart';
 import 'package:doc_ueberall/screens/Kapitel.dart';
@@ -28,10 +29,27 @@ class _HomeScreenState extends State<HomeScreen> {
               height: height * 0.05,
             ),
             Header(),
+
+            /*
+            ---
+             Display Search bar:
+              On input display best ranking, going first headers, then scraping the whole database for results
+
+            Display Tags:
+              Displaying latestz five bookmarks as Tags (see below). RN just as plain text, once you got the database running, I will add emojis that shoud be displayed upfront
+            ---
+            */
             Search(),
             SizedBox(
               height: height * 0.02,
             ),
+
+            /*
+            ---
+              Displaying first card a all Chaptors (alleInhalte)
+              The other ones are just going to be shortcuts to spesific Articles
+            ---
+            */
             Cards(),
           ]),
         ),
@@ -106,7 +124,7 @@ class Header extends StatelessWidget {
                             padding:
                                 const EdgeInsets.fromLTRB(25.0, 25, 25, 15),
                             child: Text(
-                              "Kontrollzentrum",
+                              "Kontrollzentrum", //Controlcenter
                               style: TextStyle(
                                   fontSize: 38,
                                   fontWeight: FontWeight.bold,
@@ -121,12 +139,18 @@ class Header extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10.0)),
                             child: Column(
                               children: <Widget>[
+
+                                /*
+                                --
+                                 Link to page (ZuletstGesehen.dart) all Articles checked off as seen schould be displayed using the BuildInhaltCard
+                                ---
+                                */
                                 ListTile(
                                   leading: Icon(
                                     Icons.history,
                                     color: kRedColor,
                                   ),
-                                  title: Text("Zuletzt gesehen"),
+                                  title: Text("Zuletzt gesehen"), //last seen
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {
                                     Navigator.push(
@@ -137,12 +161,18 @@ class Header extends StatelessWidget {
                                     );
                                   },
                                 ),
+
+                                /*
+                                ---
+                                 Link to PageGespeicherteArtikel.dart; all articles that are bookmarked should be displayed on that screen
+                                ---
+                                */
                                 ListTile(
                                   leading: Icon(
                                     Icons.touch_app,
                                     color: kRedColor,
                                   ),
-                                  title: Text("Gespeicherte Artikel"),
+                                  title: Text("Gespeicherte Artikel"), //bookmarked
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {
                                      Navigator.push(
@@ -156,6 +186,12 @@ class Header extends StatelessWidget {
                               ],
                             ),
                           ),
+
+                          /*
+                          ---
+                           This is Static, no Backend required
+                          ---
+                          */
                           Card(
                             elevation: 4.0,
                             margin: const EdgeInsets.fromLTRB(
@@ -255,6 +291,13 @@ class Header extends StatelessWidget {
 }
 
 class Search extends StatelessWidget {
+
+  /* 
+  ---
+   Tags are just temporary
+   Should be getting replaced by the actual latest fife bookmarked articles
+  ---
+  */
   final List<String> tags = [
    '😷 Vorerkrankugnen ',
     '💊 Reiseapotheke ',
@@ -274,7 +317,16 @@ class Search extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.015,
           ),
+
+
           SearchBar(),
+
+          /*
+          ---
+            Tags should display the latest 5 bookmarked articles - Also GestureDetector should be added to link to the pages of the Tags you click
+            a list of all bookmarked articles should be in GeespeicherteArtikel.dart
+          ---
+          */
           Padding(
             padding: EdgeInsets.only(top: 20),
             child: Center(
@@ -336,7 +388,7 @@ class Cards extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            "unsere Inhalte",
+            "unsere Inhalte", //our Articles
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: primaryTextColor,
@@ -356,6 +408,13 @@ class Cards extends StatelessWidget {
     double _height = MediaQuery.of(context).size.height;
     return Column(
       children: <Widget>[
+
+
+        /*
+        ---
+          Alle Kapitel should open up Kapitel.dart which schould display some kind of Listview displaying all Chapters using the BuildKapitelCard component
+        ---
+        */
         TopicCard(
           header: 'Alle Kapitel',
           description: 'Sehen sie alle unsere Inhalte auf einen Blick',
@@ -373,6 +432,11 @@ class Cards extends StatelessWidget {
         SizedBox(
           height: _height * 0.02,
         ),
+
+        /*
+        ---
+          shortcut to first Chaptor about the Article "Reisevorbereitungen"
+        */
         TopicCard(
           header: 'Reisevorbereitungen',
           description:
@@ -384,6 +448,12 @@ class Cards extends StatelessWidget {
         SizedBox(
           height: _height * 0.02,
         ),
+
+        /*
+        ---
+        shortcut to second Cpator Article about Kleine Medikamentenrunfe
+        ---
+        */
         TopicCard(
           header: 'Kleine Medikamentenrunde',
           description: 'Alles was sie über Ihre Reseapotheke wissen müssen.',
@@ -394,6 +464,12 @@ class Cards extends StatelessWidget {
         SizedBox(
           height: _height * 0.02,
         ),
+
+        /*
+        ---
+          Shortcut to Chaptor 16, Article 1
+        ---
+        */
         TopicCard(
           header: 'Notfallinstruktionen',
           description: 'Notfallinstruktionen in Kriesensituationen.',

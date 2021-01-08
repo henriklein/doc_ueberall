@@ -5,12 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
-// ignore: must_be_immutable
+/*
+---
+ right now only header and discription should be added to the database
+ Add missing variables to the database as seen below, one sentence, so that i can fulfill it later
+  description: "Lorum ipsum";
+
+I think this file is pretty strait forwarded
+---
+*/
 class TopicCard extends StatelessWidget {
   const TopicCard(
       {Key key,
-      this.header,
-      this.description,
+      this.header, //common sence
+      this.description, 
       this.imgURL,
       this.bgColor,
       this.press})
@@ -36,11 +44,14 @@ class TopicCard extends StatelessWidget {
         ),
         child: Padding(
           padding: EdgeInsets.all(10),
-          child: 
-          ListTile(
+          child: ListTile(
             leading: Container(
-              width: 70,
-              child: SvgPicture.asset(imgURL, width: 70, height: 70,)),
+                width: 70,
+                child: SvgPicture.asset(
+                  imgURL,
+                  width: 70,
+                  height: 70,
+                )),
             title: Text(
               header,
               style: TextStyle(
@@ -64,20 +75,19 @@ class TopicCard extends StatelessWidget {
 class BuildKapitelCard extends StatelessWidget {
   const BuildKapitelCard({
     Key key,
-    this.kapitel,
-    this.intKapitel,
-    this.subtitle,
-    this.header,
-    this.keywoerter,
-    this.bookmarkchecked,
-    this.checkbox,
+    this.kapitel, //Chapter noumber written out (first (chapteer), second (chapter), etc...)
+    this.intKapitel, // Chapter as Intiger
+    this.header, // Chapter Name
+    this.description, // Subtitle not initialized yet, just add one  "Lorum Ipsum" sentence to database
+    this.keywoerter, // Article Headers inside of that Chapter shown in Row
+    this.bookmarkchecked, //common sence
+    this.checkbox, //common sence
   }) : super(key: key);
   final String kapitel;
   final String intKapitel;
   final String header;
   final String keywoerter;
-
-  final String subtitle;
+  final String description;
   final Icon bookmarkchecked;
 
   final Icon checkbox;
@@ -136,7 +146,8 @@ class BuildKapitelCard extends StatelessWidget {
                       Text(
                         intKapitel,
                         style: TextStyle(
-                          color: primaryTextColor, fontWeight: FontWeight.bold,
+                          color: primaryTextColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       )
                     ],
@@ -173,7 +184,7 @@ class BuildKapitelCard extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          subtitle,
+                          description,
                           style: TextStyle(
                             color: secondaryTextColor,
                             fontSize: 13,
@@ -182,7 +193,6 @@ class BuildKapitelCard extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
-                    
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -194,15 +204,13 @@ class BuildKapitelCard extends StatelessWidget {
                               width: 5,
                             ),
                             Flexible(
-                                                          child: Column(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Themengebiete",
+                                    "Themengebiete", //Articles Covered
                                     style: TextStyle(
-                                      fontSize: 15,
-                                      color: primaryTextColor
-                                    ),
+                                        fontSize: 15, color: primaryTextColor),
                                   ),
                                   SizedBox(
                                     height: 5,
@@ -248,20 +256,18 @@ class BuildKapitelCard extends StatelessWidget {
 class BuildInhaltCard extends StatelessWidget {
   const BuildInhaltCard({
     Key key,
-    this.kapitel,
-    this.intKapitel,
-    this.subtitle,
-    this.header,
-    this.keywoerter,
-    this.bookmarkchecked,
-    this.checkbox,
-  }) : super(key: key);
-  final String kapitel;
-  final String intKapitel;
-  final String header;
-  final String keywoerter;
+    this.artikel,     //look top
+    this.intartikel,  //look top
+    this.header,      //look up
+    this.discription, //look up
 
-  final String subtitle;
+    this.bookmarkchecked, //Display as Tags on Dashboard and on GespeicherteArtikel.dart
+    this.checkbox,    // Display on ZuletztGesehen.dart
+  }) : super(key: key);
+  final String artikel;
+  final String intartikel;
+  final String header;
+  final String discription;
   final Icon bookmarkchecked;
 
   final Icon checkbox;
@@ -269,15 +275,14 @@ class BuildInhaltCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-       onTap: () {
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  DetailPage()), //Link to Information page
+              builder: (context) => DetailPage()), //Link to Information page
         );
       },
-          child: Container(
+      child: Container(
         margin: EdgeInsets.only(bottom: 25),
         child: Column(
           children: [
@@ -302,7 +307,7 @@ class BuildInhaltCard extends StatelessWidget {
                     children: [
                       RichText(
                         text: TextSpan(
-                            text: kapitel,
+                            text: artikel,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: primaryTextColor,
@@ -318,11 +323,10 @@ class BuildInhaltCard extends StatelessWidget {
                             ]),
                       ),
                       Text(
-                        intKapitel,
+                        intartikel,
                         style: TextStyle(
-                          color: primaryTextColor,
-                          fontWeight: FontWeight.bold
-                        ),
+                            color: primaryTextColor,
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -349,16 +353,15 @@ class BuildInhaltCard extends StatelessWidget {
                         Text(
                           header,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            color: primaryTextColor
-                          ),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: primaryTextColor),
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         Text(
-                          subtitle,
+                          discription,
                           style: TextStyle(
                             color: secondaryTextColor,
                             fontSize: 13,
@@ -370,7 +373,9 @@ class BuildInhaltCard extends StatelessWidget {
                   Column(
                     children: [
                       IconButton(
-                          icon: checkbox, color: Colors.green, onPressed: () {}),
+                          icon: checkbox,
+                          color: Colors.green,
+                          onPressed: () {}),
                       IconButton(
                         icon: bookmarkchecked,
                         color: Colors.orange,

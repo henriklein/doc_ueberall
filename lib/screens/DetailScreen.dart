@@ -35,8 +35,14 @@ class DetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(height: 300),
+
+                        /*
+                        ---
+                         Display Article Name
+                        ---
+                        */
                         Text(
-                          "Reise-\nvorbereitung",
+                          "Reise-\nvorbereitung", //Trip Preporation
                           style: TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 50,
@@ -46,7 +52,7 @@ class DetailPage extends StatelessWidget {
                           textAlign: TextAlign.left,
                         ),
                         Text(
-                          'Alles auf eienem Blick!',
+                          'Alles auf eienem Blick!', //Everything oyou need to know (static)
                           style: TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 31,
@@ -57,6 +63,12 @@ class DetailPage extends StatelessWidget {
                         ),
                         Divider(color: kGreyColor),
                         SizedBox(height: 32),
+
+                        /*
+                        ---
+                         Display actually Plain Article Text
+                         ---
+                         */
                         Text(
                           "Anders als Versicherungsmakler können Impfungen wirklich schützen. Jedenfalls wenn sie angemessen ausgewählt und rechtzeitig begonnen werden. (siehe Kap. Malariasituation und Impfvorschriften). Die Situationen in den verschiedenen Ländern wandeln sich, teils treten Resistenzen von Erregern gegen Impfungen / Vorbeugungen auf, teils werden auch Impfungen überflüssig, so dass dem Körper eine Belastung erspart werden kann. Aktuelle Auskünfte bekommt man bei allen Impfstellen/Gesundheitsämtern oder www.tropeninstitut.de. Die tropenmedizinischen Institute und Gelbfieberimpfstellen sind zumeist aktuell informiert (siehe Kap. Impfstellen). Dort weiß man auch Bescheid über andere Gesundheitsrisiken im jeweiligen Reiseland. Die notwendigen Impfungen, die zeitliche Abfolge und Impfarten sind im Kap. Infektionskrankheiten beschrieben.",
                           maxLines: 1000,
@@ -88,6 +100,13 @@ class DetailPage extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
+
+                        /*
+                        ---
+                        Initialize a variable called Links or something where I can add links using firebase, If needed
+                        Initialize as weblink = "";
+                        ---
+                        */
                         Text(
                           "www.tropeninstitut.de",
                           style: TextStyle(color: secondaryTextColor),
@@ -100,7 +119,7 @@ class DetailPage extends StatelessWidget {
                           height: 30,
                         ),
                         Text(
-                          'Schnellaktionen',
+                          'Schnellaktionen', //quick actions
                           style: TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 25,
@@ -114,7 +133,7 @@ class DetailPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Als Gekesen Makieren",
+                              "Als Gekesen Makieren", //State as Read
                               style: TextStyle(color: secondaryTextColor),
                             ),
                             IconButton(
@@ -122,7 +141,7 @@ class DetailPage extends StatelessWidget {
                               onPressed: () {},
                             ),
                             Text(
-                              "Speichern",
+                              "Speichern", //bookmark
                               style: TextStyle(color: secondaryTextColor),
                             ),
                             IconButton(
@@ -135,7 +154,7 @@ class DetailPage extends StatelessWidget {
                           height: 30,
                         ),
                         Text(
-                          'Nächste Themen',
+                          'Nächste Themen', //next Articles
                           style: TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 25,
@@ -147,6 +166,13 @@ class DetailPage extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
+
+                        /*
+                        ---
+                          Display all uplollowing Articles in that Chapter using BuildInhaltCard
+                          Display on the bottom the next big chaptor that is following the current one
+                        ---
+                        */
                         TopicCard(
                           header: 'Reisen bei Vorerkrankungen',
                           description: 'Erkundige dich wie du...',
@@ -157,26 +183,21 @@ class DetailPage extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        // Divider(color: Colors.black38),
-                        // SizedBox(height: 30,),
-                        // Text(
-                        //   'Visualisierungen',
-                        //   style: TextStyle(
-                        //     fontFamily: 'Avenir',
-                        //     fontSize: 25,
-                        //     color: const Color(0xff47455f),
-                        //     fontWeight: FontWeight.w300,
-                        //   ),
-                        //   textAlign: TextAlign.left,
-                        // ),
+                 
                       ],
                     ),
                   ),
+
+                  /*
+                  ---
+                     Display on the bottom the next big chaptor that is following the current one
+                  ---
+                  */
                   BuildKapitelCard(
                     kapitel: "Zweites ",
                     intKapitel: "2",
                     header: "Kleine Medikamentenkunde",
-                    subtitle:
+                    description:
                         "Erkundige dich über lokale Viren und möglichn Schutz.",
                     keywoerter:
                         "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
@@ -184,30 +205,16 @@ class DetailPage extends StatelessWidget {
                     checkbox: Icon(Icons.check_box_outlined),
                   ),
 
-                  // Container(
-                  //   height: 150,
-                  //   padding: const EdgeInsets.only(left: 30.0),
-                  //   child: ListView.builder(
-                  //       itemCount: 4,
-                  //       scrollDirection: Axis.horizontal,
-                  //       itemBuilder: (context, index) {
-                  //         return Card(
-                  //           clipBehavior: Clip.antiAlias,
-                  //           shape: RoundedRectangleBorder(
-                  //             borderRadius: BorderRadius.circular(24),
-                  //           ),
-                  //           child: AspectRatio(
-                  //               aspectRatio: 1,
-                  //               child: Image.network(
-                  //                 "https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340",
-                  //                 fit: BoxFit.cover,
-                  //               )),
-                  //         );
-                  //       }),
-                  // ),
+                 
                 ],
               ),
             ),
+            
+            /*
+            ---
+              Display First Letter of Chapter
+            ---
+            */
             Positioned(
               top: 60,
               left: 32,

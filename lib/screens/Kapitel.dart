@@ -25,7 +25,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                     }),
                 Flexible(
                     child: Text(
-                  "Alle Kapitel",
+                  "Alle Kapitel", //ALL Chaptors
                   style: TextStyle(fontSize: 30, color: primaryTextColor),
                 )),
               ],
@@ -54,13 +54,19 @@ class _KapitelScreenState extends State<KapitelScreen> {
                     SizedBox(
                       height: height * 0.05,
                     ),
+
+                    /*
+                    ---
+                      Displaying all Chaptors probably as an listview.bulder (do whatever you think would be best)
+                      ---
+                    */
                     BuildKapitelCard(
-                      kapitel: "Erstes ",
-                      intKapitel: "1",
-                      header: "Reise",
-                      subtitle:
+                      kapitel: "Erstes ", //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
+                      intKapitel: "1", //in of current Chapter
+                      header: "Reise", //Header of Chapter
+                      description: //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later
                           "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-                          keywoerter: "Resevorbereitung, Reisen bei Vorerkrankungen",
+                          keywoerter: "Resevorbereitung, Reisen bei Vorerkrankungen", //Displaying all Headers of Articles inside that Chapter
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),
@@ -68,7 +74,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Zweites ",
                       intKapitel: "2",
                       header: "Kleine Medikamentenkunde",
-                      subtitle: "Erkundige dich über lokale Viren und möglichen Schutz.",
+                      description: "Erkundige dich über lokale Viren und möglichen Schutz.",
                       keywoerter: "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
                       bookmarkchecked: Icon(Icons.bookmark),
                       checkbox: Icon(Icons.check_box_outlined),
@@ -77,7 +83,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Drittes ",
                       intKapitel: "3",
                       header: "Tiere und Pflanzen",
-                      subtitle: "Was tun bei Kontakt mit örtlichen Tieren",
+                      description: "Was tun bei Kontakt mit örtlichen Tieren",
                       keywoerter: "Tiere und Pflanzen', Insektenstiche und -bisse, Verletzungen durch Meerestiere, Pflanzen",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -86,7 +92,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Viertes ",
                       intKapitel: "4",
                       header: "Sport",
-                      subtitle: "Welche Sportarten sind etabliert",
+                      description: "Welche Sportarten sind etabliert",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -95,7 +101,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Fünftes ",
                       intKapitel: "5",
                       header: "Physikalische Beeinträchtigungen",
-                      subtitle: "Was weiß ich",
+                      description: "Was weiß ich",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -104,7 +110,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Sechste",
                       intKapitel: "6",
                       header: "Infektionen Erkältungen & Entzündungen",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -113,7 +119,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Siebte ",
                       intKapitel: "7",
                       header: "Schmerzen",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -122,7 +128,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Achte",
                       intKapitel: "8",
                       header: "Verletzungen",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -131,7 +137,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Neunte ",
                       intKapitel: "9",
                       header: "Kreislaufstörungen / Schwindel",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -140,7 +146,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Zehnte ",
                       intKapitel: "10",
                       header: "Infektionskrankheiten und Impfungen",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -149,7 +155,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Elfte ",
                       intKapitel: "11",
                       header: "Notfälle",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -158,7 +164,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Zwölfte ",
                       intKapitel: "12",
                       header: "Techniken und Handgriffe",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -167,7 +173,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Dreizehnte ",
                       intKapitel: "13",
                       header: "Erste Hilfe",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -176,7 +182,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "Vierzehnte ",
                       intKapitel: "14",
                       header: "Regionale Gesundheitsrisiken",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -186,7 +192,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       intKapitel: "15",
                       header:
                           "Malariasituation und Impfvorschriften nach Ländern",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),
@@ -195,7 +201,7 @@ class _KapitelScreenState extends State<KapitelScreen> {
                       kapitel: "sechzehnte",
                       intKapitel: "16",
                       header: "Autorisierte Gelbfieberimpfstellen",
-                      subtitle: "You havent seen Leyla in 12 days",
+                      description: "You havent seen Leyla in 12 days",
                       keywoerter: "Word1, word 2, word3, etc..",
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outline_blank),

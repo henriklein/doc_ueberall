@@ -27,7 +27,7 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
                     }),
                 Flexible(
                     child: Text(
-                  "Reise",
+                  "Reise", //Trip Should be replaced with actual header of chapter you are in
                   style: TextStyle(fontSize: 30, color: primaryTextColor),
                 )),
               ],
@@ -57,22 +57,22 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
                       height: height * 0.05,
                     ),
                     BuildInhaltCard(
-                      kapitel: "Erstes ",
-                      intKapitel: "1",
-                      header: "Reisevorbereitung",
-                      subtitle:
+                      artikel: "Erstes ", //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
+                      intartikel: "1",  //int of current article
+                      header: "Reisevorbereitung", //Header of Article inside of theee Chapter
+                      discription: //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
                           "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-                          keywoerter: "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
+                         
                   
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),
                     BuildInhaltCard(
-                      kapitel: "Zweites ",
-                      intKapitel: "2",
+                      artikel: "Zweites ",
+                      intartikel: "2",
                       header: "Reisen bei Vorerkrankungen",
-                      subtitle: "Können sie mit Vorerkrankungen Reisen antreten?",
-                      keywoerter: "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
+                      discription: "Können sie mit Vorerkrankungen Reisen antreten?",
+                     
                      
                       bookmarkchecked: Icon(Icons.bookmark),
                       checkbox: Icon(Icons.check_box_outlined),

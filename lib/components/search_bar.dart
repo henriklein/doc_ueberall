@@ -19,7 +19,7 @@ class SearchBar extends StatelessWidget {
           child: Center(
             child: TextField(
               decoration: InputDecoration.collapsed(
-                hintText: 'hier suchen!',
+                hintText: 'hier suchen!', //search  here
               ),
             ),
           ),
