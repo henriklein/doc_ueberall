@@ -90,7 +90,7 @@ class Header extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Mehr",
+                  "Optionen",
                   style: TextStyle(color: secondaryTextColor),
                 )
               ])),
@@ -217,7 +217,7 @@ class Header extends StatelessWidget {
                                     Icons.history,
                                     color: kRedColor,
                                   ),
-                                  title: Text("All. Geschäftsbedingungen"),
+                                  title: Text("Allg. Geschäftsbedingungen"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {},
                                 ),
@@ -249,7 +249,7 @@ class Header extends StatelessWidget {
                                     Icons.settings,
                                     color: kRedColor,
                                   ),
-                                  title: Text("Weitere Enstellungen"),
+                                  title: Text("Weitere Einstellungen"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {},
                                 ),
@@ -388,7 +388,7 @@ class Cards extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            "unsere Inhalte", //our Articles
+            "Unsere Inhalte", //our Articles
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: primaryTextColor,
@@ -440,7 +440,7 @@ class Cards extends StatelessWidget {
         TopicCard(
           header: 'Reisevorbereitungen',
           description:
-              'Erkundigen sie sich noch vor beginn der Reiße über aktuelle Umstände.',
+              'Erkundigen sie sich noch vor Beginn der Reise über aktuelle Umstände.',
           imgURL: 'assets/SVGs/prepare.svg',
           bgColor: kPurpleColor,
           press: () {},
@@ -455,7 +455,7 @@ class Cards extends StatelessWidget {
         ---
         */
         TopicCard(
-          header: 'Kleine Medikamentenrunde',
+          header: 'Kleine Medikamentenkunde',
           description: 'Alles was sie über Ihre Reseapotheke wissen müssen.',
           imgURL: 'assets/SVGs/medecine.svg',
           bgColor: kYellowColor,
