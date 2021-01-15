@@ -22,21 +22,28 @@ class InitDependencies {
     container.register<FirebaseKepitelsDataSource>((c) {
       print("FirebaseKepitelsDataSource registered");
       return FirebaseKepitelsDataSource(c.get<Firestore>(creator: "Firestore"));
-    }, name: "FirebaseKepitelsDataSource", defaultMode: InjectMode.create);
+    }, name: "FirebaseKepitelsDataSource", defaultMode: InjectMode.singleton);
     container.register<FirebaseKapitelInhalteDataSource>((c) {
       print("FirebaseKapitelInhalteDataSource registered");
-      return FirebaseKapitelInhalteDataSource(c.get<Firestore>(creator: "Firestore"));
-    }, name: "FirebaseKapitelInhalteDataSource", defaultMode: InjectMode.create);
+      return FirebaseKapitelInhalteDataSource(
+          c.get<Firestore>(creator: "Firestore"));
+    },
+        name: "FirebaseKapitelInhalteDataSource",
+        defaultMode: InjectMode.singleton);
     container.register<FirebaseDetailScreenDataSource>((c) {
       print("FirebaseDetailScreenDataSource registered");
-      return FirebaseDetailScreenDataSource(c.get<Firestore>(creator: "Firestore"));
-    }, name: "FirebaseDetailScreenDataSource", defaultMode: InjectMode.create);
+      return FirebaseDetailScreenDataSource(
+          c.get<Firestore>(creator: "Firestore"));
+    },
+        name: "FirebaseDetailScreenDataSource",
+        defaultMode: InjectMode.singleton);
 
     container.register<FirebaseDashBoardDataSource>((c) {
       print("FirebaseDashBoardDataSource registered");
-      return FirebaseDashBoardDataSource(c.get<Firestore>(creator: "Firestore"));
+      return FirebaseDashBoardDataSource(
+          c.get<Firestore>(creator: "Firestore"));
     }, name: "FirebaseDashBoardDataSource", defaultMode: InjectMode.create);
-    
+
     container.register<KepitolsViewModel>((c) {
       print("KepitolsViewModel registered");
       return KepitolsViewModel(c.get<FirebaseKepitelsDataSource>(
@@ -58,7 +65,7 @@ class InitDependencies {
           creator: "FirebaseDetailScreenDataSource"));
     }, name: "DetailScreenViewModel", defaultMode: InjectMode.singleton);
 
-//    
+//
 //    container.register<ThemasViewModel>((c) {
 //      print("ThemasViewModel registered");
 //      return ThemasViewModel(c.get<FirebaseThemasDataSource>(

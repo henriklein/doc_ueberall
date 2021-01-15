@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 
 import 'package:doc_ueberall/constant.dart';
 
-class DetailPage extends StatelessWidget {
-  final PlanetInfo planetInfo;
+class DetailPage extends StatefulWidget {
+  final String id;
 
-  const DetailPage({Key key, this.planetInfo}) : super(key: key);
+  const DetailPage({Key key, this.id}) : super(key: key);
 
   @override
+  _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  @override
   Widget build(BuildContext context) {
+    print("id is ${widget.id}");
     return Scaffold(
       body: SafeArea(
         bottom: false,

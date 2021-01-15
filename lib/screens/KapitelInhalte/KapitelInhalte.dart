@@ -2,8 +2,10 @@ import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/constant.dart';
 import 'package:flutter/material.dart';
 
-
 class KapitelInhalte extends StatefulWidget {
+  final String id;
+
+  const KapitelInhalte({Key key, this.id}) : super(key: key);
   @override
   _KapitelInhalteState createState() => _KapitelInhalteState();
 }
@@ -17,7 +19,7 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(20,50,30,20),
+            padding: EdgeInsets.fromLTRB(20, 50, 30, 20),
             child: Row(
               children: [
                 IconButton(
@@ -57,13 +59,14 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
                       height: height * 0.05,
                     ),
                     BuildInhaltCard(
-                      artikel: "Erstes ", //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
-                      intartikel: "1",  //int of current article
-                      header: "Reisevorbereitung", //Header of Article inside of theee Chapter
+                      artikel:
+                          "Erstes ", //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
+                      intartikel: "1", //int of current article
+                      header:
+                          "Reisevorbereitung", //Header of Article inside of theee Chapter
                       discription: //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
                           "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-                         
-                  
+
                       bookmarkchecked: Icon(Icons.bookmark_outline),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),
@@ -71,14 +74,11 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
                       artikel: "Zweites ",
                       intartikel: "2",
                       header: "Reisen bei Vorerkrankungen",
-                      discription: "Können sie mit Vorerkrankungen Reisen antreten?",
-                     
-                     
+                      discription:
+                          "Können sie mit Vorerkrankungen Reisen antreten?",
                       bookmarkchecked: Icon(Icons.bookmark),
                       checkbox: Icon(Icons.check_box_outlined),
                     ),
-                   
-                    
                   ]),
                 ),
               ),

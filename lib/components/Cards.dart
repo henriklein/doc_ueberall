@@ -17,7 +17,7 @@ class TopicCard extends StatelessWidget {
   const TopicCard(
       {Key key,
       this.header, //common sence
-      this.description, 
+      this.description,
       this.imgURL,
       this.bgColor,
       this.press})
@@ -95,13 +95,9 @@ class BuildKapitelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(AppRoutes.KAPITELINHALTE);
-//        Navigator.push(
-//          context,
-//          MaterialPageRoute(
-//              builder: (context) =>
-//                  KapitelInhalte()), //Link to Information page
-//        );
+        Navigator.of(context).pushNamed(AppRoutes.KAPITELINHALTE, arguments: {
+          'id': 'qXm8HCU6T2C6qWSJWLIK'
+        }); //Link to Information page
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 25),
@@ -256,13 +252,13 @@ class BuildKapitelCard extends StatelessWidget {
 class BuildInhaltCard extends StatelessWidget {
   const BuildInhaltCard({
     Key key,
-    this.artikel,     //look top
-    this.intartikel,  //look top
-    this.header,      //look up
+    this.artikel, //look top
+    this.intartikel, //look top
+    this.header, //look up
     this.discription, //look up
 
     this.bookmarkchecked, //Display as Tags on Dashboard and on GespeicherteArtikelViewModel.dart
-    this.checkbox,    // Display on ZuletztGesehen.dart
+    this.checkbox, // Display on ZuletztGesehen.dart
   }) : super(key: key);
   final String artikel;
   final String intartikel;
@@ -276,12 +272,9 @@ class BuildInhaltCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE);
-//        Navigator.push(
-//          context,
-//          MaterialPageRoute(
-//              builder: (context) => DetailPage()), //Link to Information page
-//        );
+        Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE, arguments: {
+          'id': 'qXm8HCU6T2C6qWSJWLIK'
+        }); //Link to Information page
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 25),

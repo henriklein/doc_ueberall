@@ -6,13 +6,13 @@ import 'package:rxdart/rxdart.dart';
 class FirebaseKapitelInhalteDataSource {
   final Firestore fStore;
 
-  final BehaviorSubject<KapitelInhaltes> _kapitelInhaltesSubject = BehaviorSubject();
-  Stream<KapitelInhaltes> get outKapitelInhaltes => _kapitelInhaltesSubject.stream;
+  final BehaviorSubject<KapitelInhaltes> _kapitelInhaltesSubject =
+      BehaviorSubject();
+  Stream<KapitelInhaltes> get outKapitelInhaltes =>
+      _kapitelInhaltesSubject.stream;
 
   FirebaseKapitelInhalteDataSource(this.fStore) {
     fStore.collection("kapitelInhalte").getDocuments().then((querySnapshot) {
-      print(
-          "querySnapshot.documents.first.data ${querySnapshot.documents.first.data}");
       _kapitelInhaltesSubject.sink
           .add(KapitelInhaltes.fromJson(querySnapshot.documents.first.data));
     });
@@ -21,5 +21,4 @@ class FirebaseKapitelInhalteDataSource {
   void dispose() {
     _kapitelInhaltesSubject.drain();
   }
-
 }

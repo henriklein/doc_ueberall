@@ -1,3 +1,26 @@
+class Details {
+  final List<DetailScreen> detailScreens;
+
+  Details({
+    this.detailScreens,
+  });
+
+  @override
+  String toString() {
+    return 'Details{ detailScreens : $detailScreens }';
+  }
+
+  factory Details.fromJson(Map<dynamic, dynamic> json) => new Details(
+        detailScreens: json['detailScreens']
+            ?.values
+            ?.map((jsn) => DetailScreen.fromJson(jsn))
+            ?.toList()
+            ?.cast<DetailScreen>(),
+      );
+
+  Map<String, dynamic> toJson() => {"detailScreens": detailScreens};
+}
+
 class DetailScreen {
   String id;
 

@@ -17,9 +17,8 @@ class FirebaseDetailScreenDataSource {
           .add(DetailScreen.fromJson(querySnapshot.documents.first.data));
     });
   }
-  
+
   void dispose() {
     _detailScreenSubject.drain();
   }
-
 }
