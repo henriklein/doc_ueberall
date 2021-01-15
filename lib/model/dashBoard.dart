@@ -18,7 +18,7 @@ class DashBoard {
             ?.cast<DashBoards>(),
       );
 
-  Map<String, dynamic> toJson() => {"kepitols": dashBoards};
+  Map<String, dynamic> toJson() => {"dashBoards": dashBoards};
 }
 
 class DashBoards {
@@ -30,7 +30,7 @@ class DashBoards {
 
   @override
   String toString() {
-    return "Kepitol{ id: $id }";
+    return "dashBoards{ id: $id }";
   }
 
   DashBoards.fromJson(Map<String, dynamic> json) {
