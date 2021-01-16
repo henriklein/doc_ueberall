@@ -11,13 +11,11 @@ class Kepitels {
   }
 
   factory Kepitels.fromJson(Map<dynamic, dynamic> json) => new Kepitels(
-        kepitols: json['kepitels']
-            ?.values
-            ?.map((jsn) => Kepitol.fromJson(jsn))
-            ?.toList()
-            ?.cast<Kepitol>(),
+        kepitols: json['kapitels']
+            .map((jsn) => Kepitol.fromJson(jsn))
+            .toList()
+            .cast<Kepitol>(),
       );
-
   Map<String, dynamic> toJson() => {"kepitels": kepitols};
 }
 
@@ -31,9 +29,6 @@ class Kepitol {
   String bookmarkchecked;
   bool checkbox;
 
-
-
-
   Kepitol({
     this.id,
     this.kapitel,
@@ -43,7 +38,6 @@ class Kepitol {
     this.keywoerter,
     this.bookmarkchecked,
     this.checkbox,
-
   });
 
   @override
@@ -52,19 +46,16 @@ class Kepitol {
         "description: $description, keywoerter: $keywoerter, bookmarkchecked: $bookmarkchecked, checkbox: $checkbox  }";
   }
 
-  Kepitol.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    kapitel = json['kapitel'];
-    int_Kapitel = json['int_Kapitel'];
-    header = json['header'];
-    description = json['description'];
-    keywoerter = json['keywoerter'];
-    bookmarkchecked = json['bookmarkchecked'];
-    checkbox = json['checkbox'];
-
-
-
-  }
+  factory Kepitol.fromJson(Map<dynamic, dynamic> json) => new Kepitol(
+        id: json['id'],
+        kapitel: json['kapitel'],
+        int_Kapitel: json['int_Kapitel'],
+        header: json['header'],
+        description: json['description'],
+        keywoerter: json['keywoerter'],
+        bookmarkchecked: json['bookmarkchecked'],
+        checkbox: json['checkbox'],
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -76,7 +67,6 @@ class Kepitol {
     data['keywoerter'] = this.keywoerter;
     data['bookmarkchecked'] = this.bookmarkchecked;
     data['checkbox'] = this.checkbox;
-
 
     return data..removeWhere((_, value) => value == null);
   }

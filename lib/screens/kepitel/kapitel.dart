@@ -17,6 +17,7 @@ class _KapitolScreenState extends State<KapitolScreen> {
     super.initState();
     viewModel = ViewModelProvider.of<KepitolsViewModel>(context);
   }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -47,12 +48,12 @@ class _KapitolScreenState extends State<KapitolScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
 //                        Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.3),),
-                  Image.asset(
-                    "assets/no_chats.png",
-//                    color: AppColors.darkBlue[900],
-                    height: 120,
-                    fit: BoxFit.fitHeight,
-                  ),
+//                  Image.asset(
+//                    "assets/no_chats.png",
+////                    color: AppColors.darkBlue[900],
+//                    height: 120,
+//                    fit: BoxFit.fitHeight,
+//                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height * 0.3),
@@ -85,9 +86,9 @@ class _KapitolScreenState extends State<KapitolScreen> {
                         }),
                     Flexible(
                         child: Text(
-                          "Alle Kapitel", //ALL Chaptors
-                          style: TextStyle(fontSize: 30, color: primaryTextColor),
-                        )),
+                      "Alle Kapitel", //ALL Chaptors
+                      style: TextStyle(fontSize: 30, color: primaryTextColor),
+                    )),
                   ],
                 ),
               ),
@@ -121,13 +122,13 @@ class _KapitolScreenState extends State<KapitolScreen> {
                     */
                         BuildKapitelCard(
                           kapitel:
-                          "Erstes", //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
+                              "Erstes", //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
                           intKapitel: "1", //in of current Chapter
                           header: "Reise", //Header of Chapter
                           description: //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later
-                          "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
+                              "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
                           keywoerter:
-                          "Resevorbereitung, Reisen bei Vorerkrankungen", //Displaying all Headers of Articles inside that Chapter
+                              "Resevorbereitung, Reisen bei Vorerkrankungen", //Displaying all Headers of Articles inside that Chapter
                           bookmarkchecked: Icon(Icons.bookmark_outline),
                           checkbox: Icon(Icons.check_box_outlined),
                         ),
@@ -136,13 +137,12 @@ class _KapitolScreenState extends State<KapitolScreen> {
                           intKapitel: "2",
                           header: "Kleine Medikamentenkunde",
                           description:
-                          "Erkundige dich über lokale Viren und möglichen Schutz.",
+                              "Erkundige dich über lokale Viren und möglichen Schutz.",
                           keywoerter:
-                          "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
+                              "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
                           bookmarkchecked: Icon(Icons.bookmark),
                           checkbox: Icon(Icons.check_box_outlined),
                         ),
-
                         SizedBox(
                           height: height * 0.02,
                         ),
