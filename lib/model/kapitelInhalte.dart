@@ -1,27 +1,3 @@
-class KapitelInhaltes {
-  final List<KapitelInhalte> kapitelInhaltes;
-
-  KapitelInhaltes({
-    this.kapitelInhaltes,
-
-  });
-
-  @override
-  String toString() {
-    return 'kapitelInhaltes{ kapitelInhaltes : $kapitelInhaltes }';
-  }
-
-  factory KapitelInhaltes.fromJson(Map<dynamic, dynamic> json) => new KapitelInhaltes(
-        kapitelInhaltes: json['kapitelInhaltes']
-            ?.values
-            ?.map((jsn) => KapitelInhalte.fromJson(jsn))
-            ?.toList()
-            ?.cast<KapitelInhalte>(),
-      );
-
-  Map<String, dynamic> toJson() => {"kapitelInhaltes": kapitelInhaltes};
-}
-
 class KapitelInhalte {
   String id;
   String artikel;
@@ -30,8 +6,6 @@ class KapitelInhalte {
   String discription;
   String bookmarkchecked;
   bool checkbox;
-
-
 
   KapitelInhalte({
     this.id,
@@ -57,19 +31,5 @@ class KapitelInhalte {
     bookmarkchecked = json['bookmarkchecked'];
     header = json['header'];
     discription = json['discription'];
-
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['int_artikel'] = this.int_artikel;
-    data['artikel'] = this.artikel;
-    data['checkbox'] = this.checkbox;
-    data['bookmarkchecked'] = this.bookmarkchecked;
-    data['header'] = this.header;
-    data['discription'] = this.discription;
-
-    return data..removeWhere((_, value) => value == null);
   }
 }

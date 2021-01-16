@@ -23,13 +23,13 @@ class InitDependencies {
       print("FirebaseKepitelsDataSource registered");
       return FirebaseKepitelsDataSource(c.get<Firestore>(creator: "Firestore"));
     }, name: "FirebaseKepitelsDataSource", defaultMode: InjectMode.singleton);
-    container.register<FirebaseKapitelInhalteDataSource>((c) {
-      print("FirebaseKapitelInhalteDataSource registered");
-      return FirebaseKapitelInhalteDataSource(
-          c.get<Firestore>(creator: "Firestore"));
-    },
-        name: "FirebaseKapitelInhalteDataSource",
-        defaultMode: InjectMode.singleton);
+//    container.register<FirebaseKapitelInhalteDataSource>((c) {
+//      print("FirebaseKapitelInhalteDataSource registered");
+//      return FirebaseKapitelInhalteDataSource(
+//          c.get<Firestore>(creator: "Firestore"));
+//    },
+//        name: "FirebaseKapitelInhalteDataSource",
+//        defaultMode: InjectMode.singleton);
     container.register<FirebaseDetailScreenDataSource>((c) {
       print("FirebaseDetailScreenDataSource registered");
       return FirebaseDetailScreenDataSource(
@@ -49,11 +49,11 @@ class InitDependencies {
       return KepitolsViewModel(c.get<FirebaseKepitelsDataSource>(
           creator: "FirebaseKepitelsDataSource"));
     }, name: "KepitolsViewModel", defaultMode: InjectMode.singleton);
-    container.register<KapitelInhaltesViewModel>((c) {
-      print("KapitelInhaltesViewModel registered");
-      return KapitelInhaltesViewModel(c.get<FirebaseKapitelInhalteDataSource>(
-          creator: "FirebaseKapitelInhalteDataSource"));
-    }, name: "KapitelInhaltesViewModel", defaultMode: InjectMode.singleton);
+//    container.register<KapitelInhaltesViewModel>((c) {
+//      print("KapitelInhaltesViewModel registered");
+//      return KapitelInhaltesViewModel(c.get<FirebaseKapitelInhalteDataSource>(
+//          creator: "FirebaseKapitelInhalteDataSource"));
+//    }, name: "KapitelInhaltesViewModel", defaultMode: InjectMode.singleton);
     container.register<DashBoardViewModel>((c) {
       print("DashBoardViewModel registered");
       return DashBoardViewModel(c.get<FirebaseDashBoardDataSource>(

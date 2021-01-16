@@ -40,11 +40,10 @@ class AppRoutes {
           if (ModalRoute.of(context).isCurrent) {
             id = (ModalRoute.of(context).settings.arguments as Map)['id'];
           }
-          return ViewModelProvider<KapitelInhaltesViewModel>(
+          return ViewModelProvider<KepitolsViewModel>(
             child: KapitelInhalte(id: id),
-            viewmodel: c.get<KapitelInhaltesViewModel>(
-                creator: "KapitelInhaltesViewModel",
-                mode: dioc.InjectMode.create),
+            viewmodel: c.get<KepitolsViewModel>(
+                creator: "KepitolsViewModel", mode: dioc.InjectMode.singleton),
           );
         },
         AppRoutes.DETAILPAGE: (context) {

@@ -1,3 +1,5 @@
+import 'package:doc_ueberall/model/kapitelInhalte.dart';
+
 class Kepitels {
   final List<Kepitol> kepitols;
 
@@ -22,52 +24,42 @@ class Kepitels {
 class Kepitol {
   String id;
   String kapitel;
-  String int_Kapitel;
+  String prio;
   String header;
   String description;
-  String keywoerter;
   String bookmarkchecked;
   bool checkbox;
+  List<KapitelInhalte> kapitelInhaltes;
 
-  Kepitol({
-    this.id,
-    this.kapitel,
-    this.int_Kapitel,
-    this.header,
-    this.description,
-    this.keywoerter,
-    this.bookmarkchecked,
-    this.checkbox,
-  });
+  Kepitol(
+      {this.id,
+      this.kapitel,
+      this.prio,
+      this.header,
+      this.description,
+      this.bookmarkchecked,
+      this.checkbox,
+      this.kapitelInhaltes});
 
   @override
   String toString() {
-    return "Kepitol{ id: $id, kapitel: $kapitel, int_Kapitel: $int_Kapitel, header: $header, "
-        "description: $description, keywoerter: $keywoerter, bookmarkchecked: $bookmarkchecked, checkbox: $checkbox  }";
+    return "Kepitol{ id: $id, kapitel: $kapitel, int_Kapitel: $prio, header: $header, "
+        "description: $description, bookmarkchecked: $bookmarkchecked, checkbox: $checkbox  }";
   }
 
-  factory Kepitol.fromJson(Map<dynamic, dynamic> json) => new Kepitol(
-        id: json['id'],
-        kapitel: json['kapitel'],
-        int_Kapitel: json['int_Kapitel'],
-        header: json['header'],
-        description: json['description'],
-        keywoerter: json['keywoerter'],
-        bookmarkchecked: json['bookmarkchecked'],
-        checkbox: json['checkbox'],
-      );
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['kapitel'] = this.kapitel;
-    data['int_Kapitel'] = this.int_Kapitel;
-    data['header'] = this.header;
-    data['description'] = this.description;
-    data['keywoerter'] = this.keywoerter;
-    data['bookmarkchecked'] = this.bookmarkchecked;
-    data['checkbox'] = this.checkbox;
-
-    return data..removeWhere((_, value) => value == null);
+  factory Kepitol.fromJson(Map<dynamic, dynamic> json) {
+    return Kepitol(
+      id: json['id'],
+      kapitel: json['kapitel'],
+      prio: json['prio'],
+      header: json['header'],
+      description: json['description'] ?? "",
+      kapitelInhaltes: json['kapitel_inhaltes']
+          .map((jsn) => KapitelInhalte.fromJson(jsn))
+          .toList()
+          .cast<KapitelInhalte>(),
+      bookmarkchecked: json['bookmarkchecked'],
+      checkbox: json['checkbox'],
+    );
   }
 }

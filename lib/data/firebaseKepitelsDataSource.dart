@@ -21,6 +21,4 @@ class FirebaseKepitelsDataSource {
   void dispose() {
     _kepitolsSubject.drain();
   }
-
-
 }
