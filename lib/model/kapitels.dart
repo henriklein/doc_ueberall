@@ -11,14 +11,14 @@ class Kepitels {
   }
 
   factory Kepitels.fromJson(Map<dynamic, dynamic> json) => new Kepitels(
-        kepitols: json['kepitols']
+        kepitols: json['kepitels']
             ?.values
             ?.map((jsn) => Kepitol.fromJson(jsn))
             ?.toList()
             ?.cast<Kepitol>(),
       );
 
-  Map<String, dynamic> toJson() => {"kepitols": kepitols};
+  Map<String, dynamic> toJson() => {"kepitels": kepitols};
 }
 
 class Kepitol {
