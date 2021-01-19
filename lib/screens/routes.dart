@@ -1,9 +1,9 @@
 import 'package:dioc/dioc.dart' as dioc;
+import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:doc_ueberall/screens/DashBoard/DashBoard.dart';
 import 'package:doc_ueberall/screens/DetailScreen/DetailScreen.dart';
 import 'package:doc_ueberall/screens/DetailScreen/viewModel/DetailScreenViewModel.dart';
 import 'package:doc_ueberall/screens/KapitelInhalte/KapitelInhalte.dart';
-import 'package:doc_ueberall/screens/KapitelInhalte/viewModel/kapitelInhalteViewModel.dart';
 import 'package:doc_ueberall/screens/kepitel/kapitel.dart';
 import 'package:doc_ueberall/screens/kepitel/viewModel/kepitelViewModel.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
@@ -36,12 +36,13 @@ class AppRoutes {
           );
         },
         AppRoutes.KAPITELINHALTE: (context) {
-          String id;
+          Kepitol kapitel;
           if (ModalRoute.of(context).isCurrent) {
-            id = (ModalRoute.of(context).settings.arguments as Map)['id'];
+            kapitel =
+                (ModalRoute.of(context).settings.arguments as Map)['kapitel'];
           }
           return ViewModelProvider<KepitolsViewModel>(
-            child: KapitelInhalte(id: id),
+            child: KapitelInhalte(kapitel: kapitel),
             viewmodel: c.get<KepitolsViewModel>(
                 creator: "KepitolsViewModel", mode: dioc.InjectMode.singleton),
           );

@@ -80,7 +80,8 @@ class BuildKapitelCard extends StatelessWidget {
     this.description, // Subtitle not initialized yet, just add one  "Lorum Ipsum" sentence to database
     this.keywoerter, // Article Headers inside of that Chapter shown in Row
     this.bookmarkchecked, //common sence
-    this.checkbox, //common sence
+    this.checkbox,
+    this.fun, //common sence
   }) : super(key: key);
   final String kapitel;
   final String intKapitel;
@@ -88,17 +89,14 @@ class BuildKapitelCard extends StatelessWidget {
   final String keywoerter;
   final String description;
   final Icon bookmarkchecked;
+  final fun;
 
   final Icon checkbox;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(AppRoutes.KAPITELINHALTE, arguments: {
-          'id': 'qXm8HCU6T2C6qWSJWLIK'
-        }); //Link to Information page
-      },
+      onTap: fun,
       child: Container(
         margin: EdgeInsets.only(bottom: 25),
         child: Column(
@@ -257,6 +255,7 @@ class BuildInhaltCard extends StatelessWidget {
     this.header, //look up
     this.discription, //look up
 
+    this.fun,
     this.bookmarkchecked, //Display as Tags on Dashboard and on GespeicherteArtikelViewModel.dart
     this.checkbox, // Display on ZuletztGesehen.dart
   }) : super(key: key);
@@ -267,15 +266,12 @@ class BuildInhaltCard extends StatelessWidget {
   final Icon bookmarkchecked;
 
   final Icon checkbox;
+  final fun;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE, arguments: {
-          'id': 'qXm8HCU6T2C6qWSJWLIK'
-        }); //Link to Information page
-      },
+      onTap: fun,
       child: Container(
         margin: EdgeInsets.only(bottom: 25),
         child: Column(

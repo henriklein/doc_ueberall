@@ -1,35 +1,34 @@
-class KapitelInhalte {
+class KapitelzInhalte {
   String id;
-  String artikel;
-  String int_artikel;
+  String themengebiet;
+  String prio;
   String header;
-  String discription;
+  String description;
   String bookmarkchecked;
   bool checkbox;
 
-  KapitelInhalte({
+  KapitelzInhalte({
     this.id,
-    this.int_artikel,
-    this.artikel,
+    this.prio,
+    this.themengebiet,
     this.checkbox,
     this.bookmarkchecked,
     this.header,
-    this.discription,
   });
 
   @override
   String toString() {
-    return "kapitelInhaltes{ id: $id, int_artikel: $int_artikel, artikel: $artikel,"
-        "checkbox: $checkbox, bookmarkchecked: $bookmarkchecked, header: $header, discription: $discription }";
+    return "kapitelInhaltes{ id: $id, int_artikel: $prio, themengebiet: $themengebiet,"
+        "checkbox: $checkbox, bookmarkchecked: $bookmarkchecked, header: $header, description: $description }";
   }
 
-  KapitelInhalte.fromJson(Map<String, dynamic> json) {
+  KapitelzInhalte.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    int_artikel = json['int_artikel'];
-    artikel = json['artikel'];
+    prio = json['prio'];
+    themengebiet = json['themengebiet'];
     checkbox = json['checkbox'];
     bookmarkchecked = json['bookmarkchecked'];
     header = json['header'];
-    discription = json['discription'];
+    description = json['description'] ?? "";
   }
 }

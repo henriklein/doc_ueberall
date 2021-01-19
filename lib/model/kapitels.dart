@@ -29,7 +29,7 @@ class Kepitol {
   String description;
   String bookmarkchecked;
   bool checkbox;
-  List<KapitelInhalte> kapitelInhaltes;
+  List<KapitelzInhalte> kapitelInhaltes;
 
   Kepitol(
       {this.id,
@@ -51,13 +51,13 @@ class Kepitol {
     return Kepitol(
       id: json['id'],
       kapitel: json['kapitel'],
-      prio: json['prio'],
+      prio: json['prio'] ?? "",
       header: json['header'],
       description: json['description'] ?? "",
       kapitelInhaltes: json['kapitel_inhaltes']
-          .map((jsn) => KapitelInhalte.fromJson(jsn))
+          .map((jsn) => KapitelzInhalte.fromJson(jsn))
           .toList()
-          .cast<KapitelInhalte>(),
+          .cast<KapitelzInhalte>(),
       bookmarkchecked: json['bookmarkchecked'],
       checkbox: json['checkbox'],
     );

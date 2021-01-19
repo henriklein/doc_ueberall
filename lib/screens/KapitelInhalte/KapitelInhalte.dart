@@ -1,11 +1,13 @@
 import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/constant.dart';
+import 'package:doc_ueberall/model/kapitels.dart';
+import 'package:doc_ueberall/screens/routes.dart';
 import 'package:flutter/material.dart';
 
 class KapitelInhalte extends StatefulWidget {
-  final String id;
+  final Kepitol kapitel;
 
-  const KapitelInhalte({Key key, this.id}) : super(key: key);
+  const KapitelInhalte({Key key, this.kapitel}) : super(key: key);
   @override
   _KapitelInhalteState createState() => _KapitelInhalteState();
 }
@@ -53,34 +55,57 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
               ),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: SingleChildScrollView(
-                  child: Column(children: <Widget>[
-                    SizedBox(
-                      height: height * 0.05,
-                    ),
-                    BuildInhaltCard(
-                      artikel:
-                          "Erstes ", //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
-                      intartikel: "1", //int of current article
-                      header:
-                          "Reisevorbereitung", //Header of Article inside of theee Chapter
-                      discription: //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
-                          "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
+                child: ListView.builder(
+                    itemCount: widget.kapitel.kapitelInhaltes.length,
+                    itemBuilder: (context, index) {
+                      var inhate = widget.kapitel.kapitelInhaltes[index];
+                      return BuildInhaltCard(
+                        artikel: inhate
+                            .header, //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
+                        intartikel: inhate.prio, //int of current article
+                        header: inhate
+                            .themengebiet, //Header of Article inside of theee Chapter
+                        discription: inhate
+                            .description, //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
 
-                      bookmarkchecked: Icon(Icons.bookmark_outline),
-                      checkbox: Icon(Icons.check_box_outlined),
-                    ),
-                    BuildInhaltCard(
-                      artikel: "Zweites ",
-                      intartikel: "2",
-                      header: "Reisen bei Vorerkrankungen",
-                      discription:
-                          "Können sie mit Vorerkrankungen Reisen antreten?",
-                      bookmarkchecked: Icon(Icons.bookmark),
-                      checkbox: Icon(Icons.check_box_outlined),
-                    ),
-                  ]),
-                ),
+                        bookmarkchecked: Icon(Icons.bookmark_outline),
+                        checkbox: Icon(Icons.check_box_outlined),
+                        fun: () {
+                          Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
+                              arguments: {
+                                'id': widget.kapitel.id
+                              }); //Link to Information page
+                        },
+                      );
+                    }),
+//                SingleChildScrollView(
+//                  child: Column(children: <Widget>[
+//                    SizedBox(
+//                      height: height * 0.05,
+//                    ),
+//                    BuildInhaltCard(
+//                      artikel:
+//                          "Erstes ", //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
+//                      intartikel: "1", //int of current article
+//                      header:
+//                          "Reisevorbereitung", //Header of Article inside of theee Chapter
+//                      discription: //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
+//                          "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
+//
+//                      bookmarkchecked: Icon(Icons.bookmark_outline),
+//                      checkbox: Icon(Icons.check_box_outlined),
+//                    ),
+//                    BuildInhaltCard(
+//                      artikel: "Zweites ",
+//                      intartikel: "2",
+//                      header: "Reisen bei Vorerkrankungen",
+//                      discription:
+//                          "Können sie mit Vorerkrankungen Reisen antreten?",
+//                      bookmarkchecked: Icon(Icons.bookmark),
+//                      checkbox: Icon(Icons.check_box_outlined),
+//                    ),
+//                  ]),
+//                ),
               ),
             ),
           ),

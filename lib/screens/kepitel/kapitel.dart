@@ -2,6 +2,7 @@ import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/constant.dart';
 import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:doc_ueberall/screens/kepitel/viewModel/kepitelViewModel.dart';
+import 'package:doc_ueberall/screens/routes.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,6 @@ class _KapitolScreenState extends State<KapitolScreen> {
       body: StreamBuilder<Kepitels>(
         stream: viewModel.outKepitols,
         builder: (BuildContext context, AsyncSnapshot<Kepitels> snapshot) {
-          print("snapshot.data ${snapshot.data}");
           if (!snapshot.hasData)
             return Center(
               child: Row(
@@ -113,58 +113,27 @@ class _KapitolScreenState extends State<KapitolScreen> {
                       child: ListView.builder(
                           itemCount: chatsCount,
                           itemBuilder: (context, index) {
+                            var chapter = snapshot.data.kepitols[index];
                             return BuildKapitelCard(
-                              kapitel:
-                                  "Erstes", //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
-                              intKapitel: "1", //in of current Chapter
-                              header: "Reise", //Header of Chapter
-                              description: //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later
-                                  "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
+                              kapitel: chapter
+                                  .header, //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
+                              intKapitel: chapter.prio, //in of current Chapter
+                              header: chapter.kapitel, //Header of Chapter
+                              description: chapter
+                                  .description, //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later
                               keywoerter:
                                   "Resevorbereitung, Reisen bei Vorerkrankungen", //Displaying all Headers of Articles inside that Chapter
+                              fun: () {
+                                Navigator.of(context).pushNamed(
+                                    AppRoutes.KAPITELINHALTE,
+                                    arguments: {
+                                      'kapitel': snapshot.data.kepitols[index]
+                                    }); //Link to Information page
+                              },
                               bookmarkchecked: Icon(Icons.bookmark_outline),
                               checkbox: Icon(Icons.check_box_outlined),
                             );
-                          })
-//                    child: SingleChildScrollView(
-//                      child: Column(children: <Widget>[
-//                        SizedBox(
-//                          height: height * 0.05,
-//                        ),
-//                        /*
-//                    ---
-//                      Displaying all Chaptors probably as an listview.bulder (do whatever you think would be best)
-//                      ---
-//                    */
-//                        BuildKapitelCard(
-//                          kapitel:
-//                              "Erstes", //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
-//                          intKapitel: "1", //in of current Chapter
-//                          header: "Reise", //Header of Chapter
-//                          description: //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later
-//                              "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-//                          keywoerter:
-//                              "Resevorbereitung, Reisen bei Vorerkrankungen", //Displaying all Headers of Articles inside that Chapter
-//                          bookmarkchecked: Icon(Icons.bookmark_outline),
-//                          checkbox: Icon(Icons.check_box_outlined),
-//                        ),
-//                        BuildKapitelCard(
-//                          kapitel: "Zweites",
-//                          intKapitel: "2",
-//                          header: "Kleine Medikamentenkunde",
-//                          description:
-//                              "Erkundige dich über lokale Viren und möglichen Schutz.",
-//                          keywoerter:
-//                              "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
-//                          bookmarkchecked: Icon(Icons.bookmark),
-//                          checkbox: Icon(Icons.check_box_outlined),
-//                        ),
-//                        SizedBox(
-//                          height: height * 0.02,
-//                        ),
-//                      ]),
-//                    ),
-                      ),
+                          })),
                 ),
               ),
             ],
