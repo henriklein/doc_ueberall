@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc_ueberall/model/kapitelDetails.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FirebaseDetailScreenDataSource {
   final Firestore _fStore;
@@ -10,6 +11,21 @@ class FirebaseDetailScreenDataSource {
   Stream<List<Details>> get outDetailScreen => _detailScreenSubject.stream;
 
   FirebaseDetailScreenDataSource(this._fStore) {
+//    SharedPreferences.getInstance().then((prefs) {
+//      var kapitels =
+//          Kepitels.fromJson(json.decode(prefs.getString('kapitels')));
+//      if (kapitels.kepitols == null) {
+//        fStore.collection("kapitel").getDocuments().then((querySnapshot) {
+//          _kepitolsSubject.sink
+//              .add(Kepitels.fromJson(querySnapshot.documents.first.data));
+//          prefs.setString(
+//              'kapitels', querySnapshot.documents.first.data.toString());
+//        });
+//      } else {
+//        _kepitolsSubject.sink.add(kapitels);
+//      }
+//    });
+
     _fStore.collection("kapitel_detail").getDocuments().then((querySnapshot) {
       print(
           "querySnapshot.documents.first.data ${querySnapshot.documents.first.data}");

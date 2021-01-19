@@ -18,7 +18,8 @@ class Kepitels {
             .toList()
             .cast<Kepitol>(),
       );
-  Map<String, dynamic> toJson() => {"kepitels": kepitols};
+  Map<String, dynamic> toJson() =>
+      {"kepitels": kepitols?.map((kapitel) => kapitel.toJson())?.toList()};
 }
 
 class Kepitol {
@@ -61,5 +62,19 @@ class Kepitol {
       bookmarkchecked: json['bookmarkchecked'],
       checkbox: json['checkbox'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['kapitel'] = this.kapitel;
+    data['prio'] = this.prio;
+    data['header'] = this.header;
+    data['description'] = this.description;
+    data['kapitel_inhaltes'] =
+        this.kapitelInhaltes.map((inhalte) => inhalte.toJson())?.toList();
+    data['bookmarkchecked'] = this.bookmarkchecked;
+    data['checkbox'] = this.checkbox;
+    return data..removeWhere((_, value) => value == null);
   }
 }

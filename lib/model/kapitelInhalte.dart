@@ -31,4 +31,16 @@ class KapitelzInhalte {
     header = json['header'];
     description = json['description'] ?? "";
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['prio'] = this.prio;
+    data['themengebiet'] = this.themengebiet;
+    data['description'] = this.description;
+    data['header'] = this.header;
+    data['bookmarkchecked'] = this.bookmarkchecked;
+    data['checkbox'] = this.checkbox;
+    return data..removeWhere((_, value) => value == null);
+  }
 }
