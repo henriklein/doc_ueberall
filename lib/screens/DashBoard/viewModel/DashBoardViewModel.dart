@@ -8,15 +8,10 @@ class DashBoardViewModel extends ViewModelBase {
   final FirebaseKepitelsDataSource _kepitelsDataSource;
   final FirebaseDetailScreenDataSource _detailScreenDataSource;
 
-  final BehaviorSubject<List<Details>> _detailsSubject = BehaviorSubject();
-  Stream<List<Details>> get outDetailScreen => _detailsSubject.stream;
+  Stream<List<Details>> get outDetailScreen =>
+      _detailScreenDataSource.outDetailScreen;
 
   DashBoardViewModel(this._kepitelsDataSource, this._detailScreenDataSource);
-
-  getBookMarkedDetails() {
-    var detail = _detailScreenDataSource.getBookMarkedDetails();
-    _detailsSubject.sink.add(detail);
-  }
 
   @override
   void dispose() {

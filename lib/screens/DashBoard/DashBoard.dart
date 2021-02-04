@@ -1,10 +1,11 @@
+import 'dart:math';
+
 import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/components/search_bar.dart';
 import 'package:doc_ueberall/constant.dart';
 import 'package:doc_ueberall/model/kapitelDetails.dart';
 import 'package:doc_ueberall/screens/DashBoard/viewModel/DashBoardViewModel.dart';
 
-import 'package:doc_ueberall/screens/GespeicherteArtikel/GespeicherteArtikel.dart';
 import 'package:doc_ueberall/screens/ZuletztGesehen/ZuletztGesehen.dart';
 import 'package:doc_ueberall/screens/routes.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
@@ -24,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     viewModel = ViewModelProvider.of<DashBoardViewModel>(context);
-    viewModel.getBookMarkedDetails();
   }
 
   @override
@@ -54,27 +54,23 @@ class _HomeScreenState extends State<HomeScreen> {
               stream: viewModel.outDetailScreen,
               builder: (BuildContext context,
                   AsyncSnapshot<List<Details>> snapshot) {
-                if (!snapshot.hasData) return Container();
-                List<Details> details = snapshot.data
-                  ..sort((workA, workB) => workA.prio.compareTo(workB.prio));
-                if (details.length == 0) {
-                  return Container();
-                }
                 var list = snapshot.data
-                    ?.where((element) => element.isBookMarked == true)
-                    ?.toList()
-                    ?.cast<Details>()
-                      ..sort((detailA, detailB) =>
-                          detailA.prio.compareTo(detailB.prio));
+                        ?.where((element) => element.isBookMarked == true)
+                        ?.toList()
+                        ?.cast<Details>() ??
+                    [];
+                list?.sort(
+                    (workA, workB) => workA.lastSeen.compareTo(workB.lastSeen));
                 List<String> strList = [];
                 for (var item in list) {
                   strList.add(item.text);
                   if (strList.length == 5) break;
                 }
-                return Search();
+                return Search(
+                  tags: list.sublist(0, min(list.length, 4)),
+                );
               },
             ),
-            Search(),
             SizedBox(
               height: height * 0.02,
             ),
@@ -330,16 +326,17 @@ class Search extends StatelessWidget {
    Should be getting replaced by the actual latest fife bookmarked articles
   ---
   */
+  final List<Details> tags;
 //  final List<String> tags;
-//
-//  const Search({Key key, this.tags}) : super(key: key);
-  final List<String> tags = [
-    '😷 Vorerkrankugnen ',
-    '💊 Reiseapotheke ',
-    '💉 Impfungen',
-    "👔 Versicherungen",
-    "🤕 Asthma"
-  ];
+
+  const Search({Key key, this.tags}) : super(key: key);
+//  final List<String> tags = [
+//    '😷 Vorerkrankugnen ',
+//    '💊 Reiseapotheke ',
+//    '💉 Impfungen',
+//    "👔 Versicherungen",
+//    "🤕 Asthma"
+//  ];
 //  final List<String> icons = ['Icons.settings'];
 
   @override
@@ -360,51 +357,59 @@ class Search extends StatelessWidget {
             a list of all bookmarked articles should be in GeespeicherteArtikel.dart
           ---
           */
-          Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Center(
-              child: Tags(
-                itemCount: tags.length,
-                itemBuilder: (index) {
-                  return GestureDetector(
-                    onTap: () {
-                      HapticFeedback.mediumImpact();
-                    },
-                    child: UnconstrainedBox(
-                      child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: kBoxBackground,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(22))),
-                        child: Padding(
-                          padding: EdgeInsets.all(
-                            MediaQuery.of(context).size.height * 0.01,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: kRedColor,
-                                maxRadius: 0,
+          (tags != null)
+              ? Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Center(
+                    child: Tags(
+                      itemCount: tags.length,
+                      itemBuilder: (index) {
+                        return GestureDetector(
+                          onTap: () {
+                            HapticFeedback.mediumImpact();
+
+                            Navigator.of(context)
+                                .pushNamed(AppRoutes.DETAILPAGE, arguments: {
+                              'detail': tags[index]
+                            }); //Link to Information page
+                          },
+                          child: UnconstrainedBox(
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  color: kBoxBackground,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(22))),
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.height * 0.01,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: kRedColor,
+                                      maxRadius: 0,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "${tags[index].icon} ${tags[index].text}",
+                                      style: TextStyle(fontSize: 12),
+                                    )
+                                  ],
+                                ),
                               ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                tags[index],
-                                style: TextStyle(fontSize: 12),
-                              )
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-            ),
-          ),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

@@ -14,11 +14,12 @@ class FirebaseDetailScreenDataSource {
   FirebaseDetailScreenDataSource(this._fStore) {
     //if you ever want to clear data uncomment the line below
     SharedPreferences.getInstance().then((prefs) {
+      var local = prefs.getStringList('kapitel_details');
 //      prefs.setStringList('kapitel_details', null);
-      if (prefs.getStringList('kapitel_details') == null) {
+      if (local == null) {
         _detailScreenSubject.sink.add(details);
-        prefs.setString('kapitel_details',
-            json.encode(details.map((e) => e.toJson()).toList()));
+//        prefs.setStringList('kapitel_details',
+//            details.map((e) => json.encode(e.toJson())).toList());
       }
 
       _fStore
@@ -29,19 +30,27 @@ class FirebaseDetailScreenDataSource {
             .map((detailDoc) => Details.fromJson(detailDoc.data))
             .toList()
             .cast<Details>();
-        var detailsLocal = prefs
-            .getStringList('kapitel_details')
-            .map((e) => Details.fromJson(json.decode(e)))
-            .toList()
-            .cast<Details>();
-        var detailz = detailsRemote
-            .map((e) => e.update(
-                detailsLocal.where((element) => element.id == e.id).first))
-            .toList()
-            .cast<Details>();
-        _detailScreenSubject.sink.add(detailz);
-        prefs.setStringList('kapitel_details',
-            detailz.map((e) => json.encode(e.toJson())).toList());
+
+        if (local != null) {
+          var detailsLocal = prefs
+              .getStringList('kapitel_details')
+              .map((e) => Details.fromJson(json.decode(e)))
+              .toList()
+              .cast<Details>();
+          print("detailsRemote ${detailsRemote}");
+          var detailz = detailsRemote
+              .map((e) => e.update(
+                  detailsLocal.where((element) => element.id == e.id).first))
+              .toList()
+              .cast<Details>();
+          _detailScreenSubject.sink.add(detailz);
+          prefs.setStringList('kapitel_details',
+              detailz.map((e) => json.encode(e.toJson())).toList());
+        } else {
+          _detailScreenSubject.sink.add(detailsRemote);
+          prefs.setStringList('kapitel_details',
+              detailsRemote.map((e) => json.encode(e.toJson())).toList());
+        }
       });
     });
   }

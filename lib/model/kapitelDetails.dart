@@ -9,6 +9,7 @@ class Details {
   String articleText;
   String text;
   String link;
+  String icon;
   DateTime lastSeen;
   bool isSeen;
   bool isBookMarked;
@@ -40,6 +41,7 @@ class Details {
     prio = json['prio'];
     header = json['header'];
     kapitel = json['kapitel'];
+    icon = json['icon'];
     lastSeen = json['last_seen'] == null
         ? null
         : DateTime.fromMillisecondsSinceEpoch(json['last_seen']);
@@ -59,6 +61,7 @@ class Details {
     data['link'] = this.link;
     data['text'] = this.text;
     data['kapitel'] = this.kapitel;
+    data['icon'] = this.icon;
     data['last_seen'] = this.lastSeen?.millisecondsSinceEpoch;
     data['is_seen'] = this.isSeen;
     data['is_bookmarked'] = this.isBookMarked;
