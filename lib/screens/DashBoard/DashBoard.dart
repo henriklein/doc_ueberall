@@ -1,10 +1,13 @@
 import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/components/search_bar.dart';
 import 'package:doc_ueberall/constant.dart';
+import 'package:doc_ueberall/model/kapitelDetails.dart';
+import 'package:doc_ueberall/screens/DashBoard/viewModel/DashBoardViewModel.dart';
 
 import 'package:doc_ueberall/screens/GespeicherteArtikel/GespeicherteArtikel.dart';
 import 'package:doc_ueberall/screens/ZuletztGesehen/ZuletztGesehen.dart';
 import 'package:doc_ueberall/screens/routes.dart';
+import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +19,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  DashBoardViewModel viewModel;
+  @override
+  void initState() {
+    super.initState();
+    viewModel = ViewModelProvider.of<DashBoardViewModel>(context);
+    viewModel.getBookMarkedDetails();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -39,6 +50,30 @@ class _HomeScreenState extends State<HomeScreen> {
               Displaying latestz five bookmarks as Tags (see below). RN just as plain text, once you got the database running, I will add emojis that shoud be displayed upfront
             ---
             */
+            StreamBuilder<List<Details>>(
+              stream: viewModel.outDetailScreen,
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Details>> snapshot) {
+                if (!snapshot.hasData) return Container();
+                List<Details> details = snapshot.data
+                  ..sort((workA, workB) => workA.prio.compareTo(workB.prio));
+                if (details.length == 0) {
+                  return Container();
+                }
+                var list = snapshot.data
+                    ?.where((element) => element.isBookMarked == true)
+                    ?.toList()
+                    ?.cast<Details>()
+                      ..sort((detailA, detailB) =>
+                          detailA.prio.compareTo(detailB.prio));
+                List<String> strList = [];
+                for (var item in list) {
+                  strList.add(item.text);
+                  if (strList.length == 5) break;
+                }
+                return Search();
+              },
+            ),
             Search(),
             SizedBox(
               height: height * 0.02,
@@ -175,12 +210,14 @@ class Header extends StatelessWidget {
                                       Text("Gespeicherte Artikel"), //bookmarked
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              GespeicherteArtikels()), //Link to Information page
-                                    );
+                                    Navigator.of(context).pushNamed(AppRoutes
+                                        .GESPEICHERTE_ARTIKELS); //Link to Information page
+//                                    Navigator.push(
+//                                      context,
+//                                      MaterialPageRoute(
+//                                          builder: (context) =>
+//                                              GespeicherteArtikels()), //Link to Information page
+//                                    );
                                   },
                                 ),
                               ],
@@ -293,6 +330,9 @@ class Search extends StatelessWidget {
    Should be getting replaced by the actual latest fife bookmarked articles
   ---
   */
+//  final List<String> tags;
+//
+//  const Search({Key key, this.tags}) : super(key: key);
   final List<String> tags = [
     '😷 Vorerkrankugnen ',
     '💊 Reiseapotheke ',
@@ -300,7 +340,7 @@ class Search extends StatelessWidget {
     "👔 Versicherungen",
     "🤕 Asthma"
   ];
-  final List<String> icons = ['Icons.settings'];
+//  final List<String> icons = ['Icons.settings'];
 
   @override
   Widget build(BuildContext context) {

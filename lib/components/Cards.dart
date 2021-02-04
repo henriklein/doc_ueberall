@@ -1,5 +1,4 @@
 import 'package:doc_ueberall/constant.dart';
-import 'package:doc_ueberall/screens/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -88,10 +87,10 @@ class BuildKapitelCard extends StatelessWidget {
   final String header;
   final String keywoerter;
   final String description;
-  final Icon bookmarkchecked;
+  final IconButton bookmarkchecked;
   final fun;
 
-  final Icon checkbox;
+  final IconButton checkbox;
 
   @override
   Widget build(BuildContext context) {
@@ -263,10 +262,10 @@ class BuildInhaltCard extends StatelessWidget {
   final String intartikel;
   final String header;
   final String discription;
-  final Icon bookmarkchecked;
-
-  final Icon checkbox;
+  final IconButton bookmarkchecked;
   final fun;
+
+  final IconButton checkbox;
 
   @override
   Widget build(BuildContext context) {
@@ -352,6 +351,144 @@ class BuildInhaltCard extends StatelessWidget {
                         ),
                         Text(
                           discription,
+                          style: TextStyle(
+                            color: secondaryTextColor,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                          icon: checkbox,
+                          color: Colors.green,
+                          onPressed: () {}),
+                      IconButton(
+                        icon: bookmarkchecked,
+                        color: Colors.orange,
+                        onPressed: () {},
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BuildArticleCard extends StatelessWidget {
+  const BuildArticleCard({
+    Key key,
+    this.artikel, //look top
+    this.intartikel, //look top
+    this.header, //look up
+    this.discription, //look up
+
+    this.fun,
+    this.bookmarkchecked, //Display as Tags on Dashboard and on GespeicherteArtikelViewModel.dart
+    this.checkbox, // Display on ZuletztGesehen.dart
+  }) : super(key: key);
+  final String artikel;
+  final String intartikel;
+  final String header;
+  final String discription;
+  final IconButton bookmarkchecked;
+  final fun;
+
+  final IconButton checkbox;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: fun,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 25),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 15,
+                  height: 10,
+                  decoration: BoxDecoration(
+                      color: kRedColor,
+                      borderRadius: BorderRadius.horizontal(
+                        right: Radius.circular(5),
+                      )),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width - 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                            text: artikel,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: primaryTextColor,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: " Thema",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: secondaryTextColor,
+                                ),
+                              )
+                            ]),
+                      ),
+                      Text(
+                        intartikel ?? "",
+                        style: TextStyle(
+                            color: primaryTextColor,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey[300]),
+                  borderRadius: BorderRadius.circular(20)),
+              margin: EdgeInsets.only(right: 10, left: 30),
+              padding: EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          header,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: primaryTextColor),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          discription,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
                           style: TextStyle(
                             color: secondaryTextColor,
                             fontSize: 13,

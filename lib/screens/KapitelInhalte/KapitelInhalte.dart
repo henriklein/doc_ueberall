@@ -1,11 +1,14 @@
 import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/constant.dart';
+import 'package:doc_ueberall/model/kapitelInhalte.dart';
 import 'package:doc_ueberall/model/kapitels.dart';
+import 'package:doc_ueberall/screens/kepitel/viewModel/kepitelViewModel.dart';
 import 'package:doc_ueberall/screens/routes.dart';
+import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
 import 'package:flutter/material.dart';
 
 class KapitelInhalte extends StatefulWidget {
-  final Kepitol kapitel;
+  final Kapitel kapitel;
 
   const KapitelInhalte({Key key, this.kapitel}) : super(key: key);
   @override
@@ -13,9 +16,16 @@ class KapitelInhalte extends StatefulWidget {
 }
 
 class _KapitelInhalteState extends State<KapitelInhalte> {
+  KepitolsViewModel viewModel;
+  @override
+  void initState() {
+    super.initState();
+    viewModel = ViewModelProvider.of<KepitolsViewModel>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    List<KapitelzInhalte> inhaltes = widget.kapitel.kapitelInhaltes;
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Column(
@@ -56,25 +66,53 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: ListView.builder(
-                    itemCount: widget.kapitel.kapitelInhaltes.length,
+                    itemCount: inhaltes.length,
                     itemBuilder: (context, index) {
-                      var inhate = widget.kapitel.kapitelInhaltes[index];
                       return BuildInhaltCard(
-                        artikel: inhate
+                        artikel: inhaltes[index]
                             .header, //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
-                        intartikel: inhate.prio, //int of current article
-                        header: inhate
+                        intartikel:
+                            inhaltes[index].prio, //int of current article
+                        header: inhaltes[index]
                             .themengebiet, //Header of Article inside of theee Chapter
-                        discription: inhate
+                        discription: inhaltes[index]
                             .description, //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
 
-                        bookmarkchecked: Icon(Icons.bookmark_outline),
-                        checkbox: Icon(Icons.check_box_outlined),
+                        bookmarkchecked: IconButton(
+                          icon: (inhaltes[index]?.isBookmarked ?? false)
+                              ? Icon(Icons.bookmark)
+                              : Icon(Icons.bookmark_outline),
+                          onPressed: () {
+                            viewModel.bookMarkInhalte(
+                                widget.kapitel, inhaltes[index].id);
+                            setState(() {
+                              inhaltes[index].isBookmarked !=
+                                  (inhaltes[index]?.isBookmarked ?? false);
+                            });
+                          },
+                        ),
+                        checkbox: IconButton(
+                          icon: (inhaltes[index]?.isSeen ?? false)
+                              ? Icon(Icons.check_box_outlined)
+                              : Icon(Icons.check_box_outline_blank),
+                          onPressed: () {
+                            viewModel.seenInhalte(
+                                widget.kapitel, inhaltes[index].id);
+                            setState(() {
+                              inhaltes[index].isSeen !=
+                                      inhaltes[index]?.isSeen ??
+                                  false;
+                            });
+                          },
+                        ),
                         fun: () {
-                          Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
-                              arguments: {
-                                'id': widget.kapitel.id
-                              }); //Link to Information page
+                          viewModel.justSawThamengabeit(
+                              widget.kapitel, inhaltes[index].id);
+                          Navigator.of(context)
+                              .pushNamed(AppRoutes.ARTICLE_LIST, arguments: {
+                            'th_id': inhaltes[index].id,
+                            'kapitel': widget.kapitel,
+                          }); //Link to Information page
                         },
                       );
                     }),

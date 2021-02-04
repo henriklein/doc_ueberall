@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dioc/dioc.dart';
-import 'package:doc_ueberall/data/firebaseDashBoardDataSource.dart';
 import 'package:doc_ueberall/data/firebaseDetailScreenDataSource.dart';
 import 'package:doc_ueberall/data/firebaseKepitelsDataSource.dart';
 import 'package:doc_ueberall/screens/DashBoard/viewModel/DashBoardViewModel.dart';
@@ -28,13 +27,6 @@ class InitDependencies {
     },
         name: "FirebaseDetailScreenDataSource",
         defaultMode: InjectMode.singleton);
-
-    container.register<FirebaseDashBoardDataSource>((c) {
-      print("FirebaseDashBoardDataSource registered");
-      return FirebaseDashBoardDataSource(
-          c.get<Firestore>(creator: "Firestore"));
-    }, name: "FirebaseDashBoardDataSource", defaultMode: InjectMode.create);
-
     container.register<KepitolsViewModel>((c) {
       print("KepitolsViewModel registered");
       return KepitolsViewModel(c.get<FirebaseKepitelsDataSource>(
@@ -42,8 +34,11 @@ class InitDependencies {
     }, name: "KepitolsViewModel", defaultMode: InjectMode.singleton);
     container.register<DashBoardViewModel>((c) {
       print("DashBoardViewModel registered");
-      return DashBoardViewModel(c.get<FirebaseDashBoardDataSource>(
-          creator: "FirebaseDashBoardDataSource"));
+      return DashBoardViewModel(
+          c.get<FirebaseKepitelsDataSource>(
+              creator: "FirebaseKepitelsDataSource"),
+          c.get<FirebaseDetailScreenDataSource>(
+              creator: "FirebaseDetailScreenDataSource"));
     }, name: "DashBoardViewModel", defaultMode: InjectMode.singleton);
     container.register<DetailScreenViewModel>((c) {
       print("DetailScreenViewModel registered");

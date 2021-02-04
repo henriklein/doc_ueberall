@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:doc_ueberall/constant.dart';
 
 class DetailPage extends StatefulWidget {
-  final String id;
+  final Details detail;
 
-  const DetailPage({Key key, this.id}) : super(key: key);
+  const DetailPage({Key key, this.detail}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -17,258 +17,211 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   DetailScreenViewModel viewModel;
+  Details detail;
 
   @override
   void initState() {
     super.initState();
     viewModel = ViewModelProvider.of<DetailScreenViewModel>(context);
-    viewModel.getDetails(widget.id);
+    detail = widget.detail;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: StreamBuilder<Details>(
-        stream: viewModel.outDetailScreen,
-        builder: (BuildContext context, AsyncSnapshot<Details> snapshot) {
-          if (!snapshot.hasData)
-            return Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        bottom: false,
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+              right: -64,
+              child: Opacity(
+                  opacity: 0.2,
+                  child: Image.network(
+                    "https://images.all-free-download.com/images/graphiclarge/travel_people_icons_design_camera_and_luggages_style_6826459.jpg",
+                    scale: 2.2,
+                  )),
+            ),
+            SingleChildScrollView(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  CircularProgressIndicator(
-                    backgroundColor: Color.fromRGBO(0, 0, 255, 1),
-//                        value: null,
-                    strokeWidth: 7.0,
-                  ),
-                ],
-              ),
-            );
-          return SafeArea(
-            bottom: false,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  right: -64,
-                  child: Opacity(
-                      opacity: 0.2,
-                      child: Image.network(
-                        "https://images.all-free-download.com/images/graphiclarge/travel_people_icons_design_camera_and_luggages_style_6826459.jpg",
-                        scale: 2.2,
-                      )),
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 30, 30, 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(height: 300),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 30, 30, 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 300),
 
-                            /*
+                        /*
                         ---
                          Display Article Name
                         ---
                         */
-                            Text(
-                              "Reise-\nvorbereitung", //Trip Preporation
-                              style: TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 50,
-                                color: primaryTextColor,
-                                fontWeight: FontWeight.w900,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            Text(
-                              'Alles auf eienem Blick!', //Everything oyou need to know (static)
-                              style: TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 31,
-                                color: primaryTextColor,
-                                fontWeight: FontWeight.w300,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            Divider(color: kGreyColor),
-                            SizedBox(height: 32),
+                        Text(
+                          detail.text, //Trip Preporation
+                          style: TextStyle(
+                            fontFamily: 'Avenir',
+                            fontSize: 50,
+                            color: primaryTextColor,
+                            fontWeight: FontWeight.w900,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        Text(
+                          'Alles auf eienem Blick!', //Everything oyou need to know (static)
+                          style: TextStyle(
+                            fontFamily: 'Avenir',
+                            fontSize: 31,
+                            color: primaryTextColor,
+                            fontWeight: FontWeight.w300,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        Divider(color: kGreyColor),
+                        SizedBox(height: 32),
 
-                            /*
+                        /*
                         ---
                          Display actually Plain Article Text
                          ---
                          */
-                            Text(
-                              snapshot.data.articleText,
-                              maxLines: 1000,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 16,
-                                color: secondaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(color: kGreyColor),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              'Web Links',
-                              style: TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 25,
-                                color: primaryTextColor,
-                                fontWeight: FontWeight.w300,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                        Text(
+                          detail.articleText,
+                          maxLines: 1000,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'Avenir',
+                            fontSize: 16,
+                            color: secondaryTextColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Divider(color: kGreyColor),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          'Web Links',
+                          style: TextStyle(
+                            fontFamily: 'Avenir',
+                            fontSize: 25,
+                            color: primaryTextColor,
+                            fontWeight: FontWeight.w300,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
 
-                            /*
+                        /*
                         ---
                         Initialize a variable called Links or something where I can add links using firebase, If needed
                         Initialize as weblink = "";
                         ---
                         */
+                        Text(
+                          detail.link,
+                          style: TextStyle(color: secondaryTextColor),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Divider(color: kGreyColor),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          'Schnellaktionen', //quick actions
+                          style: TextStyle(
+                            fontFamily: 'Avenir',
+                            fontSize: 25,
+                            color: primaryTextColor,
+                            fontWeight: FontWeight.w300,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Text(
-                              snapshot.data.link,
+                              "Als Gekesen Makieren", //State as Read
                               style: TextStyle(color: secondaryTextColor),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(color: kGreyColor),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              'Schnellaktionen', //quick actions
-                              style: TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 25,
-                                color: primaryTextColor,
-                                fontWeight: FontWeight.w300,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Als Gekesen Makieren", //State as Read
-                                  style: TextStyle(color: secondaryTextColor),
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.check_box_outline_blank),
-                                  onPressed: () {},
-                                ),
-                                Text(
-                                  "Speichern", //bookmark
-                                  style: TextStyle(color: secondaryTextColor),
-                                ),
-                                IconButton(
-                                    icon: Icon(Icons.bookmark_outline),
-                                    onPressed: () {})
-                              ],
-                            ),
-                            Divider(color: kGreyColor),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              'Nächste Themen', //next Articles
-                              style: TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 25,
-                                color: primaryTextColor,
-                                fontWeight: FontWeight.w300,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            IconButton(
+                              icon: (detail.isSeen ?? false)
+                                  ? Icon(Icons.check_box_outlined)
+                                  : Icon(Icons.check_box_outline_blank),
 
-                            /*
-                        ---
-                          Display all uplollowing Articles in that Chapter using BuildInhaltCard
-                          Display on the bottom the next big chaptor that is following the current one
-                        ---
-                        */
-                            TopicCard(
-                              header: 'Reisen bei Vorerkrankungen',
-                              description: 'Erkundige dich wie du...',
-                              imgURL: 'assets/SVGs/prepare.svg',
-                              bgColor: kRedColor,
-                              press: () {},
+//                              icon: Icon(Icons.check_box_outline_blank),
+                              onPressed: () {
+                                setState(() {
+                                  detail.isSeen != detail?.isSeen ?? false;
+                                });
+                                viewModel.seen(detail);
+                              },
                             ),
-                            SizedBox(
-                              height: 20,
+                            Text(
+                              "Speichern", //bookmark
+                              style: TextStyle(color: secondaryTextColor),
                             ),
+                            IconButton(
+                                icon: (detail.isBookMarked ?? false)
+                                    ? Icon(Icons.bookmark)
+                                    : Icon(Icons.bookmark_outline),
+                                onPressed: () {
+                                  viewModel.bookMark(detail);
+                                  setState(() {
+                                    detail.isBookMarked !=
+                                            detail?.isBookMarked ??
+                                        false;
+                                  });
+                                })
                           ],
                         ),
-                      ),
-
-                      /*
-                  ---
-                     Display on the bottom the next big chaptor that is following the current one
-                  ---
-                  */
-                      BuildKapitelCard(
-                        kapitel: "Zweites ",
-                        intKapitel: "2",
-                        header: "Kleine Medikamentenkunde",
-                        description:
-                            "Erkundige dich über lokale Viren und möglichn Schutz.",
-                        keywoerter:
-                            "Kleine Medikamentenkunde, Anwendungsweisen, Medikamente, Mikrobiologische Medikamente, Schmerzmittel und fiebersenkende Mittel, Entzündungshemmende Mittel ",
-                        bookmarkchecked: Icon(Icons.bookmark),
-                        checkbox: Icon(Icons.check_box_outlined),
-                      ),
-                    ],
+                        Divider(color: kGreyColor),
+                        SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
+              ),
+            ),
 
-                /*
+            /*
             ---
               Display First Letter of Chapter
             ---
             */
-                Positioned(
-                  top: 60,
-                  left: 32,
-                  child: Text(
-                    "R",
-                    style: TextStyle(
-                      fontFamily: 'Avenir',
-                      fontSize: 247,
-                      color: primaryTextColor.withOpacity(0.08),
-                      fontWeight: FontWeight.w900,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
+            Positioned(
+              top: 60,
+              left: 32,
+              child: Text(
+                detail.text[0].toUpperCase(),
+                style: TextStyle(
+                  fontFamily: 'Avenir',
+                  fontSize: 247,
+                  color: primaryTextColor.withOpacity(0.08),
+                  fontWeight: FontWeight.w900,
                 ),
-                IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
+                textAlign: TextAlign.left,
+              ),
             ),
-          );
-        },
+            IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

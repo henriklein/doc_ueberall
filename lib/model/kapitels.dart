@@ -1,67 +1,99 @@
 import 'package:doc_ueberall/model/kapitelInhalte.dart';
 
-class Kepitels {
-  final List<Kepitol> kepitols;
+class Kapitels {
+  List<Kapitel> kepitols;
 
-  Kepitels({
+  Kapitels({
     this.kepitols,
   });
 
   @override
   String toString() {
-    return 'Kepitols{ kepitols: $kepitols }';
+    return 'Kapitels{ kapitels: $kepitols }';
   }
 
-  factory Kepitels.fromJson(Map<dynamic, dynamic> json) => new Kepitels(
+  factory Kapitels.fromJson(Map<dynamic, dynamic> json) => new Kapitels(
         kepitols: json['kapitels']
-            .map((jsn) => Kepitol.fromJson(jsn))
+            .map((jsn) => Kapitel.fromJson(jsn))
             .toList()
-            .cast<Kepitol>(),
+            .cast<Kapitel>(),
       );
-  Map<String, dynamic> toJson() =>
-      {"kepitels": kepitols?.map((kapitel) => kapitel.toJson())?.toList()};
+
+  update(Kapitels kapitels) {
+    for (var kapitel in this.kepitols) {
+      var kapitelLocal =
+          kapitels.kepitols.where((element) => element.id == kapitel.id)?.first;
+      kapitel.isSeen = kapitelLocal.isSeen;
+      kapitel.isBookmarked = kapitelLocal.isBookmarked;
+    }
+//    var kepitols = kapitels;
+//    this.kepitols = kapitels.kepitols
+//        .map((kapital) => this
+//            .kepitols
+//            .firstWhere((element) => element.id == kapital.id)
+//            ?.update(kapital))
+//        ?.toList()
+//        ?.cast<Kapitel>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['kapitels'] = kepitols?.map((kapitel) => kapitel.toJson())?.toList();
+    return data..removeWhere((_, value) => value == null);
+  }
 }
 
-class Kepitol {
+class Kapitel {
   String id;
   String kapitel;
   String prio;
   String header;
   String description;
-  String bookmarkchecked;
-  bool checkbox;
+  bool isSeen;
+  bool isBookmarked;
   List<KapitelzInhalte> kapitelInhaltes;
 
-  Kepitol(
+  Kapitel(
       {this.id,
       this.kapitel,
       this.prio,
       this.header,
       this.description,
-      this.bookmarkchecked,
-      this.checkbox,
+      this.isSeen,
+      this.isBookmarked,
       this.kapitelInhaltes});
 
   @override
   String toString() {
     return "Kepitol{ id: $id, kapitel: $kapitel, int_Kapitel: $prio, header: $header, "
-        "description: $description, bookmarkchecked: $bookmarkchecked, checkbox: $checkbox  }";
+        "description: $description,  checkbox: $isSeen  }";
   }
 
-  factory Kepitol.fromJson(Map<dynamic, dynamic> json) {
-    return Kepitol(
+  factory Kapitel.fromJson(Map<dynamic, dynamic> json) {
+    return Kapitel(
       id: json['id'],
       kapitel: json['kapitel'],
       prio: json['prio'] ?? "",
       header: json['header'],
       description: json['description'] ?? "",
+      isSeen: json['is_seen'],
+      isBookmarked: json['is_bookmarked'],
       kapitelInhaltes: json['kapitel_inhaltes']
           .map((jsn) => KapitelzInhalte.fromJson(jsn))
           .toList()
           .cast<KapitelzInhalte>(),
-      bookmarkchecked: json['bookmarkchecked'],
-      checkbox: json['checkbox'],
     );
+  }
+
+  update(Kapitel kapitel) {
+    return Kapitel(
+        kapitel: kapitel.kapitel,
+        prio: kapitel.prio,
+        header: kapitel.header,
+        description: kapitel.description,
+        kapitelInhaltes: kapitel.kapitelInhaltes,
+        isSeen: this.isSeen ?? false,
+        isBookmarked: this.isBookmarked ?? false);
   }
 
   Map<String, dynamic> toJson() {
@@ -73,8 +105,8 @@ class Kepitol {
     data['description'] = this.description;
     data['kapitel_inhaltes'] =
         this.kapitelInhaltes.map((inhalte) => inhalte.toJson())?.toList();
-    data['bookmarkchecked'] = this.bookmarkchecked;
-    data['checkbox'] = this.checkbox;
+    data['is_seen'] = this.isSeen;
+    data['is_bookmarked'] = this.isBookmarked;
     return data..removeWhere((_, value) => value == null);
   }
 }

@@ -1,31 +1,39 @@
 import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/constant.dart';
+import 'package:doc_ueberall/model/kapitelDetails.dart';
 import 'package:doc_ueberall/model/kapitels.dart';
-import 'package:doc_ueberall/screens/kepitel/viewModel/kepitelViewModel.dart';
+import 'package:doc_ueberall/screens/DetailScreen/viewModel/DetailScreenViewModel.dart';
 import 'package:doc_ueberall/screens/routes.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
 import 'package:flutter/material.dart';
 
-class KapitolScreen extends StatefulWidget {
+class ArticleList extends StatefulWidget {
+  final Kapitel kapitel;
+  final String thId;
+
+  const ArticleList({Key key, this.kapitel, this.thId}) : super(key: key);
+
   @override
-  _KapitolScreenState createState() => _KapitolScreenState();
+  _ArticleListState createState() => _ArticleListState();
 }
 
-class _KapitolScreenState extends State<KapitolScreen> {
-  KepitolsViewModel viewModel;
+class _ArticleListState extends State<ArticleList> {
+  DetailScreenViewModel viewModel;
+
   @override
   void initState() {
     super.initState();
-    viewModel = ViewModelProvider.of<KepitolsViewModel>(context);
+    viewModel = ViewModelProvider.of<DetailScreenViewModel>(context);
+    viewModel.getDetails(widget.thId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: StreamBuilder<Kapitels>(
-        stream: viewModel.outKepitols,
-        builder: (BuildContext context, AsyncSnapshot<Kapitels> snapshot) {
+      body: StreamBuilder<List<Details>>(
+        stream: viewModel.outDetailScreen,
+        builder: (BuildContext context, AsyncSnapshot<List<Details>> snapshot) {
           if (!snapshot.hasData)
             return Center(
               child: Row(
@@ -39,8 +47,10 @@ class _KapitolScreenState extends State<KapitolScreen> {
                 ],
               ),
             );
-          final int chatsCount = snapshot.data.kepitols?.length ?? 0;
-          if (chatsCount == 0) {
+          List<Details> details = snapshot.data
+            ..sort((workA, workB) => workA.prio.compareTo(workB.prio));
+          ;
+          if (details.length == 0) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -109,43 +119,51 @@ class _KapitolScreenState extends State<KapitolScreen> {
                   child: Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                       child: ListView.builder(
-                          itemCount: chatsCount,
+                          itemCount: details.length,
                           itemBuilder: (context, index) {
-                            var chapter = snapshot.data.kepitols[index];
-                            return BuildKapitelCard(
-                              kapitel: chapter
-                                  .header, //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
-                              intKapitel: chapter.prio, //in of current Chapter
-                              header: chapter.kapitel, //Header of Chapter
-                              description: chapter
-                                  .description, //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later
-                              keywoerter:
-                                  "Resevorbereitung, Reisen bei Vorerkrankungen", //Displaying all Headers of Articles inside that Chapter
+                            var detail = details[index];
+                            return BuildArticleCard(
+                              artikel: detail
+                                  .header, //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
+                              intartikel:
+                                  detail.prio ?? '', //int of current article
+                              header: detail
+                                  .text, //Header of Article inside of theee Chapter
+                              discription: detail
+                                  .articleText, //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
                               fun: () {
-                                viewModel
-                                    .justSaw(snapshot.data.kepitols[index]);
+                                viewModel.justSaw(detail);
                                 Navigator.of(context).pushNamed(
-                                    AppRoutes.KAPITELINHALTE,
+                                    AppRoutes.DETAILPAGE,
                                     arguments: {
-                                      'kapitel': snapshot.data.kepitols[index]
+                                      'detail': detail
                                     }); //Link to Information page
                               },
 //                              bookmarkchecked: Icon(Icons.bookmark_outline),
                               bookmarkchecked: IconButton(
-                                icon: (chapter?.isBookmarked ?? false)
+                                icon: (details[index].isBookMarked ?? false)
                                     ? Icon(Icons.bookmark)
                                     : Icon(Icons.bookmark_outline),
                                 onPressed: () {
-                                  viewModel
-                                      .bookMark(snapshot.data.kepitols[index]);
+                                  viewModel.bookMark(detail);
+                                  setState(() {
+                                    details[index].isBookMarked !=
+                                            details[index]?.isBookMarked ??
+                                        false;
+                                  });
                                 },
                               ),
                               checkbox: IconButton(
-                                icon: (chapter?.isSeen ?? false)
+                                icon: (details[index]?.isSeen ?? false)
                                     ? Icon(Icons.check_box_outlined)
                                     : Icon(Icons.check_box_outline_blank),
                                 onPressed: () {
-                                  viewModel.seen(snapshot.data.kepitols[index]);
+                                  viewModel.seen(detail);
+                                  setState(() {
+                                    details[index].isSeen !=
+                                            details[index]?.isSeen ??
+                                        false;
+                                  });
                                 },
                               ),
                             );

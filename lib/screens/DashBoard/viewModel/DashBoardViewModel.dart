@@ -1,19 +1,25 @@
-import 'package:doc_ueberall/data/firebaseDashBoardDataSource.dart';
-import 'package:doc_ueberall/model/dashBoard.dart';
+import 'package:doc_ueberall/data/firebaseDetailScreenDataSource.dart';
+import 'package:doc_ueberall/data/firebaseKepitelsDataSource.dart';
+import 'package:doc_ueberall/model/kapitelDetails.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DashBoardViewModel extends ViewModelBase {
-  final FirebaseDashBoardDataSource _dashBoardDataSource;
+  final FirebaseKepitelsDataSource _kepitelsDataSource;
+  final FirebaseDetailScreenDataSource _detailScreenDataSource;
 
-  final BehaviorSubject<DashBoards> _dashBoardSubject = BehaviorSubject();
+  final BehaviorSubject<List<Details>> _detailsSubject = BehaviorSubject();
+  Stream<List<Details>> get outDetailScreen => _detailsSubject.stream;
 
-  Stream<DashBoards> get outDashBoard => _dashBoardDataSource.outDashBoard;
+  DashBoardViewModel(this._kepitelsDataSource, this._detailScreenDataSource);
 
-  DashBoardViewModel(this._dashBoardDataSource);
+  getBookMarkedDetails() {
+    var detail = _detailScreenDataSource.getBookMarkedDetails();
+    _detailsSubject.sink.add(detail);
+  }
 
   @override
   void dispose() {
-    _dashBoardSubject.close();
+//    nothing to close
   }
 }

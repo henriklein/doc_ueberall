@@ -4,24 +4,29 @@ class Details {
   String kapitel;
   String themengebietId;
   String themengebiet;
+  String header;
+  String prio;
   String articleText;
   String text;
   String link;
+  DateTime lastSeen;
+  bool isSeen;
+  bool isBookMarked;
 
-  Details(
-      {this.kapitelId,
-      this.themengebiet,
-      this.themengebietId,
-      this.articleText,
-      this.link,
-      this.text,
-      this.kapitel,
-      this.id});
+  Details(this.kapitel, this.kapitelId, this.themengebietId, this.themengebiet,
+      this.header, this.prio, this.text, this.articleText, this.link);
 
   @override
   String toString() {
     return "Details{ id: $id, kapitel_id: $kapitelId, article_text: $articleText, link: $link,"
         "text: $text,  kapitel: $kapitel,}";
+  }
+
+  update(Details details) {
+    this.isSeen = details.isSeen;
+    this.lastSeen = details.lastSeen;
+    this.isBookMarked = details.isBookMarked;
+    return this;
   }
 
   Details.fromJson(Map<String, dynamic> json) {
@@ -32,7 +37,14 @@ class Details {
     articleText = json['article_text'];
     link = json['link'];
     text = json['text'];
+    prio = json['prio'];
+    header = json['header'];
     kapitel = json['kapitel'];
+    lastSeen = json['last_seen'] == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(json['last_seen']);
+    isSeen = json['is_seen'];
+    isBookMarked = json['is_bookmarked'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,9 +54,14 @@ class Details {
     data['themengebiet'] = this.themengebiet;
     data['themengebiet_id'] = this.themengebietId;
     data['article_text'] = this.articleText;
+    data['header'] = this.header;
+    data['prio'] = this.prio;
     data['link'] = this.link;
     data['text'] = this.text;
     data['kapitel'] = this.kapitel;
+    data['last_seen'] = this.lastSeen?.millisecondsSinceEpoch;
+    data['is_seen'] = this.isSeen;
+    data['is_bookmarked'] = this.isBookMarked;
     return data..removeWhere((_, value) => value == null);
   }
 }

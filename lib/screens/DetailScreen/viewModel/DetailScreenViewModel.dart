@@ -6,15 +6,32 @@ import 'package:rxdart/rxdart.dart';
 class DetailScreenViewModel extends ViewModelBase {
   final FirebaseDetailScreenDataSource _detailScreenDataSource;
 
-  final BehaviorSubject<Details> _detailsSubject = BehaviorSubject();
+  final BehaviorSubject<List<Details>> _detailsSubject = BehaviorSubject();
 
-  Stream<Details> get outDetailScreen => _detailsSubject.stream;
+  Stream<List<Details>> get outDetailScreen => _detailsSubject.stream;
 
   DetailScreenViewModel(this._detailScreenDataSource);
 
-  getDetails(String kapitelId) async {
-    var detail = await _detailScreenDataSource.getDetails(kapitelId);
-    _detailsSubject.add(detail);
+  bookMark(Details details) {
+    _detailScreenDataSource.bookMark(details);
+  }
+
+  seen(Details details) {
+    _detailScreenDataSource.seen(details);
+  }
+
+  justSaw(Details detail) {
+    _detailScreenDataSource.justSaw(detail);
+  }
+
+  getDetails(String th_id) {
+    var detail = _detailScreenDataSource.getDetails(th_id);
+    _detailsSubject.sink.add(detail);
+  }
+
+  getBookMarkedDetails() {
+    var detail = _detailScreenDataSource.getBookMarkedDetails();
+    _detailsSubject.sink.add(detail);
   }
 
   @override

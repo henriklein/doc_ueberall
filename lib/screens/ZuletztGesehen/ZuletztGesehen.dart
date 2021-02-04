@@ -2,7 +2,6 @@ import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/constant.dart';
 import 'package:flutter/material.dart';
 
-
 class ZuletztGesehen extends StatefulWidget {
   @override
   _ZuletztGesehenState createState() => _ZuletztGesehenState();
@@ -17,7 +16,7 @@ class _ZuletztGesehenState extends State<ZuletztGesehen> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(20,50,30,20),
+            padding: EdgeInsets.fromLTRB(20, 50, 30, 20),
             child: Row(
               children: [
                 IconButton(
@@ -57,26 +56,37 @@ class _ZuletztGesehenState extends State<ZuletztGesehen> {
                       height: height * 0.05,
                     ),
                     BuildInhaltCard(
-                      artikel: "Erstes ", //curreent Article Noumber as wiritten out (needs to  be initialized as "", ill add real data later)
-                      intartikel: "1",  //int of current Article
+                      artikel:
+                          "Erstes ", //curreent Article Noumber as wiritten out (needs to  be initialized as "", ill add real data later)
+                      intartikel: "1", //int of current Article
                       header: "Reisevorbereitung", //Header of Article
                       discription: //Needs to be initialized as "lorum Ipsum sentence, Ill add real data later"
                           "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-                          
-                      bookmarkchecked: Icon(Icons.bookmark_outline),
-                      checkbox: Icon(Icons.check_box_outlined),
+
+                      bookmarkchecked: IconButton(
+                        icon: Icon(Icons.bookmark),
+                        onPressed: () {},
+                      ),
+                      checkbox: IconButton(
+                        icon: Icon(Icons.check_box_outlined),
+                        onPressed: () {},
+                      ),
                     ),
                     BuildInhaltCard(
                       artikel: "Zweites ",
                       intartikel: "2",
                       header: "Reisen bei Vorerkrankungen",
-                      discription: "Erkundige dich über lokale Viren und möglichn Schutz.",
-                     
-                      bookmarkchecked: Icon(Icons.bookmark),
-                      checkbox: Icon(Icons.check_box_outlined),
+                      discription:
+                          "Erkundige dich über lokale Viren und möglichn Schutz.",
+                      bookmarkchecked: IconButton(
+                        icon: Icon(Icons.bookmark),
+                        onPressed: () {},
+                      ),
+                      checkbox: IconButton(
+                        icon: Icon(Icons.check_box_outlined),
+                        onPressed: () {},
+                      ),
                     ),
-                   
-                    
                   ]),
                 ),
               ),

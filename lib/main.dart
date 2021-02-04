@@ -1,11 +1,22 @@
 import 'package:doc_ueberall/di/injects.dart';
+import 'package:doc_ueberall/screens/DashBoard/viewModel/DashBoardViewModel.dart';
 import 'package:doc_ueberall/screens/routes.dart';
+import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:doc_ueberall/screens/DashBoard/DashBoard.dart';
 import 'package:dioc/dioc.dart' as dioc;
 
+void main() async {
+//  File jsonFile = File();
+//  // this code will only run when the app is downloaded for the first time
+//  // this code is responsible for setting initial local data
+//  String data =
+//      await DefaultAssetBundle.of(context).loadString("assets/data.json");
+//  final jsonResult = json.decode(data);
+//  SharedPreferences.getInstance().then((prefs) {
+//    prefs.setString('kapitel', json.encode(kapitels.toJson()));
+//  });
 
-void main() {
   runApp(MyApp());
 }
 
@@ -18,7 +29,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: ViewModelProvider<DashBoardViewModel>(
+        child: HomeScreen(),
+        viewmodel: c.get<DashBoardViewModel>(
+            creator: "DashBoardViewModel", mode: dioc.InjectMode.create),
+      ),
     );
   }
 }
