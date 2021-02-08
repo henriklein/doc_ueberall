@@ -26,32 +26,13 @@ class _KapitolScreenState extends State<KapitolScreen> {
       body: StreamBuilder<Kapitels>(
         stream: viewModel.outKepitols,
         builder: (BuildContext context, AsyncSnapshot<Kapitels> snapshot) {
-          if (!snapshot.hasData)
-            return Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    backgroundColor: Color.fromRGBO(0, 0, 255, 1),
-                    strokeWidth: 7.0,
-                  ),
-                ],
-              ),
-            );
+          if (!snapshot.hasData) return Container();
           final int chatsCount = snapshot.data.kepitols?.length ?? 0;
           if (chatsCount == 0) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-//                        Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.3),),
-//                  Image.asset(
-//                    "assets/no_chats.png",
-////                    color: AppColors.darkBlue[900],
-//                    height: 120,
-//                    fit: BoxFit.fitHeight,
-//                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height * 0.3),
@@ -119,35 +100,18 @@ class _KapitolScreenState extends State<KapitolScreen> {
                               header: chapter.kapitel, //Header of Chapter
                               description: chapter
                                   .description, //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later
-                              keywoerter:
-                                  "Resevorbereitung, Reisen bei Vorerkrankungen", //Displaying all Headers of Articles inside that Chapter
+                              keywoerter: chapter.kapitelInhaltes
+                                  .map((e) => e.themengebiet)
+                                  .toList()
+                                  .join(
+                                      ", "), //Displaying all Headers of Articles inside that Chapter
                               fun: () {
-                                viewModel
-                                    .justSaw(snapshot.data.kepitols[index]);
                                 Navigator.of(context).pushNamed(
                                     AppRoutes.KAPITELINHALTE,
                                     arguments: {
                                       'kapitel': snapshot.data.kepitols[index]
                                     }); //Link to Information page
                               },
-//                              bookmarkchecked: Icon(Icons.bookmark_outline),
-                              bookmarkchecked: IconButton(
-                                icon: (chapter?.isBookmarked ?? false)
-                                    ? Icon(Icons.bookmark)
-                                    : Icon(Icons.bookmark_outline),
-                                onPressed: () {
-                                  viewModel
-                                      .bookMark(snapshot.data.kepitols[index]);
-                                },
-                              ),
-                              checkbox: IconButton(
-                                icon: (chapter?.isSeen ?? false)
-                                    ? Icon(Icons.check_box_outlined)
-                                    : Icon(Icons.check_box_outline_blank),
-                                onPressed: () {
-                                  viewModel.seen(snapshot.data.kepitols[index]);
-                                },
-                              ),
                             );
                           })),
                 ),

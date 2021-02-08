@@ -12,29 +12,29 @@ class KepitolsViewModel extends ViewModelBase {
 
   KepitolsViewModel(this._kepitelsDataSource);
 
-  bookMark(Kapitel kapitel) {
-    _kepitelsDataSource.bookMark(kapitel);
-  }
+//  bookMark(Kapitel kapitel) {
+//    _kepitelsDataSource.bookMark(kapitel);
+//  }
+//
+//  seen(Kapitel kapitel) {
+//    _kepitelsDataSource.seen(kapitel);
+//  }
 
-  seen(Kapitel kapitel) {
-    _kepitelsDataSource.seen(kapitel);
-  }
+//  bookMarkInhalte(Kapitel kapitel, String th_id) {
+//    _kepitelsDataSource.bookMarkThamengabeit(kapitel, th_id);
+//  }
+//
+//  seenInhalte(Kapitel kapitel, String th_id) {
+//    _kepitelsDataSource.seenThamengabeit(kapitel, th_id);
+//  }
 
-  bookMarkInhalte(Kapitel kapitel, String th_id) {
-    _kepitelsDataSource.bookMarkThamengabeit(kapitel, th_id);
-  }
+//  justSaw(Kapitel kapitel) {
+//    _kepitelsDataSource.justSaw(kapitel);
+//  }
 
-  seenInhalte(Kapitel kapitel, String th_id) {
-    _kepitelsDataSource.seenThamengabeit(kapitel, th_id);
-  }
-
-  justSaw(Kapitel kapitel) {
-    _kepitelsDataSource.justSaw(kapitel);
-  }
-
-  justSawThamengabeit(Kapitel kapitel, String th_id) {
-    _kepitelsDataSource.justSawThamengabeit(kapitel, th_id);
-  }
+//  justSawThamengabeit(Kapitel kapitel, String th_id) {
+//    _kepitelsDataSource.justSawThamengabeit(kapitel, th_id);
+//  }
 
   @override
   void dispose() {

@@ -4,36 +4,36 @@ class KapitelzInhalte {
   String prio;
   String header;
   String description;
-  String bookmarkchecked;
+//  String bookmarkchecked;
   String iconLink;
-  bool isSeen;
-  bool isBookmarked;
+//  bool isSeen;
+//  bool isBookmarked;
 
   KapitelzInhalte({
     this.id,
     this.prio,
     this.themengebiet,
-    this.isSeen,
-    this.isBookmarked,
-    this.bookmarkchecked,
+//    this.isSeen,
+//    this.isBookmarked,
+//    this.bookmarkchecked,
     this.header,
   });
 
   @override
   String toString() {
     return "kapitelInhaltes{ id: $id, int_artikel: $prio, themengebiet: $themengebiet,"
-        "checkbox: $isSeen, bookmarkchecked: $bookmarkchecked, header: $header, description: $description }";
+        " header: $header, description: $description }";
   }
 
   KapitelzInhalte.fromJson(Map<String, dynamic> json) {
     id = json['Tg_id'];
     prio = json['prio'];
     themengebiet = json['themengebiet'];
-    bookmarkchecked = json['bookmarkchecked'];
+//    bookmarkchecked = json['bookmarkchecked'];
     header = json['header'];
     description = json['description'] ?? "";
-    isSeen = json['is_seen'];
-    isBookmarked = json['is_bookmarked'];
+//    isSeen = json['is_seen'];
+//    isBookmarked = json['is_bookmarked'];
     iconLink = json['icon_link'];
   }
 
@@ -44,9 +44,9 @@ class KapitelzInhalte {
     data['themengebiet'] = this.themengebiet;
     data['description'] = this.description;
     data['header'] = this.header;
-    data['bookmarkchecked'] = this.bookmarkchecked;
-    data['is_seen'] = this.isSeen;
-    data['is_bookmarked'] = this.isBookmarked;
+//    data['bookmarkchecked'] = this.bookmarkchecked;
+//    data['is_seen'] = this.isSeen;
+//    data['is_bookmarked'] = this.isBookmarked;
     data['icon_link'] = this.iconLink;
     return data..removeWhere((_, value) => value == null);
   }

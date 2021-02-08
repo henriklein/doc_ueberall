@@ -19,13 +19,13 @@ class Kapitels {
             .cast<Kapitel>(),
       );
 
-  update(Kapitels kapitels) {
-    for (var kapitel in this.kepitols) {
-      var kapitelLocal =
-          kapitels.kepitols.where((element) => element.id == kapitel.id)?.first;
-      kapitel.isSeen = kapitelLocal.isSeen;
-      kapitel.isBookmarked = kapitelLocal.isBookmarked;
-    }
+//  update(Kapitels kapitels) {
+//    for (var kapitel in this.kepitols) {
+//      var kapitelLocal =
+//          kapitels.kepitols.where((element) => element.id == kapitel.id)?.first;
+//      kapitel.isSeen = kapitelLocal.isSeen;
+//      kapitel.isBookmarked = kapitelLocal.isBookmarked;
+//    }
 //    var kepitols = kapitels;
 //    this.kepitols = kapitels.kepitols
 //        .map((kapital) => this
@@ -34,7 +34,7 @@ class Kapitels {
 //            ?.update(kapital))
 //        ?.toList()
 //        ?.cast<Kapitel>();
-  }
+//  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -49,8 +49,8 @@ class Kapitel {
   String prio;
   String header;
   String description;
-  bool isSeen;
-  bool isBookmarked;
+//  bool isSeen;
+//  bool isBookmarked;
   List<KapitelzInhalte> kapitelInhaltes;
 
   Kapitel(
@@ -59,14 +59,14 @@ class Kapitel {
       this.prio,
       this.header,
       this.description,
-      this.isSeen,
-      this.isBookmarked,
+//      this.isSeen,
+//      this.isBookmarked,
       this.kapitelInhaltes});
 
   @override
   String toString() {
     return "Kepitol{ id: $id, kapitel: $kapitel, int_Kapitel: $prio, header: $header, "
-        "description: $description,  checkbox: $isSeen  }";
+        "description: $description }";
   }
 
   factory Kapitel.fromJson(Map<dynamic, dynamic> json) {
@@ -76,8 +76,8 @@ class Kapitel {
       prio: json['prio'] ?? "",
       header: json['header'],
       description: json['description'] ?? "",
-      isSeen: json['is_seen'],
-      isBookmarked: json['is_bookmarked'],
+//      isSeen: json['is_seen'],
+//      isBookmarked: json['is_bookmarked'],
       kapitelInhaltes: json['kapitel_inhaltes']
           .map((jsn) => KapitelzInhalte.fromJson(jsn))
           .toList()
@@ -85,16 +85,16 @@ class Kapitel {
     );
   }
 
-  update(Kapitel kapitel) {
-    return Kapitel(
-        kapitel: kapitel.kapitel,
-        prio: kapitel.prio,
-        header: kapitel.header,
-        description: kapitel.description,
-        kapitelInhaltes: kapitel.kapitelInhaltes,
-        isSeen: this.isSeen ?? false,
-        isBookmarked: this.isBookmarked ?? false);
-  }
+//  update(Kapitel kapitel) {
+//    return Kapitel(
+//        kapitel: kapitel.kapitel,
+//        prio: kapitel.prio,
+//        header: kapitel.header,
+//        description: kapitel.description,
+//        kapitelInhaltes: kapitel.kapitelInhaltes,
+////        isSeen: this.isSeen ?? false,
+////        isBookmarked: this.isBookmarked ?? false);
+//  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -105,8 +105,8 @@ class Kapitel {
     data['description'] = this.description;
     data['kapitel_inhaltes'] =
         this.kapitelInhaltes.map((inhalte) => inhalte.toJson())?.toList();
-    data['is_seen'] = this.isSeen;
-    data['is_bookmarked'] = this.isBookmarked;
+//    data['is_seen'] = this.isSeen;
+//    data['is_bookmarked'] = this.isBookmarked;
     return data..removeWhere((_, value) => value == null);
   }
 }

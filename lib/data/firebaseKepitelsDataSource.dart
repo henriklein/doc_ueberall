@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc_ueberall/model/kapitelInhalte.dart';
 import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 class FirebaseKepitelsDataSource {
   final Firestore fStore;
@@ -15,139 +15,22 @@ class FirebaseKepitelsDataSource {
 
   FirebaseKepitelsDataSource(this.fStore) {
     SharedPreferences.getInstance().then((prefs) {
-      //if you ever want to clear data uncomment the line below
-//      prefs.setString('kapitel', null);
-      if (prefs.getString('kapitel') == null) {
-        _kepitolsSubject.sink.add(kapitels);
-        prefs.setString('kapitel', json.encode(kapitels.toJson()));
-      }
+      var kapitelsString = prefs.getString('kapitels');
       fStore
           .collection("kapitel")
           .document('OQ19KZA1blQPOqI9FhRD')
           .snapshots()
           .listen((querySnapshot) {
-        if (prefs.getString('kapitel') != null) {
+        if (querySnapshot.exists) {
           var kapitelsRemote = Kapitels.fromJson(querySnapshot.data);
-          var kapitelsLocal =
-              Kapitels.fromJson(json.decode(prefs.getString('kapitel')));
-          kapitelsRemote.update(kapitelsLocal);
           _kepitolsSubject.sink.add(kapitelsRemote);
-          prefs.setString('kapitel', json.encode(kapitelsRemote.toJson()));
+        } else if (kapitelsString != null) {
+          var kapitelsLocal = Kapitels.fromJson(json.decode(kapitelsString));
+          _kepitolsSubject.sink.add(kapitelsLocal);
         } else {
-          _kepitolsSubject.sink.add(Kapitels.fromJson(querySnapshot.data));
-          prefs.setString('kapitel',
-              json.encode(Kapitels.fromJson(querySnapshot.data).toJson()));
+          _kepitolsSubject.sink.add(kapitelsDefault);
         }
       });
-    });
-  }
-
-  bookMark(Kapitel kapitel) {
-    SharedPreferences.getInstance().then((prefs) {
-      Kapitels kapitels;
-      kapitels = _kepitolsSubject.value;
-      kapitels.kepitols
-          .where((element) => element.id == kapitel.id)
-          .first
-          .isBookmarked = !(kapitels.kepitols
-              .where((element) => element.id == kapitel.id)
-              .first
-              .isBookmarked ??
-          false);
-      _kepitolsSubject.sink.add(kapitels);
-      prefs.setString('kapitel', json.encode(kapitels.toJson()));
-    });
-  }
-
-  seen(Kapitel kapitel) {
-    SharedPreferences.getInstance().then((prefs) {
-      Kapitels kapitels;
-      kapitels = _kepitolsSubject.value;
-      kapitels.kepitols
-          .where((element) => element.id == kapitel.id)
-          .first
-          .isSeen = !(kapitels.kepitols
-              ?.where((element) => element.id == kapitel.id)
-              ?.first
-              ?.isSeen ??
-          false);
-      _kepitolsSubject.sink.add(kapitels);
-      prefs.setString('kapitel', json.encode(kapitels.toJson()));
-    });
-  }
-
-  justSaw(Kapitel kapitel) {
-    SharedPreferences.getInstance().then((prefs) {
-      Kapitels kapitels;
-      kapitels = _kepitolsSubject.value;
-      kapitels.kepitols
-          .where((element) => element.id == kapitel.id)
-          .first
-          .isSeen = true;
-      _kepitolsSubject.sink.add(kapitels);
-      prefs.setString('kapitel', json.encode(kapitels.toJson()));
-    });
-  }
-
-  bookMarkThamengabeit(Kapitel kapitel, String th_id) {
-    SharedPreferences.getInstance().then((prefs) {
-      Kapitels kapitels;
-      kapitels = _kepitolsSubject.value;
-      kapitels.kepitols
-          .where((element) => element.id == kapitel.id)
-          .first
-          .kapitelInhaltes
-          .where((element) => element.id == th_id)
-          .first
-          .isBookmarked = !(kapitels.kepitols
-              .where((element) => element.id == kapitel.id)
-              .first
-              .kapitelInhaltes
-              .where((element) => element.id == th_id)
-              .first
-              .isBookmarked ??
-          false);
-      _kepitolsSubject.sink.add(kapitels);
-      prefs.setString('kapitel', json.encode(kapitels.toJson()));
-    });
-  }
-
-  seenThamengabeit(Kapitel kapitel, String th_id) {
-    SharedPreferences.getInstance().then((prefs) {
-      Kapitels kapitels;
-      kapitels = _kepitolsSubject.value;
-      kapitels.kepitols
-          .where((element) => element.id == kapitel.id)
-          .first
-          .kapitelInhaltes
-          .where((element) => element.id == th_id)
-          .first
-          .isSeen = !(kapitels.kepitols
-              ?.where((element) => element.id == kapitel.id)
-              ?.first
-              ?.kapitelInhaltes
-              ?.where((element) => element.id == th_id)
-              ?.first
-              ?.isSeen ??
-          false);
-      _kepitolsSubject.sink.add(kapitels);
-      prefs.setString('kapitel', json.encode(kapitels.toJson()));
-    });
-  }
-
-  justSawThamengabeit(Kapitel kapitel, String th_id) {
-    SharedPreferences.getInstance().then((prefs) {
-      Kapitels kapitels;
-      kapitels = _kepitolsSubject.value;
-      kapitels.kepitols
-          .where((element) => element.id == kapitel.id)
-          .first
-          .kapitelInhaltes
-          .where((element) => element.id == th_id)
-          .first
-          .isSeen = true;
-      _kepitolsSubject.sink.add(kapitels);
-      prefs.setString('kapitel', json.encode(kapitels.toJson()));
     });
   }
 
@@ -156,12 +39,14 @@ class FirebaseKepitelsDataSource {
   }
 }
 
-Kapitels kapitels = Kapitels(kepitols: [
+Kapitels kapitelsDefault = Kapitels(kepitols: [
   Kapitel(
       id: '8e2294c059d111eb9168931778d09dbc',
       prio: '1',
       header: 'Erstes',
-      description: '',
+      kapitel: 'Reise',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: 'fa16a6da2b97421bb618c71c17f3aa1b',
@@ -178,7 +63,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: 'd1c30cf059d111eb9e1ecf3e549c3962',
       prio: '2',
       header: 'Zweites',
-      description: '',
+      kapitel: 'Kleine Medikamentenkunde',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: '38277f0cc1d04b87af4e173953e40a49',
@@ -215,7 +102,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: 'e93bf63059d111eb9e1ecf3e549c3962',
       prio: '3',
       header: 'Drittes',
-      description: '',
+      kapitel: 'Tiere und Pflanzen',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: 'fa341e970e9e46d68176347f6b2e5b1b',
@@ -242,7 +131,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: 'f8f7d30059d111eb9168931778d09dbc',
       prio: '4',
       header: 'Viertes',
-      description: '',
+      kapitel: 'Sport',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: 'c05fe70f48684e248b0f6f3cd05450d1',
@@ -284,7 +175,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: '0de30c8059d211eb9168931778d09dbc',
       prio: '5',
       header: 'Fünftes',
-      description: '',
+      kapitel: 'Physikalische Beeinträchtigungen',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: 'e6d6b2a0cfa94d899ce5a381f2f5cbb6',
@@ -306,7 +199,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: '1e62877059d211eb9168931778d09dbc',
       prio: '6',
       header: 'Sechste',
-      description: '',
+      kapitel: 'Infektionen, Erkältungen & Entzündungen',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: 'd169e3d485ac47d09d6b160dbd99b9ea',
@@ -328,7 +223,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: '33e8a16059d211eb9e1ecf3e549c3962',
       prio: '7',
       header: 'Siebte',
-      description: '',
+      kapitel: 'Schmerzen',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: 'f0a1df9e68094f9ebb1dd9f31b44437d',
@@ -340,7 +237,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: '462c3a8059d211eb9168931778d09dbc',
       prio: '8',
       header: 'Achte',
-      description: '',
+      kapitel: 'Verletzungen',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: '1edd144602074ac291b368f6816158ec',
@@ -362,7 +261,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: '5a359f8059d211eb9e1ecf3e549c3962',
       prio: '9',
       header: 'Neunte',
-      description: '',
+      kapitel: 'Kreislaufstörungen / Schwindel',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: 'b115d7a3ec0845879fde7e5c7d6b900d',
@@ -374,7 +275,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: '6d5c93c059d211eb9168931778d09dbc',
       prio: '10',
       header: 'Zehnte',
-      description: '',
+      kapitel: 'Infektionskrankheiten und Impfungen',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: '1c68ea76f880445ea11f4f41ac44f650',
@@ -397,7 +300,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: '7f02664059d211eb9168931778d09dbc',
       prio: '11',
       header: 'Elfte',
-      description: '',
+      kapitel: 'Notfälle',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: '4891d3db04e54ca8a7c62d8b43050e79',
@@ -444,7 +349,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: '922d793059d211eb9168931778d09dbc',
       prio: '12',
       header: 'Zwölfte',
-      description: '',
+      kapitel: 'Techniken und Handgriffe',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: '87ecb42bfc67431ba85b31ed099a3b4b',
@@ -466,7 +373,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: 'a4cf10d059d211eb9e1ecf3e549c3962',
       prio: '13',
       header: 'Dreizehnte',
-      description: '',
+      kapitel: 'Erste Hilfe',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: '1967807928e248209b56e5a0553a2ada',
@@ -493,7 +402,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: 'b588ae9059d211eb9168931778d09dbc',
       prio: '14',
       header: 'Vierzehnte',
-      description: '',
+      kapitel: 'Regionale Gesundheitsrisiken',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: '484a2f0a98904157a1a0ef47c3c0bc3e',
@@ -530,7 +441,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: 'd2a0a64059d211eb9e1ecf3e549c3962',
       prio: '15',
       header: 'Fünfzehnte',
-      description: '',
+      kapitel: 'Malariasituation und Impfvorschriften nach Ländern',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: '47e3e4c1d08e4b1fb4985ae9451a6010',
@@ -542,7 +455,9 @@ Kapitels kapitels = Kapitels(kepitols: [
       id: 'faa9853059d211eb9168931778d09dbc',
       prio: '16',
       header: 'sechzehnte',
-      description: '',
+      kapitel: 'Autorisierte Gelbfieberimpfstellen',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       kapitelInhaltes: [
         KapitelzInhalte(
             id: '8c463e2a36394411add68fd7429d8d11',

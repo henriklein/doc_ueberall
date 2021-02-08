@@ -62,15 +62,6 @@ class _ZuletztGesehenState extends State<ZuletztGesehen> {
                       header: "Reisevorbereitung", //Header of Article
                       discription: //Needs to be initialized as "lorum Ipsum sentence, Ill add real data later"
                           "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
-
-                      bookmarkchecked: IconButton(
-                        icon: Icon(Icons.bookmark),
-                        onPressed: () {},
-                      ),
-                      checkbox: IconButton(
-                        icon: Icon(Icons.check_box_outlined),
-                        onPressed: () {},
-                      ),
                     ),
                     BuildInhaltCard(
                       artikel: "Zweites ",
@@ -78,14 +69,6 @@ class _ZuletztGesehenState extends State<ZuletztGesehen> {
                       header: "Reisen bei Vorerkrankungen",
                       discription:
                           "Erkundige dich über lokale Viren und möglichn Schutz.",
-                      bookmarkchecked: IconButton(
-                        icon: Icon(Icons.bookmark),
-                        onPressed: () {},
-                      ),
-                      checkbox: IconButton(
-                        icon: Icon(Icons.check_box_outlined),
-                        onPressed: () {},
-                      ),
                     ),
                   ]),
                 ),

@@ -78,8 +78,6 @@ class BuildKapitelCard extends StatelessWidget {
     this.header, // Chapter Name
     this.description, // Subtitle not initialized yet, just add one  "Lorum Ipsum" sentence to database
     this.keywoerter, // Article Headers inside of that Chapter shown in Row
-    this.bookmarkchecked, //common sence
-    this.checkbox,
     this.fun, //common sence
   }) : super(key: key);
   final String kapitel;
@@ -87,10 +85,7 @@ class BuildKapitelCard extends StatelessWidget {
   final String header;
   final String keywoerter;
   final String description;
-  final IconButton bookmarkchecked;
   final fun;
-
-  final IconButton checkbox;
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +161,7 @@ class BuildKapitelCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          header,
+                          header ?? '',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: primaryTextColor,
@@ -225,15 +220,15 @@ class BuildKapitelCard extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      IconButton(
-                          icon: checkbox,
-                          color: Colors.green,
-                          onPressed: () {}),
-                      IconButton(
-                        icon: bookmarkchecked,
-                        color: Colors.orange,
-                        onPressed: () {},
-                      ),
+//                      IconButton(
+//                          icon: checkbox,
+//                          color: Colors.green,
+//                          onPressed: () {}),
+//                      IconButton(
+//                        icon: bookmarkchecked,
+//                        color: Colors.orange,
+//                        onPressed: () {},
+//                      ),
                     ],
                   )
                 ],
@@ -255,17 +250,12 @@ class BuildInhaltCard extends StatelessWidget {
     this.discription, //look up
 
     this.fun,
-    this.bookmarkchecked, //Display as Tags on Dashboard and on GespeicherteArtikelViewModel.dart
-    this.checkbox, // Display on ZuletztGesehen.dart
   }) : super(key: key);
   final String artikel;
   final String intartikel;
   final String header;
   final String discription;
-  final IconButton bookmarkchecked;
   final fun;
-
-  final IconButton checkbox;
 
   @override
   Widget build(BuildContext context) {
@@ -361,15 +351,15 @@ class BuildInhaltCard extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      IconButton(
-                          icon: checkbox,
-                          color: Colors.green,
-                          onPressed: () {}),
-                      IconButton(
-                        icon: bookmarkchecked,
-                        color: Colors.orange,
-                        onPressed: () {},
-                      ),
+//                      IconButton(
+//                          icon: checkbox,
+//                          color: Colors.green,
+//                          onPressed: () {}),
+//                      IconButton(
+//                        icon: bookmarkchecked,
+//                        color: Colors.orange,
+//                        onPressed: () {},
+//                      ),
                     ],
                   )
                 ],

@@ -18,7 +18,6 @@ class _GespeicherteArtikelsState extends State<GespeicherteArtikels> {
   void initState() {
     super.initState();
     viewModel = ViewModelProvider.of<DetailScreenViewModel>(context);
-    viewModel.getBookMarkedDetails();
   }
 
   @override
@@ -42,9 +41,13 @@ class _GespeicherteArtikelsState extends State<GespeicherteArtikels> {
                 ],
               ),
             );
+
           List<Details> details = snapshot.data
-            ..sort((workA, workB) => workA.prio.compareTo(workB.prio));
-          ;
+              .where((element) => element.isBookMarked == true)
+              .toList()
+              .cast<Details>()
+                ..sort((detailA, detailB) =>
+                    detailA.index.compareTo(detailB.index));
           if (details.length == 0) {
             return Center(
               child: Column(

@@ -13,9 +13,19 @@ class Details {
   DateTime lastSeen;
   bool isSeen;
   bool isBookMarked;
+  int index;
 
-  Details(this.kapitel, this.kapitelId, this.themengebietId, this.themengebiet,
-      this.header, this.prio, this.text, this.articleText, this.link);
+  Details(
+      this.kapitel,
+      this.kapitelId,
+      this.themengebietId,
+      this.themengebiet,
+      this.header,
+      this.prio,
+      this.text,
+      this.articleText,
+      this.link,
+      this.index);
 
   @override
   String toString() {
@@ -47,6 +57,7 @@ class Details {
         : DateTime.fromMillisecondsSinceEpoch(json['last_seen']);
     isSeen = json['is_seen'];
     isBookMarked = json['is_bookmarked'];
+    index = json['index'];
   }
 
   Map<String, dynamic> toJson() {
@@ -64,7 +75,8 @@ class Details {
     data['icon'] = this.icon;
     data['last_seen'] = this.lastSeen?.millisecondsSinceEpoch;
     data['is_seen'] = this.isSeen;
-    data['is_bookmarked'] = this.isBookMarked;
+    data['is_bookmarked'] = this.isSeen;
+    data['index'] = this.index;
     return data..removeWhere((_, value) => value == null);
   }
 }

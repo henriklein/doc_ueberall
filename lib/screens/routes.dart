@@ -58,10 +58,16 @@ class AppRoutes {
             detail =
                 (ModalRoute.of(context).settings.arguments as Map)['detail'];
           }
+          var viewModel = c.get<DetailScreenViewModel>(
+              creator: "DetailScreenViewModel",
+              mode: dioc.InjectMode.singleton);
+          viewModel.justSaw(detail);
+          detail.isSeen = true;
           return ViewModelProvider<DetailScreenViewModel>(
-            child: DetailPage(detail: detail),
-            viewmodel: c.get<DetailScreenViewModel>(
-                creator: "DetailScreenViewModel", mode: dioc.InjectMode.create),
+            child: DetailPage(
+              detail: detail,
+            ),
+            viewmodel: viewModel,
           );
         },
         AppRoutes.ARTICLE_LIST: (context) {

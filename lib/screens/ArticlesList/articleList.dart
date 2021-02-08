@@ -24,7 +24,6 @@ class _ArticleListState extends State<ArticleList> {
   void initState() {
     super.initState();
     viewModel = ViewModelProvider.of<DetailScreenViewModel>(context);
-    viewModel.getDetails(widget.thId);
   }
 
   @override
@@ -48,20 +47,16 @@ class _ArticleListState extends State<ArticleList> {
               ),
             );
           List<Details> details = snapshot.data
-            ..sort((workA, workB) => workA.prio.compareTo(workB.prio));
-          ;
+              .where((element) => element.themengebietId == widget.thId)
+              .toList()
+              .cast<Details>()
+                ..sort((detailA, detailB) =>
+                    detailA.index.compareTo(detailB.index));
           if (details.length == 0) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-//                        Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.3),),
-//                  Image.asset(
-//                    "assets/no_chats.png",
-////                    color: AppColors.darkBlue[900],
-//                    height: 120,
-//                    fit: BoxFit.fitHeight,
-//                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height * 0.3),
@@ -125,19 +120,19 @@ class _ArticleListState extends State<ArticleList> {
                             return BuildArticleCard(
                               artikel: detail
                                   .header, //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
-                              intartikel:
-                                  detail.prio ?? '', //int of current article
+                              intartikel: detail?.index?.toString() ??
+                                  '', //int of current article
                               header: detail
                                   .text, //Header of Article inside of theee Chapter
                               discription: detail
                                   .articleText, //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
                               fun: () {
-                                viewModel.justSaw(detail);
                                 Navigator.of(context).pushNamed(
                                     AppRoutes.DETAILPAGE,
                                     arguments: {
                                       'detail': detail
-                                    }); //Link to Information page
+                                    }).then((value) =>
+                                    setState(() {})); //Link to Information page
                               },
 //                              bookmarkchecked: Icon(Icons.bookmark_outline),
                               bookmarkchecked: IconButton(
@@ -146,11 +141,7 @@ class _ArticleListState extends State<ArticleList> {
                                     : Icon(Icons.bookmark_outline),
                                 onPressed: () {
                                   viewModel.bookMark(detail);
-                                  setState(() {
-                                    details[index].isBookMarked !=
-                                            details[index]?.isBookMarked ??
-                                        false;
-                                  });
+                                  setState(() {});
                                 },
                               ),
                               checkbox: IconButton(

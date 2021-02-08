@@ -77,37 +77,9 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
                             .themengebiet, //Header of Article inside of theee Chapter
                         discription: inhaltes[index]
                             .description, //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
-
-                        bookmarkchecked: IconButton(
-                          icon: (inhaltes[index]?.isBookmarked ?? false)
-                              ? Icon(Icons.bookmark)
-                              : Icon(Icons.bookmark_outline),
-                          onPressed: () {
-                            viewModel.bookMarkInhalte(
-                                widget.kapitel, inhaltes[index].id);
-                            setState(() {
-                              inhaltes[index].isBookmarked !=
-                                  (inhaltes[index]?.isBookmarked ?? false);
-                            });
-                          },
-                        ),
-                        checkbox: IconButton(
-                          icon: (inhaltes[index]?.isSeen ?? false)
-                              ? Icon(Icons.check_box_outlined)
-                              : Icon(Icons.check_box_outline_blank),
-                          onPressed: () {
-                            viewModel.seenInhalte(
-                                widget.kapitel, inhaltes[index].id);
-                            setState(() {
-                              inhaltes[index].isSeen !=
-                                      inhaltes[index]?.isSeen ??
-                                  false;
-                            });
-                          },
-                        ),
                         fun: () {
-                          viewModel.justSawThamengabeit(
-                              widget.kapitel, inhaltes[index].id);
+//                          viewModel.justSawThamengabeit(
+//                              widget.kapitel, inhaltes[index].id);
                           Navigator.of(context)
                               .pushNamed(AppRoutes.ARTICLE_LIST, arguments: {
                             'th_id': inhaltes[index].id,

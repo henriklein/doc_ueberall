@@ -59,15 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ?.toList()
                         ?.cast<Details>() ??
                     [];
-                list?.sort(
-                    (workA, workB) => workA.lastSeen.compareTo(workB.lastSeen));
-                List<String> strList = [];
-                for (var item in list) {
-                  strList.add(item.text);
-                  if (strList.length == 5) break;
-                }
+//                list?.sort(
+//                    (workA, workB) => workA.lastSeen.compareTo(workB.lastSeen));
                 return Search(
-                  tags: list.sublist(0, min(list.length, 4)),
+                  tags: list.sublist(0, min(list.length, 5)),
                 );
               },
             ),
