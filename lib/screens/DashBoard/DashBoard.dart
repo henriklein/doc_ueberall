@@ -391,7 +391,7 @@ class Search extends StatelessWidget {
                                       width: 5,
                                     ),
                                     Text(
-                                      "${tags[index].icon} ${tags[index].text}",
+                                      "${tags[index].icon ?? ""} ${tags[index].text}",
                                       style: TextStyle(fontSize: 12),
                                     )
                                   ],

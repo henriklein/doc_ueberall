@@ -340,7 +340,7 @@ class BuildInhaltCard extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          discription,
+                          discription ?? "",
                           style: TextStyle(
                             color: secondaryTextColor,
                             fontSize: 13,

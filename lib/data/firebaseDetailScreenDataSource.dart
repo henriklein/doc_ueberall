@@ -49,20 +49,6 @@ class FirebaseDetailScreenDataSource {
     });
   }
 
-//  List<Details> getDetails(String themengebietId) {
-//    return _detailScreenSubject.value
-//        .where((element) => element.themengebietId == themengebietId)
-//        .toList()
-//        .cast<Details>();
-//  }
-//
-//  List<Details> getBookMarkedDetails() {
-//    return _detailScreenSubject.value
-//        ?.where((element) => element.isBookMarked == true)
-//        ?.toList()
-//        ?.cast<Details>();
-//  }
-
   bookMark(Details detail) {
     SharedPreferences.getInstance().then((prefs) {
       List<Details> details;

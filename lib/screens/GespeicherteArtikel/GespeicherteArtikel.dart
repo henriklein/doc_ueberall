@@ -140,11 +140,11 @@ class _GespeicherteArtikelsState extends State<GespeicherteArtikels> {
                                     : Icon(Icons.bookmark_outline),
                                 onPressed: () {
                                   viewModel.bookMark(detail);
-                                  setState(() {
-                                    details[index].isBookMarked !=
-                                            details[index]?.isBookMarked ??
-                                        false;
-                                  });
+//                                  setState(() {
+////                                    details[index].isBookMarked !=
+////                                            details[index]?.isBookMarked ??
+////                                        false;
+//                                  });
                                 },
                               ),
                               checkbox: IconButton(
@@ -153,11 +153,11 @@ class _GespeicherteArtikelsState extends State<GespeicherteArtikels> {
                                     : Icon(Icons.check_box_outline_blank),
                                 onPressed: () {
                                   viewModel.seen(detail);
-                                  setState(() {
-                                    details[index].isSeen !=
-                                            details[index]?.isSeen ??
-                                        false;
-                                  });
+//                                  setState(() {
+////                                    details[index].isSeen !=
+////                                            details[index]?.isSeen ??
+////                                        false;
+//                                  });
                                 },
                               ),
                             );

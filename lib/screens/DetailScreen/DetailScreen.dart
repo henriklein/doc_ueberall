@@ -184,7 +184,7 @@ class _DetailPageState extends State<DetailPage> {
 //                              icon: Icon(Icons.check_box_outline_blank),
                                   onPressed: () {
                                     setState(() {
-                                      detail.isSeen != detail?.isSeen ?? false;
+//                                      detail.isSeen != detail?.isSeen ?? false;
                                     });
                                     viewModel.seen(detail);
                                   },
@@ -200,9 +200,9 @@ class _DetailPageState extends State<DetailPage> {
                                     onPressed: () {
                                       viewModel.bookMark(detail);
                                       setState(() {
-                                        detail.isBookMarked !=
-                                                detail?.isBookMarked ??
-                                            false;
+//                                        detail.isBookMarked !=
+//                                                detail?.isBookMarked ??
+//                                            false;
                                       });
                                     })
                               ],
@@ -242,7 +242,7 @@ class _DetailPageState extends State<DetailPage> {
                               : Icon(Icons.bookmark_outline),
                           onPressed: () {
                             viewModel.bookMark(nextDetail);
-                            setState(() {});
+//                            setState(() {});
                           },
                         ),
                         checkbox: IconButton(
@@ -251,9 +251,9 @@ class _DetailPageState extends State<DetailPage> {
                               : Icon(Icons.check_box_outline_blank),
                           onPressed: () {
                             viewModel.seen(nextDetail);
-                            setState(() {
-                              nextDetail.isSeen != nextDetail?.isSeen ?? false;
-                            });
+//                            setState(() {
+////                              nextDetail.isSeen != nextDetail?.isSeen ?? false;
+//                            });
                           },
                         ),
                       ),

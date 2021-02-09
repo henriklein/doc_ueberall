@@ -89,8 +89,12 @@ class _ArticleListState extends State<ArticleList> {
                         }),
                     Flexible(
                         child: Text(
-                      "Alle Kapitel", //ALL Chaptors
+                      widget.kapitel.kapitelInhaltes
+                          .where((element) => element.id == widget.thId)
+                          .first
+                          .themengebiet, //ALL Chaptors
                       style: TextStyle(fontSize: 30, color: primaryTextColor),
+                      maxLines: 1, overflow: TextOverflow.ellipsis,
                     )),
                   ],
                 ),

@@ -55,7 +55,7 @@ class Details {
     lastSeen = json['last_seen'] == null
         ? null
         : DateTime.fromMillisecondsSinceEpoch(json['last_seen']);
-    isSeen = json['is_seen'];
+    isSeen = json['is_seen'] ?? false;
     isBookMarked = json['is_bookmarked'];
     index = json['index'];
   }
