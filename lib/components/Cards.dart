@@ -1,7 +1,9 @@
 import 'package:doc_ueberall/constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+
 
 /*
 ---
@@ -19,17 +21,102 @@ class TopicCard extends StatelessWidget {
       this.description,
       this.imgURL,
       this.bgColor,
-      this.press})
+      this.press,
+      })
       : super(key: key);
+
 
   final String header;
   final String description;
   final String imgURL;
   final Color bgColor;
   final Function press;
+ // final Widget trailing;
 
   @override
   Widget build(BuildContext context) {
+
+    return Card(
+
+        color: bgColor.withOpacity(0.35),
+
+
+      child: Padding(
+        padding: EdgeInsets.all(0.0),
+        child: ExpansionTile(
+
+//          trailing: widget.trailing ?? RotationTransition(
+//            turns: _iconTurns,
+//            child: const Icon(Icons.expand_more),
+//          ),
+          title:  DecoratedBox(
+            decoration: BoxDecoration(
+              //color: bgColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(0),
+              child: ListTile(
+                leading: Container(
+                    width: 70,
+                    child: SvgPicture.asset(
+                      imgURL,
+                      width: 70,
+                      height: 70,
+                    )),
+                title: Text(
+                  header,
+                  style: TextStyle(
+                    color: primaryTextColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  description,
+                  style: TextStyle(
+                    color: secondaryTextColor.withOpacity(0.7),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0,right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Big Bang'),
+                  Icon(Icons.arrow_forward_ios,size: 10,),
+                ],
+              ),
+            ),
+            SizedBox(height: 15,),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Birth of the Sun'),
+                  Icon(Icons.arrow_forward_ios,size: 10,),
+                ],
+              ),
+            ),
+            SizedBox(height: 15,),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Earth is Born'),
+                  Icon( Icons.arrow_forward_ios,size: 10,)
+                ]
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
     return InkWell(
       onTap: () {
         press();
