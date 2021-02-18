@@ -9,8 +9,11 @@ import 'package:doc_ueberall/constant.dart';
 
 class DetailPage extends StatefulWidget {
   final Details detail;
+  final int kapitelInt;
+  final int topicInt;
 
-  const DetailPage({Key key, this.detail}) : super(key: key);
+  const DetailPage({Key key, this.detail, this.kapitelInt, this.topicInt})
+      : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -62,7 +65,9 @@ class _DetailPageState extends State<DetailPage> {
                   child: Opacity(
                       opacity: 0.2,
                       child: Image.network(
-                        "https://images.all-free-download.com/images/graphiclarge/travel_people_icons_design_camera_and_luggages_style_6826459.jpg",
+                        (detail.backgroundImg != '')
+                            ? detail.backgroundImg
+                            : "https://images.all-free-download.com/images/graphiclarge/travel_people_icons_design_camera_and_luggages_style_6826459.jpg",
                         scale: 2.2,
                       )),
                 ),
@@ -76,7 +81,15 @@ class _DetailPageState extends State<DetailPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(height: 300),
-
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'index / ${widget.detail.index}',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
                             /*
                         ---
                          Display Article Name
@@ -93,7 +106,8 @@ class _DetailPageState extends State<DetailPage> {
                               textAlign: TextAlign.left,
                             ),
                             Text(
-                              'Alles auf eienem Blick!', //Everything oyou need to know (static)
+                              detail.subHeading ??
+                                  '', //Everything oyou need to know (static)
                               style: TextStyle(
                                 fontFamily: 'Avenir',
                                 fontSize: 31,
@@ -128,19 +142,23 @@ class _DetailPageState extends State<DetailPage> {
                             SizedBox(
                               height: 30,
                             ),
-                            Text(
-                              'Web Links',
-                              style: TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 25,
-                                color: primaryTextColor,
-                                fontWeight: FontWeight.w300,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            (detail.link == '')
+                                ? Container()
+                                : Text(
+                                    'Web Links',
+                                    style: TextStyle(
+                                      fontFamily: 'Avenir',
+                                      fontSize: 25,
+                                      color: primaryTextColor,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                            (detail.link == '')
+                                ? Container()
+                                : SizedBox(
+                                    height: 10,
+                                  ),
 
                             /*
                         ---
@@ -148,17 +166,25 @@ class _DetailPageState extends State<DetailPage> {
                         Initialize as weblink = "";
                         ---
                         */
-                            Text(
-                              detail.link,
-                              style: TextStyle(color: secondaryTextColor),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(color: kGreyColor),
-                            SizedBox(
-                              height: 30,
-                            ),
+                            (detail.link == '')
+                                ? Container()
+                                : Text(
+                                    detail.link,
+                                    style: TextStyle(color: secondaryTextColor),
+                                  ),
+                            (detail.link == '')
+                                ? Container()
+                                : SizedBox(
+                                    height: 10,
+                                  ),
+                            (detail.link == '')
+                                ? Container()
+                                : Divider(color: kGreyColor),
+                            (detail.link == '')
+                                ? Container()
+                                : SizedBox(
+                                    height: 30,
+                                  ),
                             Text(
                               'Schnellaktionen', //quick actions
                               style: TextStyle(
@@ -221,10 +247,9 @@ class _DetailPageState extends State<DetailPage> {
                   ---
                   */
                       BuildArticleCard(
-                        artikel: nextDetail.header ??
-                            '', //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
-                        intartikel:
-                            nextDetail.prio ?? '', //int of current article
+                        artikel:
+                            'Next up', //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
+                        intartikel: '', //int of current article
                         header: nextDetail
                             .text, //Header of Article inside of theee Chapter
                         discription: nextDetail
@@ -280,11 +305,25 @@ class _DetailPageState extends State<DetailPage> {
                     textAlign: TextAlign.left,
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.arrow_back_ios),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
+                            arguments: {
+                              'detail': nextDetail
+                            }); //Link to Information page
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

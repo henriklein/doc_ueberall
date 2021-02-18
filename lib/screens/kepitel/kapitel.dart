@@ -38,7 +38,7 @@ class _KapitolScreenState extends State<KapitolScreen> {
                         top: MediaQuery.of(context).size.height * 0.3),
                   ),
                   Text(
-                    "All Chapter will appear here",
+                    "",
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: 22,
@@ -96,7 +96,8 @@ class _KapitolScreenState extends State<KapitolScreen> {
                             return BuildKapitelCard(
                               kapitel: chapter
                                   .header, //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
-                              intKapitel: chapter.prio, //in of current Chapter
+                              intKapitel: chapter.prio
+                                  ?.toString(), //in of current Chapter
                               header: chapter.kapitel, //Header of Chapter
                               description: chapter
                                   .description, //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later

@@ -1,9 +1,12 @@
 import 'package:doc_ueberall/constant.dart';
+import 'package:doc_ueberall/screens/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchBar extends StatelessWidget {
+  String currentStr;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -18,6 +21,9 @@ class SearchBar extends StatelessWidget {
           ),
           child: Center(
             child: TextField(
+              onChanged: (str) {
+                currentStr = str;
+              },
               decoration: InputDecoration.collapsed(
                 hintText: 'Hier suchen!', //search  here
               ),
@@ -29,6 +35,11 @@ class SearchBar extends StatelessWidget {
           child: MaterialButton(
             onPressed: () {
               HapticFeedback.heavyImpact();
+              if (currentStr != null)
+                Navigator.of(context)
+                    .pushNamed(AppRoutes.SEARCH_LIST, arguments: {
+                  'search_string': currentStr,
+                });
             },
             color: kRedColor,
             padding: EdgeInsets.symmetric(

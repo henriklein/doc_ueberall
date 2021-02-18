@@ -71,8 +71,9 @@ class _KapitelInhalteState extends State<KapitelInhalte> {
                       return BuildInhaltCard(
                         artikel: inhaltes[index]
                             .header, //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
-                        intartikel:
-                            inhaltes[index].prio, //int of current article
+                        intartikel: inhaltes[index]
+                            .prio
+                            .toString(), //int of current article
                         header: inhaltes[index]
                             .themengebiet, //Header of Article inside of theee Chapter
                         discription: inhaltes[index]

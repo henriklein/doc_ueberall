@@ -7,6 +7,7 @@ import 'package:doc_ueberall/screens/DetailScreen/DetailScreen.dart';
 import 'package:doc_ueberall/screens/DetailScreen/viewModel/DetailScreenViewModel.dart';
 import 'package:doc_ueberall/screens/GespeicherteArtikel/GespeicherteArtikel.dart';
 import 'package:doc_ueberall/screens/KapitelInhalte/KapitelInhalte.dart';
+import 'package:doc_ueberall/screens/SearchedArtikel/SearchedArtikel.dart';
 import 'package:doc_ueberall/screens/kepitel/kapitel.dart';
 import 'package:doc_ueberall/screens/kepitel/viewModel/kepitelViewModel.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
@@ -20,6 +21,7 @@ class AppRoutes {
   static const String HOME = "/home";
   static const String DETAILPAGE = "/detailpage";
   static const String ARTICLE_LIST = "/articlelist";
+  static const String SEARCH_LIST = "/searchlist";
   static const String KAPITELINHALTE = "/kapitelinhalte";
   static const String GESPEICHERTE_ARTIKELS = "/GespeicherteArtikels";
 
@@ -54,9 +56,15 @@ class AppRoutes {
         },
         AppRoutes.DETAILPAGE: (context) {
           Details detail;
+          int kapitelInt;
+          int topicInt;
           if (ModalRoute.of(context).isCurrent) {
             detail =
                 (ModalRoute.of(context).settings.arguments as Map)['detail'];
+            kapitelInt = (ModalRoute.of(context).settings.arguments
+                as Map)['kapitel_int'];
+            topicInt =
+                (ModalRoute.of(context).settings.arguments as Map)['topic_int'];
           }
           var viewModel = c.get<DetailScreenViewModel>(
               creator: "DetailScreenViewModel",
@@ -66,6 +74,8 @@ class AppRoutes {
           return ViewModelProvider<DetailScreenViewModel>(
             child: DetailPage(
               detail: detail,
+              kapitelInt: kapitelInt,
+              topicInt: topicInt,
             ),
             viewmodel: viewModel,
           );
@@ -90,6 +100,20 @@ class AppRoutes {
         AppRoutes.GESPEICHERTE_ARTIKELS: (context) {
           return ViewModelProvider<DetailScreenViewModel>(
             child: GespeicherteArtikels(),
+            viewmodel: c.get<DetailScreenViewModel>(
+                creator: "DetailScreenViewModel", mode: dioc.InjectMode.create),
+          );
+        },
+        AppRoutes.SEARCH_LIST: (context) {
+          String searchStr;
+          if (ModalRoute.of(context).isCurrent) {
+            searchStr = (ModalRoute.of(context).settings.arguments
+                as Map)['search_string'];
+          }
+          return ViewModelProvider<DetailScreenViewModel>(
+            child: SearchedArtikels(
+              searchStr: searchStr,
+            ),
             viewmodel: c.get<DetailScreenViewModel>(
                 creator: "DetailScreenViewModel", mode: dioc.InjectMode.create),
           );

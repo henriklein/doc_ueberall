@@ -429,7 +429,7 @@ class BuildArticleCard extends StatelessWidget {
                             ),
                             children: [
                               TextSpan(
-                                text: " Thema",
+                                text: (artikel == "Next up") ? "" : " Thema",
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   color: secondaryTextColor,

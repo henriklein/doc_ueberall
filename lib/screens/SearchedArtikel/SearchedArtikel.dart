@@ -1,24 +1,21 @@
 import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/constant.dart';
-import 'package:doc_ueberall/data/counting.dart';
 import 'package:doc_ueberall/model/kapitelDetails.dart';
-import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:doc_ueberall/screens/DetailScreen/viewModel/DetailScreenViewModel.dart';
 import 'package:doc_ueberall/screens/routes.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
 import 'package:flutter/material.dart';
 
-class ArticleList extends StatefulWidget {
-  final Kapitel kapitel;
-  final String thId;
+class SearchedArtikels extends StatefulWidget {
+  final String searchStr;
 
-  const ArticleList({Key key, this.kapitel, this.thId}) : super(key: key);
+  const SearchedArtikels({Key key, this.searchStr}) : super(key: key);
 
   @override
-  _ArticleListState createState() => _ArticleListState();
+  _SearchedArtikelsState createState() => _SearchedArtikelsState();
 }
 
-class _ArticleListState extends State<ArticleList> {
+class _SearchedArtikelsState extends State<SearchedArtikels> {
   DetailScreenViewModel viewModel;
 
   @override
@@ -29,6 +26,7 @@ class _ArticleListState extends State<ArticleList> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: StreamBuilder<List<Details>>(
@@ -47,17 +45,28 @@ class _ArticleListState extends State<ArticleList> {
                 ],
               ),
             );
+
           List<Details> details = snapshot.data
-              .where((element) => element.themengebietId == widget.thId)
+              .where((element) =>
+                  element.articleText.contains(widget.searchStr) ||
+                  element.text.contains(widget.searchStr))
               .toList()
               .cast<Details>()
                 ..sort((detailA, detailB) =>
                     detailA.index.compareTo(detailB.index));
           if (details.length == 0) {
+            Navigator.pop(context);
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
+//                        Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.3),),
+//                  Image.asset(
+//                    "assets/no_chats.png",
+////                    color: AppColors.darkBlue[900],
+//                    height: 120,
+//                    fit: BoxFit.fitHeight,
+//                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height * 0.3),
@@ -90,12 +99,8 @@ class _ArticleListState extends State<ArticleList> {
                         }),
                     Flexible(
                         child: Text(
-                      widget.kapitel.kapitelInhaltes
-                          .where((element) => element.id == widget.thId)
-                          .first
-                          .themengebiet, //ALL Chaptors
+                      "Gespeicherte Artikel", //saved Articles
                       style: TextStyle(fontSize: 30, color: primaryTextColor),
-                      maxLines: 1, overflow: TextOverflow.ellipsis,
                     )),
                   ],
                 ),
@@ -123,28 +128,17 @@ class _ArticleListState extends State<ArticleList> {
                           itemBuilder: (context, index) {
                             var detail = details[index];
                             return BuildArticleCard(
-                              artikel: countList[detail
-                                  .index], //Displaying Noumber of Article inside that Chapter as wirtten out (Initialize as "", Ill add real data later using firebase)
-                              intartikel: detail?.index?.toString() ??
-                                  '', //int of current article
                               header: detail
                                   .text, //Header of Article inside of theee Chapter
                               discription: detail
                                   .articleText, //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
                               fun: () {
+                                viewModel.justSaw(detail);
                                 Navigator.of(context).pushNamed(
                                     AppRoutes.DETAILPAGE,
                                     arguments: {
-                                      'detail': detail,
-                                      'kapitel_int': widget.kapitel.prio,
-                                      'topic_int': widget
-                                          .kapitel.kapitelInhaltes
-                                          .where((element) =>
-                                              element.id == widget.thId)
-                                          .first
-                                          .prio
-                                    }).then((value) =>
-                                    setState(() {})); //Link to Information page
+                                      'detail': detail
+                                    }); //Link to Information page
                               },
 //                              bookmarkchecked: Icon(Icons.bookmark_outline),
                               bookmarkchecked: IconButton(
@@ -152,8 +146,12 @@ class _ArticleListState extends State<ArticleList> {
                                     ? Icon(Icons.bookmark)
                                     : Icon(Icons.bookmark_outline),
                                 onPressed: () {
-                                  viewModel.bookMark(details[index]);
-                                  setState(() {});
+                                  viewModel.bookMark(detail);
+//                                  setState(() {
+////                                    details[index].isBookMarked !=
+////                                            details[index]?.isBookMarked ??
+////                                        false;
+//                                  });
                                 },
                               ),
                               checkbox: IconButton(
@@ -161,12 +159,12 @@ class _ArticleListState extends State<ArticleList> {
                                     ? Icon(Icons.check_box_outlined)
                                     : Icon(Icons.check_box_outline_blank),
                                 onPressed: () {
-                                  viewModel.seen(details[index]);
-                                  setState(() {
-//                                    details[index].isSeen !=
-//                                            details[index]?.isSeen ??
-//                                        false;
-                                  });
+                                  viewModel.seen(detail);
+//                                  setState(() {
+////                                    details[index].isSeen !=
+////                                            details[index]?.isSeen ??
+////                                        false;
+//                                  });
                                 },
                               ),
                             );
@@ -177,6 +175,91 @@ class _ArticleListState extends State<ArticleList> {
           );
         },
       ),
+//      Column(
+//        children: [
+//          Padding(
+//            padding: EdgeInsets.fromLTRB(20, 50, 30, 20),
+//            child: Row(
+//              children: [
+//                IconButton(
+//                    icon: Icon(Icons.arrow_back_ios),
+//                    onPressed: () {
+//                      Navigator.pop(context);
+//                    }),
+//                Flexible(
+//                    child: Text(
+//                  "Gespeicherte Artikel", //saved Articles
+//                  style: TextStyle(fontSize: 30, color: primaryTextColor),
+//                )),
+//              ],
+//            ),
+//          ),
+//          Expanded(
+//            child: Container(
+//              decoration: BoxDecoration(
+//                color: kBackgroundColor,
+//                borderRadius: BorderRadius.only(
+//                    topLeft: Radius.circular(30),
+//                    topRight: Radius.circular(23)),
+//                boxShadow: [
+//                  BoxShadow(
+//                    color: Colors.grey.withOpacity(0.5),
+//                    spreadRadius: 3,
+//                    blurRadius: 5,
+//                    offset: Offset(0, 3), // changes position of shadow
+//                  ),
+//                ],
+//              ),
+//              child: Padding(
+//                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+//                child: SingleChildScrollView(
+//                  child: Column(children: <Widget>[
+//                    SizedBox(
+//                      height: height * 0.05,
+//                    ),
+//
+//                    /*
+//                    ---
+//                      Two Examples of Saved Articles (Bookmarked)
+//                    ---
+//                    */
+//                    BuildInhaltCard(
+//                      artikel: "Erstes ",
+//                      intartikel: "1",
+//                      header: "Reisevorbereitung",
+//                      discription:
+//                          "Alles was sie zum Reiseantritt wissen müssen auf einen Blick.",
+//                      bookmarkchecked: IconButton(
+//                        icon: Icon(Icons.bookmark),
+//                        onPressed: () {},
+//                      ),
+//                      checkbox: IconButton(
+//                        icon: Icon(Icons.check_box_outlined),
+//                        onPressed: () {},
+//                      ),
+//                    ),
+//                    BuildInhaltCard(
+//                      artikel: "Zweites ",
+//                      intartikel: "2",
+//                      header: "Reisen bei Vorerkrankungen",
+//                      discription:
+//                          "Erkundige dich über lokale Viren und möglichn Schutz.",
+//                      bookmarkchecked: IconButton(
+//                        icon: Icon(Icons.bookmark),
+//                        onPressed: () {},
+//                      ),
+//                      checkbox: IconButton(
+//                        icon: Icon(Icons.check_box_outlined),
+//                        onPressed: () {},
+//                      ),
+//                    ),
+//                  ]),
+//                ),
+//              ),
+//            ),
+//          ),
+//        ],
+//      ),
     );
   }
 }

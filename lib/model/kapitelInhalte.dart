@@ -1,7 +1,7 @@
 class KapitelzInhalte {
   String id;
   String themengebiet;
-  String prio;
+  int prio;
   String header;
   String description;
 //  String bookmarkchecked;
@@ -27,7 +27,7 @@ class KapitelzInhalte {
 
   KapitelzInhalte.fromJson(Map<String, dynamic> json) {
     id = json['Tg_id'];
-    prio = json['prio'];
+    prio = int.parse(json['prio']);
     themengebiet = json['themengebiet'];
 //    bookmarkchecked = json['bookmarkchecked'];
     header = json['header'];

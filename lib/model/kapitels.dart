@@ -46,7 +46,7 @@ class Kapitels {
 class Kapitel {
   String id;
   String kapitel;
-  String prio;
+  int prio;
   String header;
   String description;
 //  bool isSeen;
@@ -73,7 +73,7 @@ class Kapitel {
     return Kapitel(
       id: json['id'],
       kapitel: json['kapitel'],
-      prio: json['prio'] ?? "",
+      prio: int.parse(json['prio']),
       header: json['header'],
       description: json['description'] ?? "",
 //      isSeen: json['is_seen'],

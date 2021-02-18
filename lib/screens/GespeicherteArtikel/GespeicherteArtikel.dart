@@ -65,7 +65,7 @@ class _GespeicherteArtikelsState extends State<GespeicherteArtikels> {
                         top: MediaQuery.of(context).size.height * 0.3),
                   ),
                   Text(
-                    "All Chapter will appear here",
+                    "",
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: 22,
