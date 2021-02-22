@@ -9,10 +9,12 @@ import 'package:doc_ueberall/constant.dart';
 
 class DetailPage extends StatefulWidget {
   final Details detail;
+  final int totalDetails;
   final int kapitelInt;
   final int topicInt;
 
-  const DetailPage({Key key, this.detail, this.kapitelInt, this.topicInt})
+  const DetailPage(
+      {Key key, this.detail, this.kapitelInt, this.topicInt, this.totalDetails})
       : super(key: key);
 
   @override

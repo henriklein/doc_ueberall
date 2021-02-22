@@ -56,11 +56,14 @@ class AppRoutes {
         },
         AppRoutes.DETAILPAGE: (context) {
           Details detail;
+          int totalDetails;
           int kapitelInt;
           int topicInt;
           if (ModalRoute.of(context).isCurrent) {
             detail =
                 (ModalRoute.of(context).settings.arguments as Map)['detail'];
+            kapitelInt = (ModalRoute.of(context).settings.arguments
+                as Map)['kapitel_int'];
             kapitelInt = (ModalRoute.of(context).settings.arguments
                 as Map)['kapitel_int'];
             topicInt =
