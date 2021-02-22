@@ -26,14 +26,14 @@ class AppRoutes {
   static const String GESPEICHERTE_ARTIKELS = "/GespeicherteArtikels";
 
   static get routes => {
-        AppRoutes.KEPITOL: (context) {
-          var viewModel = c.get<KepitolsViewModel>(
-              creator: "KepitolsViewModel", mode: dioc.InjectMode.singleton);
-          return ViewModelProvider<KepitolsViewModel>(
-            child: KapitolScreen(),
-            viewmodel: viewModel,
-          );
-        },
+//        AppRoutes.KEPITOL: (context) {
+//          var viewModel = c.get<KepitolsViewModel>(
+//              creator: "KepitolsViewModel", mode: dioc.InjectMode.singleton);
+//          return ViewModelProvider<KepitolsViewModel>(
+//            child: KapitolScreen(),
+//            viewmodel: viewModel,
+//          );
+//        },
         AppRoutes.HOME: (context) {
           var viewModel = c.get<DashBoardViewModel>(
               creator: "DashBoardViewModel", mode: dioc.InjectMode.singleton);

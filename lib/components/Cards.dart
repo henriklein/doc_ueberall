@@ -1,4 +1,6 @@
 import 'package:doc_ueberall/constant.dart';
+import 'package:doc_ueberall/model/kapitels.dart';
+import 'package:doc_ueberall/screens/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -73,169 +75,94 @@ class TopicCard extends StatelessWidget {
 class BuildKapitelCard extends StatelessWidget {
   const BuildKapitelCard({
     Key key,
-    this.kapitel, //Chapter noumber written out (first (chapteer), second (chapter), etc...)
-    this.intKapitel, // Chapter as Intiger
-    this.header, // Chapter Name
-    this.description, // Subtitle not initialized yet, just add one  "Lorum Ipsum" sentence to database
-    this.keywoerter, // Article Headers inside of that Chapter shown in Row
-    this.fun, //common sence
+    this.kapitel, //common sence
   }) : super(key: key);
-  final String kapitel;
-  final String intKapitel;
-  final String header;
-  final String keywoerter;
-  final String description;
-  final fun;
+  final Kapitel kapitel;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: fun,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 25),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 15,
-                  height: 10,
-                  decoration: BoxDecoration(
-                      color: kRedColor,
-                      borderRadius: BorderRadius.horizontal(
-                        right: Radius.circular(5),
-                      )),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width - 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                            text: kapitel,
+    return Container(
+      margin: EdgeInsets.only(bottom: 25),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.grey[300]),
+                borderRadius: BorderRadius.circular(20)),
+            margin: EdgeInsets.only(right: 10, left: 30),
+            padding: EdgeInsets.all(20),
+            child: ExpansionTile(
+//          trailing: widget.trailing ?? RotationTransition(
+//            turns: _iconTurns,
+//            child: const Icon(Icons.expand_more),
+//          ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            kapitel.kapitel ?? '',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: primaryTextColor,
+                              fontSize: 15,
                             ),
-                            children: [
-                              TextSpan(
-                                text: " Kapitel",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: secondaryTextColor,
-                                ),
-                              )
-                            ]),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            kapitel.description,
+                            style: TextStyle(
+                              color: secondaryTextColor,
+                              fontSize: 13,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
-                      Text(
-                        intKapitel,
-                        style: TextStyle(
-                          color: primaryTextColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[300]),
-                  borderRadius: BorderRadius.circular(20)),
-              margin: EdgeInsets.only(right: 10, left: 30),
-              padding: EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          header ?? '',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: primaryTextColor,
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          description,
-                          style: TextStyle(
-                            color: secondaryTextColor,
-                            fontSize: 13,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.edit,
-                              size: 20,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Themengebiete", //Articles Covered
-                                    style: TextStyle(
-                                        fontSize: 15, color: primaryTextColor),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    keywoerter,
-                                    style: TextStyle(
-                                      color: secondaryTextColor,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        )
-                      ],
                     ),
-                  ),
-                  Column(
-                    children: [
-//                      IconButton(
-//                          icon: checkbox,
-//                          color: Colors.green,
-//                          onPressed: () {}),
-//                      IconButton(
-//                        icon: bookmarkchecked,
-//                        color: Colors.orange,
-//                        onPressed: () {},
-//                      ),
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+                  ],
+                ),
+                children: kapitel.kapitelInhaltes
+                    .map((e) => InkWell(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(AppRoutes.ARTICLE_LIST, arguments: {
+                              'th_id': e.id,
+                              'kapitel': kapitel,
+                            });
+                          },
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20.0, right: 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(e.themengebiet),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(),
+                            ],
+                          ),
+                        ))
+                    .toList()),
+          )
+        ],
       ),
     );
   }

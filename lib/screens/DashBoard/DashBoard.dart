@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:doc_ueberall/components/Cards.dart';
 import 'package:doc_ueberall/constant.dart';
 import 'package:doc_ueberall/model/kapitelDetails.dart';
+import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:doc_ueberall/screens/DashBoard/viewModel/DashBoardViewModel.dart';
 
 import 'package:doc_ueberall/screens/ZuletztGesehen/ZuletztGesehen.dart';
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   DashBoardViewModel viewModel;
   bool searching = false;
   String currentStr = '';
-
+  int totalDetails;
   List<Details> searchResults;
   @override
   void initState() {
@@ -45,12 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ?.cast<Details>() ??
               [];
           if (snapshot.data != null) {
+            totalDetails = snapshot.data.length;
             searchResults = snapshot.data
-                .where((element) =>
-                    element.articleText.contains(currentStr) ||
-                    element.text.contains(currentStr))
-                .toList()
-                .cast<Details>();
+                    .where((element) => element.articleText
+                        .toLowerCase()
+                        .contains(currentStr.toLowerCase()))
+                    .toList()
+                    .cast<Details>() +
+                snapshot.data
+                    .where((element) => element.text
+                        .toLowerCase()
+                        .contains(currentStr.toLowerCase()))
+                    .toList()
+                    .cast<Details>();
 //                  ..sort((detailA, detailB) =>
 //                      detailA.index.compareTo(detailB.index));
           }
@@ -61,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: height * 0.05,
                 ),
-                searching ? Container() : header(context),
+                header(context),
 
                 /*
             ---
@@ -89,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 searching && searchResults != null
                     ? Column(
                         children: searchResultsList(context, searchResults))
-                    : Cards(),
+                    : kapitalsList(),
               ]),
             ),
           );
@@ -374,11 +382,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: MaterialButton(
                   onPressed: () {
                     HapticFeedback.heavyImpact();
-                    if (currentStr != null)
-                      Navigator.of(context)
-                          .pushNamed(AppRoutes.SEARCH_LIST, arguments: {
-                        'search_string': currentStr,
+                    if (currentStr != null) {
+                      setState(() {
+                        searching = false; // this will close the search
                       });
+                      Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
+                          arguments: {
+                            'detail': searchResults[0],
+                          'total_details': totalDetails
+                          }); //Link to Information page
+                    }
                   },
                   color: kRedColor,
                   padding: EdgeInsets.symmetric(
@@ -486,6 +499,75 @@ class _HomeScreenState extends State<HomeScreen> {
 //                },
 //              );
 //            }));
+  }
+
+  Widget kapitalsList() {
+    return StreamBuilder<Kapitels>(
+      stream: viewModel.outKepitols,
+      builder: (BuildContext context, AsyncSnapshot<Kapitels> snapshot) {
+        if (!snapshot.hasData) return Container();
+        final int chatsCount = snapshot.data.kepitols?.length ?? 0;
+        if (chatsCount == 0) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.3),
+                ),
+                Text(
+                  "",
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.05),
+                ),
+              ],
+            ),
+          );
+        }
+        return Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Column(
+              children: snapshot.data.kepitols
+                  .map((chapter) => BuildKapitelCard(
+                        kapitel: chapter,
+                      ))
+                  .toList()),
+//            ListView.builder(
+//                itemCount: chatsCount,
+//                itemBuilder: (context, index) {
+//                  var chapter = snapshot.data.kepitols[index];
+//                  return BuildKapitelCard(
+//                    kapitel: chapter
+//                        .header, //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
+//                    intKapitel: chapter.prio
+//                        ?.toString(), //in of current Chapter
+//                    header: chapter.kapitel, //Header of Chapter
+//                    description: chapter
+//                        .description, //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later
+//                    keywoerter: chapter.kapitelInhaltes
+//                        .map((e) => e.themengebiet)
+//                        .toList()
+//                        .join(
+//                        ", "), //Displaying all Headers of Articles inside that Chapter
+//                    fun: () {
+//                      Navigator.of(context).pushNamed(
+//                          AppRoutes.KAPITELINHALTE,
+//                          arguments: {
+//                            'kapitel': snapshot.data.kepitols[index]
+//                          }); //Link to Information page
+//                    },
+//                  );
+//                })
+        );
+      },
+    );
   }
 }
 
