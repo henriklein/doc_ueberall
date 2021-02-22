@@ -136,13 +136,7 @@ class _ArticleListState extends State<ArticleList> {
                                     AppRoutes.DETAILPAGE,
                                     arguments: {
                                       'detail': detail,
-                                      'kapitel_int': widget.kapitel.prio,
-                                      'topic_int': widget
-                                          .kapitel.kapitelInhaltes
-                                          .where((element) =>
-                                              element.id == widget.thId)
-                                          .first
-                                          .prio
+                                      'total_details': details.length
                                     }).then((value) =>
                                     setState(() {})); //Link to Information page
                               },

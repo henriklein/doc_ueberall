@@ -62,8 +62,8 @@ class AppRoutes {
           if (ModalRoute.of(context).isCurrent) {
             detail =
                 (ModalRoute.of(context).settings.arguments as Map)['detail'];
-            kapitelInt = (ModalRoute.of(context).settings.arguments
-                as Map)['kapitel_int'];
+            totalDetails = (ModalRoute.of(context).settings.arguments
+                as Map)['total_details'];
             kapitelInt = (ModalRoute.of(context).settings.arguments
                 as Map)['kapitel_int'];
             topicInt =
@@ -79,6 +79,7 @@ class AppRoutes {
               detail: detail,
               kapitelInt: kapitelInt,
               topicInt: topicInt,
+              totalDetails: totalDetails,
             ),
             viewmodel: viewModel,
           );
