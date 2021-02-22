@@ -127,7 +127,7 @@ class _SearchedArtikelsState extends State<SearchedArtikels> {
                           itemCount: details.length,
                           itemBuilder: (context, index) {
                             var detail = details[index];
-                            return BuildArticleCard(
+                            return SearchArticleCard(
                               header: detail
                                   .text, //Header of Article inside of theee Chapter
                               discription: detail
@@ -140,33 +140,6 @@ class _SearchedArtikelsState extends State<SearchedArtikels> {
                                       'detail': detail
                                     }); //Link to Information page
                               },
-//                              bookmarkchecked: Icon(Icons.bookmark_outline),
-                              bookmarkchecked: IconButton(
-                                icon: (details[index].isBookMarked ?? false)
-                                    ? Icon(Icons.bookmark)
-                                    : Icon(Icons.bookmark_outline),
-                                onPressed: () {
-                                  viewModel.bookMark(detail);
-//                                  setState(() {
-////                                    details[index].isBookMarked !=
-////                                            details[index]?.isBookMarked ??
-////                                        false;
-//                                  });
-                                },
-                              ),
-                              checkbox: IconButton(
-                                icon: (details[index]?.isSeen ?? false)
-                                    ? Icon(Icons.check_box_outlined)
-                                    : Icon(Icons.check_box_outline_blank),
-                                onPressed: () {
-                                  viewModel.seen(detail);
-//                                  setState(() {
-////                                    details[index].isSeen !=
-////                                            details[index]?.isSeen ??
-////                                        false;
-//                                  });
-                                },
-                              ),
                             );
                           })),
                 ),

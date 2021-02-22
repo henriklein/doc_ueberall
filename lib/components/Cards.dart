@@ -509,3 +509,215 @@ class BuildArticleCard extends StatelessWidget {
     );
   }
 }
+
+class SearchArticleCard extends StatelessWidget {
+  const SearchArticleCard({
+    Key key,
+    this.artikel, //look top
+    this.intartikel, //look top
+    this.header, //look up
+    this.discription, //look up
+
+    this.fun,
+  }) : super(key: key);
+  final String artikel;
+  final String intartikel;
+  final String header;
+  final String discription;
+  final fun;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: fun,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        header,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: primaryTextColor),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        discription,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: secondaryTextColor,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Divider()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DashboardCard extends StatelessWidget {
+  const DashboardCard({
+    Key key,
+    this.header, //common sence
+    this.description,
+    this.imgURL,
+    this.bgColor,
+    this.press,
+  }) : super(key: key);
+
+  final String header;
+  final String description;
+  final String imgURL;
+  final Color bgColor;
+  final Function press;
+  // final Widget trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: bgColor.withOpacity(0.35),
+      child: Padding(
+        padding: EdgeInsets.all(0.0),
+        child: ExpansionTile(
+//          trailing: widget.trailing ?? RotationTransition(
+//            turns: _iconTurns,
+//            child: const Icon(Icons.expand_more),
+//          ),
+          title: DecoratedBox(
+            decoration: BoxDecoration(
+              //color: bgColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(0),
+              child: ListTile(
+                leading: Container(
+                    width: 70,
+                    child: SvgPicture.asset(
+                      imgURL,
+                      width: 70,
+                      height: 70,
+                    )),
+                title: Text(
+                  header,
+                  style: TextStyle(
+                    color: primaryTextColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  description,
+                  style: TextStyle(
+                    color: secondaryTextColor.withOpacity(0.7),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Big Bang'),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 10,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Birth of the Sun'),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 10,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Earth is Born'),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 10,
+                    )
+                  ]),
+            ),
+          ],
+        ),
+      ),
+    );
+    return InkWell(
+      onTap: () {
+        press();
+        HapticFeedback.mediumImpact();
+      },
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: bgColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: ListTile(
+            leading: Container(
+                width: 70,
+                child: SvgPicture.asset(
+                  imgURL,
+                  width: 70,
+                  height: 70,
+                )),
+            title: Text(
+              header,
+              style: TextStyle(
+                color: primaryTextColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Text(
+              description,
+              style: TextStyle(
+                color: secondaryTextColor.withOpacity(0.7),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
