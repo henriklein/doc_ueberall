@@ -50,9 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     element.articleText.contains(currentStr) ||
                     element.text.contains(currentStr))
                 .toList()
-                .cast<Details>()
-                  ..sort((detailA, detailB) =>
-                      detailA.index.compareTo(detailB.index));
+                .cast<Details>();
+//                  ..sort((detailA, detailB) =>
+//                      detailA.index.compareTo(detailB.index));
           }
           return SingleChildScrollView(
             child: Padding(
@@ -86,7 +86,10 @@ class _HomeScreenState extends State<HomeScreen> {
               The other ones are just going to be shortcuts to spesific Articles
             ---
             */
-                searching ? Container() : Cards(),
+                searching && searchResults != null
+                    ? Column(
+                        children: searchResultsList(context, searchResults))
+                    : Cards(),
               ]),
             ),
           );
@@ -343,8 +346,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Center(
                   child: TextField(
-                    onSubmitted: (str) {
-                      currentStr = str;
+                    onChanged: (str) {
+                      setState(() {
+                        currentStr = str;
+                      });
                       if (str != "") {
 //                        viewModel.search(str);
                       } else {
@@ -453,7 +458,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-//  Widget searchResults(BuildContext context, List<Details> details) {
+  List<Widget> searchResultsList(BuildContext context, List<Details> details) {
+    return details
+        .map((detail) => SearchArticleCard(
+              header: detail.text, //Header of Article inside of theee Chapter
+              discription: detail
+                  .articleText, //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
+              fun: () {
+                Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
+                    arguments: {'detail': detail}); //Link to Information page
+              },
+            ))
+        .toList();
 //    return Padding(
 //        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
 //        child: ListView.builder(
@@ -470,7 +486,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //                },
 //              );
 //            }));
-//  }
+  }
 }
 
 class Cards extends StatelessWidget {

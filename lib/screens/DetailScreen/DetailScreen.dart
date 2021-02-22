@@ -87,7 +87,7 @@ class _DetailPageState extends State<DetailPage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  'widget.detail.index / ${widget.totalDetails}',
+                                  '${widget.detail.index} / ${widget.totalDetails}',
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ],

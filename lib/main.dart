@@ -7,16 +7,6 @@ import 'package:doc_ueberall/screens/DashBoard/DashBoard.dart';
 import 'package:dioc/dioc.dart' as dioc;
 
 void main() async {
-//  File jsonFile = File();
-//  // this code will only run when the app is downloaded for the first time
-//  // this code is responsible for setting initial local data
-//  String data =
-//      await DefaultAssetBundle.of(context).loadString("assets/data.json");
-//  final jsonResult = json.decode(data);
-//  SharedPreferences.getInstance().then((prefs) {
-//    prefs.setString('kapitel', json.encode(kapitels.toJson()));
-//  });
-
   runApp(MyApp());
 }
 
