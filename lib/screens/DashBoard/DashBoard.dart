@@ -5,6 +5,7 @@ import 'package:doc_ueberall/constant.dart';
 import 'package:doc_ueberall/model/kapitelDetails.dart';
 import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:doc_ueberall/screens/DashBoard/viewModel/DashBoardViewModel.dart';
+import 'package:doc_ueberall/screens/GespeicherteArtikel/GespeicherteArtikel.dart';
 
 import 'package:doc_ueberall/screens/ZuletztGesehen/ZuletztGesehen.dart';
 import 'package:doc_ueberall/screens/routes.dart';
@@ -15,6 +16,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -683,6 +686,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget links() {
+    String text =
+        'Hallo. Ich benutze seit neustem die App DocÜberall um mich auf meine kommenden Resen vorzubrereite. Vielleicht ist das ja auch was für dich. Hier ist der link: https://www.doc-überall.de/';
+    String subject = 'Doc Überall';
     return Column(
       children: [
         Divider(),
@@ -695,6 +701,14 @@ class _HomeScreenState extends State<HomeScreen> {
             'Zuletzt Gesehen',
             style: TextStyle(color: Colors.black),
           ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ZuletztGesehen()), //Link to Information page
+            );
+          },
         ),
         ListTile(
           leading: Icon(
@@ -705,30 +719,63 @@ class _HomeScreenState extends State<HomeScreen> {
             'Gespeicherte Artikel',
             style: TextStyle(color: Colors.black),
           ),
+          onTap: () {
+            Navigator.of(context).pushNamed(
+                AppRoutes.GESPEICHERTE_ARTIKELS); //Link to Information page
+//                                    Navigator.push(
+//                                      context,
+//                                      MaterialPageRoute(
+//                                          builder: (context) =>
+//                                              GespeicherteArtikels()), //Link to Information page
+//                                    );
+          },
         ),
         Divider(),
         ListTile(
-          leading: Icon(
-            Icons.info,
-          ),
-          title: Text(
-            'Über Doc Überall',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
+            leading: Icon(
+              Icons.info,
+            ),
+            title: Text(
+              'Über Uns',
+              style: TextStyle(color: Colors.black),
+            ),
+            onTap: () async {
+              final url =
+                  'https://www.xn--doc-berall-deb.de/doc-ueberall/ueber-uns/';
+              if (await canLaunch(url)) {
+                await launch(
+                  url,
+                  forceSafariVC: true,
+                );
+              }
+            }),
         ListTile(
-          leading: Icon(Icons.question_answer),
-          title: Text(
-            'Oft gestellte Fragen ',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
+            leading: Icon(Icons.question_answer),
+            title: Text(
+              'Oft gestellte Fragen ',
+              style: TextStyle(color: Colors.black),
+            ),
+            onTap: () async {
+              final url = 'https://www.xn--doc-berall-deb.de/';
+              if (await canLaunch(url)) {
+                await launch(
+                  url,
+                  forceSafariVC: true,
+                );
+              }
+            }),
         ListTile(
           leading: Icon(Icons.share),
           title: Text(
             'App Teilen',
             style: TextStyle(color: Colors.black),
           ),
+          onTap: () {
+            final RenderBox box = context.findRenderObject();
+            Share.share(text,
+                subject: subject,
+                sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+          },
         ),
         SizedBox(
           height: 20,
