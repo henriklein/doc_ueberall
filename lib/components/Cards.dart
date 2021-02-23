@@ -4,6 +4,7 @@ import 'package:doc_ueberall/screens/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'dart:math';
 
 /*
 ---
@@ -83,86 +84,87 @@ class BuildKapitelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 25),
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey[300]),
-                borderRadius: BorderRadius.circular(20)),
-            margin: EdgeInsets.only(right: 10, left: 30),
-            padding: EdgeInsets.all(20),
-            child: ExpansionTile(
-//          trailing: widget.trailing ?? RotationTransition(
-//            turns: _iconTurns,
-//            child: const Icon(Icons.expand_more),
-//          ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            kapitel.kapitel ?? '',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: primaryTextColor,
-                              fontSize: 15,
-                            ),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: Colors.primaries[Random().nextInt(Colors.primaries.length)]
+                .withOpacity(0.1),
+            border: Border.all(width: 1, color: Colors.grey[300]),
+            borderRadius: BorderRadius.circular(20)),
+        margin: EdgeInsets.only(right: 0, left: 0),
+        padding: EdgeInsets.all(5),
+        child: Theme(
+          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+          child: ExpansionTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SvgPicture.asset(
+                    "assets/SVGs/prepare.svg",
+                    width: 50,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          kapitel.kapitel ?? '',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: primaryTextColor,
+                            fontSize: 15,
                           ),
-                          SizedBox(
-                            height: 5,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          kapitel.description,
+                          style: TextStyle(
+                            color: secondaryTextColor,
+                            fontSize: 12,
                           ),
-                          Text(
-                            kapitel.description,
-                            style: TextStyle(
-                              color: secondaryTextColor,
-                              fontSize: 13,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                children: kapitel.kapitelInhaltes
-                    .map((e) => InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(AppRoutes.ARTICLE_LIST, arguments: {
-                              'th_id': e.id,
-                              'kapitel': kapitel,
-                            });
-                          },
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20.0, right: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(e.themengebiet),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 10,
-                                    ),
-                                  ],
-                                ),
+                  ),
+                ],
+              ),
+              children: kapitel.kapitelInhaltes
+                  .map((e) => InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(AppRoutes.ARTICLE_LIST, arguments: {
+                            'th_id': e.id,
+                            'kapitel': kapitel,
+                          });
+                        },
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20.0, right: 20, top: 5, bottom: 5),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(e.themengebiet),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 12,
+                                  ),
+                                ],
                               ),
-                              Divider(),
-                            ],
-                          ),
-                        ))
-                    .toList()),
-          )
-        ],
+                            ),
+                          ],
+                        ),
+                      ))
+                  .toList()),
+        ),
       ),
     );
   }

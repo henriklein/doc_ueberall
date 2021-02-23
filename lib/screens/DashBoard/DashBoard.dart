@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tags/flutter_tags.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String currentStr = '';
   int totalDetails;
   List<Details> searchResults;
+  double progressValue = 78;
   @override
   void initState() {
     super.initState();
@@ -85,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   searching ? [] : list.sublist(0, min(list.length, 5)),
                 ),
                 SizedBox(
-                  height: height * 0.02,
+                  height: height * 0.03,
                 ),
 
                 /*
@@ -97,7 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 searching && searchResults != null
                     ? Column(
                         children: searchResultsList(context, searchResults))
-                    : kapitalsList(),
+                    : Column(children: [
+                        showProsess(),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        kapitalsList(),
+                      ]),
+                links()
               ]),
             ),
           );
@@ -363,6 +372,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       } else {
                         setState(() {
                           searching = false;
+
+                          //ToDo: Dismiss Keyboard
                         });
                       }
                     },
@@ -389,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
                           arguments: {
                             'detail': searchResults[0],
-                          'total_details': totalDetails
+                            'total_details': totalDetails
                           }); //Link to Information page
                     }
                   },
@@ -501,44 +512,143 @@ class _HomeScreenState extends State<HomeScreen> {
 //            }));
   }
 
-  Widget kapitalsList() {
-    return StreamBuilder<Kapitels>(
-      stream: viewModel.outKepitols,
-      builder: (BuildContext context, AsyncSnapshot<Kapitels> snapshot) {
-        if (!snapshot.hasData) return Container();
-        final int chatsCount = snapshot.data.kepitols?.length ?? 0;
-        if (chatsCount == 0) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.3),
-                ),
-                Text(
-                  "",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.05),
-                ),
-              ],
+  Widget showProsess() {
+    return Container(
+      padding: EdgeInsets.only(left: 10),
+      height: 120,
+      child: Center(
+        child: Row(
+          children: [
+            Container(
+              width: 110,
+              child: SfRadialGauge(axes: <RadialAxis>[
+                RadialAxis(
+                  minimum: 0,
+                  maximum: 480,
+                  showLabels: false,
+                  showTicks: false,
+                  axisLineStyle: AxisLineStyle(
+                    thickness: 0.2,
+                    cornerStyle: CornerStyle.bothCurve,
+                    color: kRedColor.withOpacity(0.1),
+                    thicknessUnit: GaugeSizeUnit.factor,
+                  ),
+                  annotations: <GaugeAnnotation>[
+                    GaugeAnnotation(
+                        positionFactor: 0.1,
+                        angle: 90,
+                        widget: Text(
+                          ' 78/ 480',
+                          style: TextStyle(fontSize: 11),
+                        ))
+                  ],
+                  pointers: <GaugePointer>[
+                    RangePointer(
+                      color: kRedColor,
+                      value: 78,
+                      cornerStyle: CornerStyle.bothCurve,
+                      width: 0.2,
+                      sizeUnit: GaugeSizeUnit.factor,
+                    ),
+                  ],
+                )
+              ]),
             ),
-          );
-        }
-        return Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-          child: Column(
-              children: snapshot.data.kepitols
-                  .map((chapter) => BuildKapitelCard(
-                        kapitel: chapter,
-                      ))
-                  .toList()),
+            SizedBox(width: 10),
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Weiterlesen", //our Articles
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: primaryTextColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text("3. Sport / Sportverlezungen"),
+                  Container(
+                    // width: double.infinity,
+                    child: RaisedButton.icon(
+                      onPressed: () {},
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(15.0))),
+                      label: Text(
+                        'Blasenverletzungen',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      icon: Icon(
+                        Icons.next_plan,
+                        color: Colors.white,
+                      ),
+                      textColor: Colors.white,
+                      color: kRedColor,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget kapitalsList() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Alle Inhalte", //our Articles
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: primaryTextColor,
+            fontSize: 18,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        StreamBuilder<Kapitels>(
+          stream: viewModel.outKepitols,
+          builder: (BuildContext context, AsyncSnapshot<Kapitels> snapshot) {
+            if (!snapshot.hasData) return Container();
+            final int chatsCount = snapshot.data.kepitols?.length ?? 0;
+            if (chatsCount == 0) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.3),
+                    ),
+                    Text(
+                      "",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.05),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Column(
+                  children: snapshot.data.kepitols
+                      .map((chapter) => BuildKapitelCard(
+                            kapitel: chapter,
+                          ))
+                      .toList()),
 //            ListView.builder(
 //                itemCount: chatsCount,
 //                itemBuilder: (context, index) {
@@ -565,8 +675,65 @@ class _HomeScreenState extends State<HomeScreen> {
 //                    },
 //                  );
 //                })
-        );
-      },
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget links() {
+    return Column(
+      children: [
+        Divider(),
+        ListTile(
+          leading: Icon(
+            Icons.check_box_outlined,
+            color: Colors.green,
+          ),
+          title: Text(
+            'Zuletzt Gesehen',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.bookmark,
+            color: Colors.orange,
+          ),
+          title: Text(
+            'Gespeicherte Artikel',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        Divider(),
+        ListTile(
+          leading: Icon(
+            Icons.info,
+          ),
+          title: Text(
+            'Über Doc Überall',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.question_answer),
+          title: Text(
+            'Oft gestellte Fragen ',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.share),
+          title: Text(
+            'App Teilen',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        )
+      ],
     );
   }
 }
