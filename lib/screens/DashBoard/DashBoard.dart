@@ -210,12 +210,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   title: Text("Zuletzt gesehen"), //last seen
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ZuletztGesehen()), //Link to Information page
-                                    );
+                                    Navigator.of(context).pushNamed(
+                                        AppRoutes.GESPEICHERTE_ARTIKELS);
                                   },
                                 ),
 
@@ -440,7 +436,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             Navigator.of(context)
                                 .pushNamed(AppRoutes.DETAILPAGE, arguments: {
-                              'detail': tags[index]
+                              'detail': tags[index],
+                              'total_details': totalDetails
                             }); //Link to Information page
                           },
                           child: UnconstrainedBox(
@@ -493,7 +490,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   .articleText, //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
               fun: () {
                 Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
-                    arguments: {'detail': detail}); //Link to Information page
+                    arguments: {
+                      'detail': detail,
+                      'total_details': totalDetails
+                    }); //Link to Information page
               },
             ))
         .toList();

@@ -130,7 +130,8 @@ class _GespeicherteArtikelsState extends State<GespeicherteArtikels> {
                                 Navigator.of(context).pushNamed(
                                     AppRoutes.DETAILPAGE,
                                     arguments: {
-                                      'detail': detail
+                                      'detail': detail,
+                                      'total_details': snapshot.data.length
                                     }); //Link to Information page
                               },
 //                              bookmarkchecked: Icon(Icons.bookmark_outline),

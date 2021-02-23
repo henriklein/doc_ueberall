@@ -136,7 +136,7 @@ class _ArticleListState extends State<ArticleList> {
                                     AppRoutes.DETAILPAGE,
                                     arguments: {
                                       'detail': detail,
-                                      'total_details': details.length
+                                      'total_details': snapshot.data.length
                                     }).then((value) =>
                                     setState(() {})); //Link to Information page
                               },
