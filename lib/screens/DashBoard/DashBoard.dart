@@ -210,8 +210,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   title: Text("Zuletzt gesehen"), //last seen
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                        AppRoutes.GESPEICHERTE_ARTIKELS);
+                                    Navigator.of(context)
+                                        .pushNamed(AppRoutes.ZULETST_GESEHEN);
                                   },
                                 ),
 
