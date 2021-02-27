@@ -70,11 +70,11 @@ class _HomeScreenState extends State<HomeScreen> {
             nextArticle =
                 snapshot.data.where((element) => element.isSeen == false).first;
             totalSeen = snapshot.data
-                    .where((element) => element.isSeen == false)
+                    .where((element) => element.isSeen == true)
                     ?.length ??
                 0;
             progressValue =
-                totalSeen / ((totalDetails == 0) ? 1 : totalDetails) * 100;
+                totalSeen / ((totalDetails == 0) ? 1 : totalDetails);
           }
           return SingleChildScrollView(
             child: Padding(
