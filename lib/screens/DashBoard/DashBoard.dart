@@ -5,7 +5,6 @@ import 'package:doc_ueberall/constant.dart';
 import 'package:doc_ueberall/model/kapitelDetails.dart';
 import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:doc_ueberall/screens/DashBoard/viewModel/DashBoardViewModel.dart';
-import 'package:doc_ueberall/screens/GespeicherteArtikel/GespeicherteArtikel.dart';
 
 import 'package:doc_ueberall/screens/ZuletztGesehen/ZuletztGesehen.dart';
 import 'package:doc_ueberall/screens/routes.dart';
@@ -29,8 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
   bool searching = false;
   String currentStr = '';
   int totalDetails;
+  int totalSeen;
   List<Details> searchResults;
-  double progressValue = 78;
+  double progressValue = 0;
+
+  Details nextArticle;
+
   @override
   void initState() {
     super.initState();
@@ -64,8 +67,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         .contains(currentStr.toLowerCase()))
                     .toList()
                     .cast<Details>();
-//                  ..sort((detailA, detailB) =>
-//                      detailA.index.compareTo(detailB.index));
+            nextArticle =
+                snapshot.data.where((element) => element.isSeen == false).first;
+            totalSeen = snapshot.data
+                    .where((element) => element.isSeen == false)
+                    ?.length ??
+                0;
+            progressValue =
+                totalSeen / ((totalDetails == 0) ? 1 : totalDetails) * 100;
           }
           return SingleChildScrollView(
             child: Padding(
@@ -371,8 +380,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       } else {
                         setState(() {
                           searching = false;
-
-                          //ToDo: Dismiss Keyboard
+                          FocusScope.of(context).unfocus();
                         });
                       }
                     },
@@ -541,14 +549,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         positionFactor: 0.1,
                         angle: 90,
                         widget: Text(
-                          ' 78/ 480',
+                          ' ${totalSeen}/ ${totalDetails}',
                           style: TextStyle(fontSize: 11),
                         ))
                   ],
                   pointers: <GaugePointer>[
                     RangePointer(
                       color: kRedColor,
-                      value: 78,
+                      value: progressValue,
                       cornerStyle: CornerStyle.bothCurve,
                       width: 0.2,
                       sizeUnit: GaugeSizeUnit.factor,
