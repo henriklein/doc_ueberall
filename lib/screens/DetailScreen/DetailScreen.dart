@@ -260,7 +260,8 @@ class _DetailPageState extends State<DetailPage> {
 //                      viewModel.justSaw(detail);
                           Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
                               arguments: {
-                                'detail': nextDetail
+                                'detail': nextDetail,
+                                'total_details': widget.totalDetails
                               }); //Link to Information page
                         },
                         bookmarkchecked: IconButton(
@@ -321,7 +322,8 @@ class _DetailPageState extends State<DetailPage> {
                       onPressed: () {
                         Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
                             arguments: {
-                              'detail': nextDetail
+                              'detail': nextDetail,
+                              'total_details': widget.totalDetails
                             }); //Link to Information page
                       },
                     ),

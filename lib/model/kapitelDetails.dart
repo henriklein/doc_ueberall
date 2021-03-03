@@ -79,7 +79,7 @@ class Details {
     data['H_icon'] = this.icon;
     data['last_seen'] = this.lastSeen?.millisecondsSinceEpoch;
     data['is_seen'] = this.isSeen;
-    data['is_bookmarked'] = this.isSeen;
+    data['is_bookmarked'] = this.isBookMarked;
     data['A_index'] = this.index;
     return data..removeWhere((_, value) => value == null);
   }

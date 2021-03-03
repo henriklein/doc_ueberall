@@ -7,8 +7,7 @@ import 'package:doc_ueberall/screens/DetailScreen/DetailScreen.dart';
 import 'package:doc_ueberall/screens/DetailScreen/viewModel/DetailScreenViewModel.dart';
 import 'package:doc_ueberall/screens/GespeicherteArtikel/GespeicherteArtikel.dart';
 import 'package:doc_ueberall/screens/KapitelInhalte/KapitelInhalte.dart';
-import 'package:doc_ueberall/screens/SearchedArtikel/SearchedArtikel.dart';
-import 'package:doc_ueberall/screens/kepitel/kapitel.dart';
+import 'package:doc_ueberall/screens/ZuletztGesehen/ZuletztGesehen.dart';
 import 'package:doc_ueberall/screens/kepitel/viewModel/kepitelViewModel.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +23,7 @@ class AppRoutes {
   static const String SEARCH_LIST = "/searchlist";
   static const String KAPITELINHALTE = "/kapitelinhalte";
   static const String GESPEICHERTE_ARTIKELS = "/GespeicherteArtikels";
+  static const String ZULETST_GESEHEN = "/ZuletstGesehen";
 
   static get routes => {
 //        AppRoutes.KEPITOL: (context) {
@@ -108,19 +108,26 @@ class AppRoutes {
                 creator: "DetailScreenViewModel", mode: dioc.InjectMode.create),
           );
         },
-        AppRoutes.SEARCH_LIST: (context) {
-          String searchStr;
-          if (ModalRoute.of(context).isCurrent) {
-            searchStr = (ModalRoute.of(context).settings.arguments
-                as Map)['search_string'];
-          }
+        AppRoutes.ZULETST_GESEHEN: (context) {
           return ViewModelProvider<DetailScreenViewModel>(
-            child: SearchedArtikels(
-              searchStr: searchStr,
-            ),
+            child: ZuletztGesehen(),
             viewmodel: c.get<DetailScreenViewModel>(
                 creator: "DetailScreenViewModel", mode: dioc.InjectMode.create),
           );
         },
+//        AppRoutes.SEARCH_LIST: (context) {
+//          String searchStr;
+//          if (ModalRoute.of(context).isCurrent) {
+//            searchStr = (ModalRoute.of(context).settings.arguments
+//                as Map)['search_string'];
+//          }
+//          return ViewModelProvider<DetailScreenViewModel>(
+//            child: SearchedArtikels(
+//              searchStr: searchStr,
+//            ),
+//            viewmodel: c.get<DetailScreenViewModel>(
+//                creator: "DetailScreenViewModel", mode: dioc.InjectMode.create),
+//          );
+//        },
       };
 }
