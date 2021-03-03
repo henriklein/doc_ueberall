@@ -550,7 +550,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Weiterlesen", //our Articles
+                    (nextArticle?.index == 1)
+                        ? "start reading"
+                        : (nextArticle?.index == totalDetails)
+                            ? "well done"
+                            : "Weiterlesen", //our Articles
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: primaryTextColor,
@@ -574,7 +578,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius:
                               BorderRadius.all(Radius.circular(15.0))),
                       label: Text(
-                        'Blasenverletzungen',
+                        '${nextArticle?.text ?? ''}',
                         style: TextStyle(color: Colors.white),
                       ),
                       icon: Icon(
