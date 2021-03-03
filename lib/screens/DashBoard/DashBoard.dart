@@ -16,7 +16,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 //import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:url_launcher/url_launcher.dart';
-//import 'package:share/share.dart';
+import 'package:share/share.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -24,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController controller = TextEditingController();
   DashBoardViewModel viewModel;
   bool searching = false;
   String currentStr = '';
@@ -56,17 +57,20 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.data != null) {
             totalDetails = snapshot.data.length;
             searchResults = snapshot.data
-                    .where((element) => element.articleText
+                    .where((element) => element.text
                         .toLowerCase()
                         .contains(currentStr.toLowerCase()))
                     .toList()
                     .cast<Details>() +
                 snapshot.data
-                    .where((element) => element.text
+                    .where((element) => element.articleText
                         .toLowerCase()
                         .contains(currentStr.toLowerCase()))
                     .toList()
                     .cast<Details>();
+
+            snapshot.data.sort((articleOne, articleTwo) =>
+                articleOne.index.compareTo(articleTwo.index));
             nextArticle =
                 snapshot.data.where((element) => element.isSeen == false).first;
             totalSeen = snapshot.data
@@ -363,14 +367,15 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               Container(
                 height: 50,
-                width: MediaQuery.of(context).size.width * 0.7,
+                width: MediaQuery.of(context).size.width * 0.9,
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 decoration: BoxDecoration(
                   color: kBoxBackground,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Center(
-                  child: TextField(
+                  child: TextFormField(
+                    controller: controller,
                     onChanged: (str) {
                       setState(() {
                         currentStr = str;
@@ -395,33 +400,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: MaterialButton(
-                  onPressed: () {
-                    HapticFeedback.heavyImpact();
-                    if (currentStr != null) {
-                      setState(() {
-                        searching = false; // this will close the search
-                      });
-                      Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
-                          arguments: {
-                            'detail': searchResults[0],
-                            'total_details': totalDetails
-                          }); //Link to Information page
-                    }
-                  },
-                  color: kRedColor,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 15,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: SvgPicture.asset('assets/icons/search.svg'),
-                ),
-              ),
+              controller?.text != ''
+                  ? Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          controller.text = '';
+                          setState(() {
+                            currentStr = '';
+                            searching = false;
+                          });
+                          FocusScope.of(context).unfocus();
+                        },
+                      ),
+                    )
+                  : Container(),
             ],
           ),
 
@@ -505,22 +499,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ))
         .toList();
-//    return Padding(
-//        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-//        child: ListView.builder(
-//            itemCount: details.length,
-//            itemBuilder: (context, index) {
-//              var detail = details[index];
-//              return SearchArticleCard(
-//                header: detail.text, //Header of Article inside of theee Chapter
-//                discription: detail
-//                    .articleText, //needs to be initializeed (add "Lorum Ipsum sentence", Ill add real data later using Firebase)
-//                fun: () {
-//                  Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
-//                      arguments: {'detail': detail}); //Link to Information page
-//                },
-//              );
-//            }));
   }
 
   Widget showProsess() {
@@ -579,11 +557,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 18,
                     ),
                   ),
-                  Text("3. Sport / Sportverlezungen"),
+                  Text(nextArticle == null
+                      ? ''
+                      : "${nextArticle.index}. ${nextArticle.kapitel} / ${nextArticle.themengebiet}"),
                   Container(
                     // width: double.infinity,
                     child: RaisedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(AppRoutes.DETAILPAGE,
+                            arguments: {
+                              'detail': nextArticle,
+                              'total_details': totalDetails
+                            }); //Link to next article
+                      },
                       shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(15.0))),
@@ -780,10 +766,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           onTap: () {
             final RenderBox box = context.findRenderObject();
-            //todo:
-//            Share.share(text,
-//                subject: subject,
-//                sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+            Share.share(text,
+                subject: subject,
+                sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
           },
         ),
         SizedBox(
@@ -836,13 +821,6 @@ class Cards extends StatelessWidget {
           bgColor: kRedColor,
           press: () {
             Navigator.of(context).pushNamed(AppRoutes.KEPITOL);
-            //todo: remove this line
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                  builder: (context) =>
-//                      KapitolScreen()), //Link to Information page
-//            );
           },
         ),
         TopicCard(
@@ -852,13 +830,6 @@ class Cards extends StatelessWidget {
           bgColor: kRedColor,
           press: () {
             Navigator.of(context).pushNamed(AppRoutes.KEPITOL);
-            //todo: remove this line
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                  builder: (context) =>
-//                      KapitolScreen()), //Link to Information page
-//            );
           },
         ),
         SizedBox(
