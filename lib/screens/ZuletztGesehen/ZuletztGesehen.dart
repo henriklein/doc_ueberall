@@ -25,73 +25,74 @@ class _ZuletztGesehenState extends State<ZuletztGesehen> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: StreamBuilder<List<Details>>(
-        stream: viewModel.outDetailScreen,
-        builder: (BuildContext context, AsyncSnapshot<List<Details>> snapshot) {
-          if (!snapshot.hasData)
-            return Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    backgroundColor: Color.fromRGBO(0, 0, 255, 1),
-                    strokeWidth: 7.0,
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(20, 50, 30, 20),
+            child: Row(
+              children: [
+                IconButton(
+                    icon: Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+                Flexible(
+                    child: Text(
+                  "Zuletzt Gesehen", //saved Articles
+                  style: TextStyle(fontSize: 30, color: primaryTextColor),
+                )),
+              ],
+            ),
+          ),
+          StreamBuilder<List<Details>>(
+            stream: viewModel.outDetailScreen,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Details>> snapshot) {
+              if (!snapshot.hasData)
+                return Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      CircularProgressIndicator(
+                        backgroundColor: Color.fromRGBO(0, 0, 255, 1),
+                        strokeWidth: 7.0,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
+                );
 
-          List<Details> details = snapshot.data
-              .where((element) => element.isSeen == true)
-              .toList()
-              .cast<Details>()
-                ..sort((detailA, detailB) =>
-                    detailA.index.compareTo(detailB.index));
-          if (details.length == 0) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.3),
+              List<Details> details = snapshot.data
+                  .where((element) => element.isSeen == true)
+                  .toList()
+                  .cast<Details>()
+                    ..sort((detailA, detailB) =>
+                        detailA.index.compareTo(detailB.index));
+              if (details.length == 0) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.3),
+                      ),
+                      Text(
+                        "No Articles seen",
+                        style: TextStyle(
+                            color: secondaryTextColor,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.05),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.05),
-                  ),
-                ],
-              ),
-            );
-          }
-          return Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 50, 30, 20),
-                child: Row(
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.arrow_back_ios),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }),
-                    Flexible(
-                        child: Text(
-                      "Zuletzt Gesehen", //saved Articles
-                      style: TextStyle(fontSize: 30, color: primaryTextColor),
-                    )),
-                  ],
-                ),
-              ),
-              Expanded(
+                );
+              }
+              return Expanded(
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(1),
@@ -146,10 +147,10 @@ class _ZuletztGesehenState extends State<ZuletztGesehen> {
                             );
                           })),
                 ),
-              ),
-            ],
-          );
-        },
+              );
+            },
+          ),
+        ],
       ),
     );
   }

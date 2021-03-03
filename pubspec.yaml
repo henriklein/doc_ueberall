@@ -30,6 +30,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
   expansion_card: ^0.1.0
 #  syncfusion_flutter_gauges: ^18.2.44
+  percent_indicator: ^2.1.5
   url_launcher: ^5.7.10
   share: any
 

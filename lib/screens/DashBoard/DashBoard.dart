@@ -18,6 +18,8 @@ import 'package:flutter_tags/flutter_tags.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 
+import 'package:percent_indicator/percent_indicator.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -509,7 +511,38 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           children: [
             Container(
-              width: 110,
+                width: 110,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: CircularPercentIndicator(
+                          radius: 100,
+                          lineWidth: 7.0,
+                          progressColor: kBoxBackground,
+                          startAngle: 260,
+                          percent: 0.5555 * 1,
+                          animation: false,
+                          backgroundColor: Colors.transparent,
+                          center: Text(
+                            ' ${totalSeen ?? ""}/ ${totalDetails ?? ""}',
+                            style: TextStyle(fontSize: 11),
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: CircularPercentIndicator(
+                        radius: 100,
+                        lineWidth: 7.0,
+                        progressColor: kRedColor,
+                        startAngle: 260,
+                        percent: progressValue ?? 0.0,
+                        backgroundColor: Colors.transparent,
+                      ),
+                    ),
+                  ],
+                )
 //              child: SfRadialGauge(axes: <RadialAxis>[
 //                RadialAxis(
 //                  minimum: 0,
@@ -542,7 +575,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //                  ],
 //                )
 //              ]),
-            ),
+                ),
             SizedBox(width: 10),
             Flexible(
               child: Column(
