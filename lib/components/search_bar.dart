@@ -2,7 +2,7 @@ import 'package:doc_ueberall/constant.dart';
 import 'package:doc_ueberall/screens/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 class SearchBar extends StatelessWidget {
   String currentStr;
@@ -49,7 +49,7 @@ class SearchBar extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),
-            child: SvgPicture.asset('assets/icons/search.svg'),
+            // child: SvgPicture.asset('assets/icons/search.svg'),
           ),
         ),
       ],

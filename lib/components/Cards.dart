@@ -3,7 +3,7 @@ import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:doc_ueberall/screens/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'dart:math';
 
 /*
@@ -48,11 +48,12 @@ class TopicCard extends StatelessWidget {
           child: ListTile(
             leading: Container(
                 width: 70,
-                child: SvgPicture.asset(
-                  imgURL,
-                  width: 70,
-                  height: 70,
-                )),
+                // child: SvgPicture.asset(
+                //   imgURL,
+                //   width: 70,
+                //   height: 70,
+                // )
+                ),
             title: Text(
               header,
               style: TextStyle(
@@ -99,11 +100,11 @@ class BuildKapitelCard extends StatelessWidget {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset(
-                    "assets/SVGs/prepare.svg",
-                    width: 50,
-                    height: 50,
-                  ),
+                  // SvgPicture.asset(
+                  //   "assets/SVGs/prepare.svg",
+                  //   width: 50,
+                  //   height: 50,
+                  // ),
                   SizedBox(
                     width: 10,
                   ),
@@ -541,11 +542,12 @@ class DashboardCard extends StatelessWidget {
               child: ListTile(
                 leading: Container(
                     width: 70,
-                    child: SvgPicture.asset(
-                      imgURL,
-                      width: 70,
-                      height: 70,
-                    )),
+                    // child: SvgPicture.asset(
+                    //   imgURL,
+                    //   width: 70,
+                    //   height: 70,
+                    // )
+                    ),
                 title: Text(
                   header,
                   style: TextStyle(
@@ -626,11 +628,12 @@ class DashboardCard extends StatelessWidget {
           child: ListTile(
             leading: Container(
                 width: 70,
-                child: SvgPicture.asset(
-                  imgURL,
-                  width: 70,
-                  height: 70,
-                )),
+                // child: SvgPicture.asset(
+                //   imgURL,
+                //   width: 70,
+                //   height: 70,
+                // )
+                ),
             title: Text(
               header,
               style: TextStyle(
