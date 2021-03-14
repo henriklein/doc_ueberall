@@ -47,7 +47,8 @@ class Details {
     kapitelId = json['J_kapitel_id'];
     themengebiet = json['C_themengebiet'];
     themengebietId = json['K_themengebiet_id'];
-    articleText = json['E_article_text'];
+    articleText =
+        (json['E_article_text'] as String)?.replaceAll('<br/>', '\n\n');
     link = json['F_link'];
     subHeading = json['N_sub_heading'];
     text = json['D_article_header'];

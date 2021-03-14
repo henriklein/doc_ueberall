@@ -12,7 +12,7 @@ import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:flutter_tags/flutter_tags.dart';
 //import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ?.length ??
                 0;
             progressValue =
-                totalSeen / ((totalDetails == 0) ? 1 : totalDetails);
+                nextArticle.index / ((totalDetails == 0) ? 1 : totalDetails);
           }
           return SingleChildScrollView(
             child: Padding(
@@ -402,7 +402,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              controller?.text != ''
+              controller?.text != '' || searching == true
                   ? Align(
                       alignment: Alignment.centerRight,
                       child: IconButton(
@@ -526,7 +526,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           animation: false,
                           backgroundColor: Colors.transparent,
                           center: Text(
-                            ' ${totalSeen ?? ""}/ ${totalDetails ?? ""}',
+                            ' ${nextArticle?.index ?? ""}/ ${totalDetails ?? ""}',
                             style: TextStyle(fontSize: 11),
                           )),
                     ),
@@ -612,6 +612,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               BorderRadius.all(Radius.circular(15.0))),
                       label: Text(
                         '${nextArticle?.text ?? ''}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Colors.white),
                       ),
                       icon: Icon(
