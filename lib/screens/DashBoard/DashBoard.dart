@@ -735,12 +735,8 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(color: Colors.black),
           ),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      ZuletztGesehen()), //Link to Information page
-            );
+             Navigator.of(context)
+                                        .pushNamed(AppRoutes.ZULETST_GESEHEN);
           },
         ),
         ListTile(

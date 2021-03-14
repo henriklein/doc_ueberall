@@ -98,7 +98,7 @@ class BuildKapitelCard extends StatelessWidget {
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
               title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // SvgPicture.asset(
                   //   "assets/SVGs/prepare.svg",
