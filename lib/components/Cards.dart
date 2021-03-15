@@ -100,11 +100,6 @@ class BuildKapitelCard extends StatelessWidget {
               title: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // SvgPicture.asset(
-                  //   "assets/SVGs/prepare.svg",
-                  //   width: 50,
-                  //   height: 50,
-                  // ),
                   SizedBox(
                     width: 10,
                   ),
@@ -613,43 +608,6 @@ class DashboardCard extends StatelessWidget {
         ),
       ),
     );
-    return InkWell(
-      onTap: () {
-        press();
-        HapticFeedback.mediumImpact();
-      },
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: bgColor.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: ListTile(
-            leading: Container(
-                width: 70,
-                // child: SvgPicture.asset(
-                //   imgURL,
-                //   width: 70,
-                //   height: 70,
-                // )
-                ),
-            title: Text(
-              header,
-              style: TextStyle(
-                color: primaryTextColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            subtitle: Text(
-              description,
-              style: TextStyle(
-                color: secondaryTextColor.withOpacity(0.7),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+   
   }
 }

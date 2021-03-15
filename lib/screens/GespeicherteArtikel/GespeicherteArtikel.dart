@@ -22,7 +22,7 @@ class _GespeicherteArtikelsState extends State<GespeicherteArtikels> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Column(

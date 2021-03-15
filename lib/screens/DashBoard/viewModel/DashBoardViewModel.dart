@@ -3,7 +3,6 @@ import 'package:doc_ueberall/data/firebaseKepitelsDataSource.dart';
 import 'package:doc_ueberall/model/kapitelDetails.dart';
 import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
-import 'package:rxdart/rxdart.dart';
 
 class DashBoardViewModel extends ViewModelBase {
   final FirebaseKepitelsDataSource _kepitelsDataSource;

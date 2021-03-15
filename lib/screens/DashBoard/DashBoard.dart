@@ -5,16 +5,12 @@ import 'package:doc_ueberall/constant.dart';
 import 'package:doc_ueberall/model/kapitelDetails.dart';
 import 'package:doc_ueberall/model/kapitels.dart';
 import 'package:doc_ueberall/screens/DashBoard/viewModel/DashBoardViewModel.dart';
-
-import 'package:doc_ueberall/screens/ZuletztGesehen/ZuletztGesehen.dart';
 import 'package:doc_ueberall/screens/routes.dart';
 import 'package:doc_ueberall/viewModelProvider/ViewModelProvider.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_tags/flutter_tags.dart';
-//import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 
@@ -42,6 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     viewModel = ViewModelProvider.of<DashBoardViewModel>(context);
   }
+
+  String text =
+      'Hallo. Ich benutze seit neustem die App DocÜberall um mich auf meine kommenden Resen vorzubrereite. Vielleicht ist das ja auch was für dich. Hier ist der link: https://www.doc-überall.de/';
+  String subject = 'Doc Überall';
 
   @override
   Widget build(BuildContext context) {
@@ -272,37 +272,61 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: <Widget>[
                                 ListTile(
-                                  leading: Icon(
-                                    Icons.people_outline,
-                                    color: kRedColor,
-                                  ),
-                                  title: Text("Über DocÜberall"),
-                                  trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () {},
+                                    leading: Icon(
+                                      Icons.info_outline,
+                                      color: kRedColor,
+                                    ),
+                                    title: Text("Über uns"),
+                                    trailing: Icon(Icons.keyboard_arrow_right),
+                                    onTap: () async {
+                                      final url =
+                                          'https://www.xn--doc-berall-deb.de/doc-ueberall/ueber-uns/';
+                                      if (await canLaunch(url)) {
+                                        await launch(
+                                          url,
+                                          forceSafariVC: true,
+                                        );
+                                      }
+                                    }),
+                                SizedBox(
+                                  height: 10,
                                 ),
+                                ListTile(
+                                    leading: Icon(
+                                      Icons.chat_bubble_outline,
+                                      color: kRedColor,
+                                    ),
+                                    title: Text("Oft gestellte fragen"),
+                                    trailing: Icon(Icons.keyboard_arrow_right),
+                                    onTap: () async {
+                                      final url =
+                                          'https://www.xn--doc-berall-deb.de/';
+                                      if (await canLaunch(url)) {
+                                        await launch(
+                                          url,
+                                          forceSafariVC: true,
+                                        );
+                                      }
+                                    }),
                                 SizedBox(
                                   height: 10,
                                 ),
                                 ListTile(
                                   leading: Icon(
-                                    Icons.history,
+                                    Icons.share_outlined,
                                     color: kRedColor,
                                   ),
-                                  title: Text("Allg. Geschäftsbedingungen"),
+                                  title: Text("App weiter empfehlen"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () {},
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                ListTile(
-                                  leading: Icon(
-                                    Icons.zoom_out_map,
-                                    color: kRedColor,
-                                  ),
-                                  title: Text("Unsere Website"),
-                                  trailing: Icon(Icons.keyboard_arrow_right),
-                                  onTap: () {},
+                                  onTap: () {
+                                    final RenderBox box =
+                                        context.findRenderObject();
+                                    Share.share(text,
+                                        subject: subject,
+                                        sharePositionOrigin:
+                                            box.localToGlobal(Offset.zero) &
+                                                box.size);
+                                  },
                                 ),
                               ],
                             ),
@@ -320,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Icons.settings,
                                     color: kRedColor,
                                   ),
-                                  title: Text("Weitere Einstellungen"),
+                                  title: Text("App zurücksetzen"),
                                   trailing: Icon(Icons.keyboard_arrow_right),
                                   onTap: () {},
                                 ),
@@ -543,38 +567,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 )
-//              child: SfRadialGauge(axes: <RadialAxis>[
-//                RadialAxis(
-//                  minimum: 0,
-//                  maximum: 480,
-//                  showLabels: false,
-//                  showTicks: false,
-//                  axisLineStyle: AxisLineStyle(
-//                    thickness: 0.2,
-//                    cornerStyle: CornerStyle.bothCurve,
-//                    color: kRedColor.withOpacity(0.1),
-//                    thicknessUnit: GaugeSizeUnit.factor,
-//                  ),
-//                  annotations: <GaugeAnnotation>[
-//                    GaugeAnnotation(
-//                        positionFactor: 0.1,
-//                        angle: 90,
-//                        widget: Text(
-//                          ' ${totalSeen}/ ${totalDetails}',
-//                          style: TextStyle(fontSize: 11),
-//                        ))
-//                  ],
-//                  pointers: <GaugePointer>[
-//                    RangePointer(
-//                      color: kRedColor,
-//                      value: progressValue,
-//                      cornerStyle: CornerStyle.bothCurve,
-//                      width: 0.2,
-//                      sizeUnit: GaugeSizeUnit.factor,
-//                    ),
-//                  ],
-//                )
-//              ]),
+//
                 ),
             SizedBox(width: 10),
             Flexible(
@@ -685,32 +678,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             kapitel: chapter,
                           ))
                       .toList()),
-//            ListView.builder(
-//                itemCount: chatsCount,
-//                itemBuilder: (context, index) {
-//                  var chapter = snapshot.data.kepitols[index];
-//                  return BuildKapitelCard(
-//                    kapitel: chapter
-//                        .header, //number of chapter written out. Needs to be initialized in the Databease as "" (Ill add real dara later)
-//                    intKapitel: chapter.prio
-//                        ?.toString(), //in of current Chapter
-//                    header: chapter.kapitel, //Header of Chapter
-//                    description: chapter
-//                        .description, //Discription needs to be initialized. Add One sentence of Lorum Ipsum or something, Ill add real data later
-//                    keywoerter: chapter.kapitelInhaltes
-//                        .map((e) => e.themengebiet)
-//                        .toList()
-//                        .join(
-//                        ", "), //Displaying all Headers of Articles inside that Chapter
-//                    fun: () {
-//                      Navigator.of(context).pushNamed(
-//                          AppRoutes.KAPITELINHALTE,
-//                          arguments: {
-//                            'kapitel': snapshot.data.kepitols[index]
-//                          }); //Link to Information page
-//                    },
-//                  );
-//                })
+//
             );
           },
         ),
@@ -735,8 +703,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(color: Colors.black),
           ),
           onTap: () {
-             Navigator.of(context)
-                                        .pushNamed(AppRoutes.ZULETST_GESEHEN);
+            Navigator.of(context).pushNamed(AppRoutes.ZULETST_GESEHEN);
           },
         ),
         ListTile(
@@ -809,114 +776,6 @@ class _HomeScreenState extends State<HomeScreen> {
         SizedBox(
           height: 20,
         )
-      ],
-    );
-  }
-}
-
-class Cards extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Unsere Inhalte", //our Articles
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: primaryTextColor,
-              fontSize: 18,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: height * 0.01,
-        ),
-        buildShortCuts(context),
-      ],
-    );
-  }
-
-  buildShortCuts(BuildContext context) {
-    double _height = MediaQuery.of(context).size.height;
-    return Column(
-      children: <Widget>[
-        /*
-        ---
-          Alle Kapitel should open up Kapitel.dart which schould display some kind of Listview displaying all Chapters using the BuildKapitelCard component
-        ---
-        */
-        DashboardCard(
-          header: 'Alle Kapitel',
-          description: 'Sehen sie alle unsere Inhalte auf einen Blick',
-          imgURL: 'assets/SVGs/allChapters.svg',
-          bgColor: kRedColor,
-          press: () {
-            Navigator.of(context).pushNamed(AppRoutes.KEPITOL);
-          },
-        ),
-        TopicCard(
-          header: 'Alle Kapitel',
-          description: 'Sehen sie alle unsere Inhalte auf einen Blick',
-          imgURL: 'assets/SVGs/allChapters.svg',
-          bgColor: kRedColor,
-          press: () {
-            Navigator.of(context).pushNamed(AppRoutes.KEPITOL);
-          },
-        ),
-        SizedBox(
-          height: _height * 0.02,
-        ),
-        /*
-        ---
-          shortcut to first Chaptor about the Article "Reisevorbereitungen"
-        */
-        TopicCard(
-          header: 'Reisevorbereitungen',
-          description:
-              'Erkundigen sie sich noch vor Beginn der Reise über aktuelle Umstände.',
-          imgURL: 'assets/SVGs/prepare.svg',
-          bgColor: kPurpleColor,
-          press: () {},
-        ),
-        SizedBox(
-          height: _height * 0.02,
-        ),
-
-        /*
-        ---
-        shortcut to second Cpator Article about Kleine Medikamentenrunfe
-        ---
-        */
-        TopicCard(
-          header: 'Kleine Medikamentenkunde',
-          description: 'Alles was sie über Ihre Reseapotheke wissen müssen.',
-          imgURL: 'assets/SVGs/medecine.svg',
-          bgColor: kYellowColor,
-          press: () {},
-        ),
-        SizedBox(
-          height: _height * 0.02,
-        ),
-
-        /*
-        ---
-          Shortcut to Chaptor 16, Article 1
-        ---
-        */
-        TopicCard(
-          header: 'Notfallinstruktionen',
-          description: 'Notfallinstruktionen in Kriesensituationen.',
-          imgURL: 'assets/SVGs/firstAID.svg',
-          bgColor: kBlueColor,
-          press: () {},
-        ),
-        SizedBox(
-          height: _height * 0.02,
-        ),
       ],
     );
   }
